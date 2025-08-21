@@ -45,8 +45,8 @@ the structure should it be like this:
 1. define the matemathical model 
   here we can define what should it do the chatbot and how it should do it
   #SIGNAL AND SEGMENTATION 
-  # STRUCTURE MODEL (SHORT TIME FOURIERE TRANSFORM STFT)
-  # POTENCIA Y MEL?  -- log-Mel and normalization 
+  # STRUCTURE MODEL (SHORT TIME FOURIER TRANSFORM STFT)
+  # POTENCIA Y MEL?  -- log-Mel and normalization  (PROSÓDICAS? )
   # MASK to avoid frames w/h voice 
   # Metrics and features 
 
@@ -85,7 +85,15 @@ FIRST IS NECESSARY DEFINE THE ARCHITECTURE OF THE SYSTEM,
   - define the maintenance strategy (how to maintain the system, how to ensure the system is up to date, etc.)
   - define the versioning strategy (how to version the system, how to ensure the versioning is consistent, etc.)
   - define the backup and recovery strategy (how to backup the system, how to recover the system in case of failure, etc.)
-  - define the performance strategy (how to ensure the system is performant, how to optimize the system, etc.)-- THIS IS FRONT END TASK 
+  - define the performance strategy (how to ensure the system is performant, Bhow to optimize the system, etc.)-- THIS IS FRONT END TASK 
 
 
-  
+  --------------------------------------------------------------------------------------------------------------------------
+
+about the workflow by roll contribution 
+
+1. Frame the task (Formalize the steps and objetive to achieve )
+2. Context provided 
+3. Optimize the prompt (reduce the ambiguity and increase the clarity) 
+  -especificar 
+4.   

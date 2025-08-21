@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 // This program demonstrates basic arithmetic operations in C.
 // It calculates a simple expression and prints the result.
@@ -9,3 +8,4 @@ int main()
     printf("%d", a); /* will print 1-2+3*4 = 11 */
     return 0;
 }
+
