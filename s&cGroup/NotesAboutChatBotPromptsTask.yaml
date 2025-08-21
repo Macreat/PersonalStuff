@@ -96,4 +96,9 @@ about the workflow by roll contribution
 2. Context provided 
 3. Optimize the prompt (reduce the ambiguity and increase the clarity) 
   -especificar 
-4.   
+...
+
+continue with the task... so, the idea is to define a multiagent that could take the task and resolve it step by step, with the roles assigned , context and info provided, being always being sepecific and concrete.
+  , it means that can avoid ambiguity and hallucination 
+
+

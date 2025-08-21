@@ -4,8 +4,8 @@
 int main()
 {
     bool flag = true;
-    printf("%d\n", flag); // imprime 1
+    printf("%d\n", flag); // print 1
     flag = false;
-    printf("%d\n", flag); // imprime 0
+    printf("%d\n", flag); // print 0
     return 0;
 }
