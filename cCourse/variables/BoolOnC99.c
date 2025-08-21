@@ -5,7 +5,7 @@ int main()
 {
     bool flag = true;
     printf("%d\n", flag); // print 1
-    flag = false;
+    flag = false;         // its not necessary re define the same variable
     printf("%d\n", flag); // print 0
     return 0;
 }

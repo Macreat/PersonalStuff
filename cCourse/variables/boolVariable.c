@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdbool.h>
 // This program demonstrates basic arithmetic operations in C.
 // It calculates a simple expression and prints the result.
 
