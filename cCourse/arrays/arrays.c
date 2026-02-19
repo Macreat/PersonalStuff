@@ -5,6 +5,8 @@ int main()
     int grades[2]; // define as two based on the zerobase concept and have three elements
     int avg;
 
+    // we populate the arrays
+
     grades[0] = 80; // first element
     grades[1] = 85; // second element
     grades[2] = 90; // third element
