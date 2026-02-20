@@ -11,13 +11,13 @@ int main()
     last_name[1] = 'o';
     last_name[2] = 'e';
     last_name[3] = '\0'; // end the string
-
+                         // use sprintf to print and cocantenate and print strings
     sprintf(name, "%s %s", first_name, last_name);
-    if (strncmp(name, "John Boe", 100) == 0)
+    if (strncmp(name, "John Boe", 100) == 0) // compare name string created  ("John Boe" ) with the concatenation made
     {
         printf("Done!\n");
     }
-    name[0] = '\0';
+    name[0] = '\0'; // clean string and then concatenate first and last on name char, then print it.
     strncat(name, first_name, 4);
     strncat(name, last_name, 20);
     printf("%s\n", name);
