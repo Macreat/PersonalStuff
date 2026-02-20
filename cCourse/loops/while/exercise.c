@@ -15,18 +15,18 @@ int main()
     int array[] = {1, 7, 4, 5, 9, 3, 5, 11, 6, 3, 4};
     int i = 0;
 
-    while (i < 11)
+    while (i < 11) // define our while loop with the lenght of our array.
     {
         if (array[i] < 5) // we have to iterate inside our array / check C1
         {
             i++;
-            continue; // on this condition ,if i doesnt iterate and use continue derivate, we get stuck in an infinite loop
+            continue; // on this condition ,if i doesnt iterate and use continue derivate, i get stuck in an infinite loop
         }
         else if (array[i] > 10) // check C2
         {
             break;
         }
-        printf("%d\n", array[i]);
+        printf("%d\n", array[i]); // print the values that match the condition
         i++;
     }
 
