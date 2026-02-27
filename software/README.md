@@ -9,10 +9,9 @@
 
 We apply the **conceptual → logical → physical** model to guide the development of a distributed frequency monitoring system based on Software Defined Radio (SDR) sensors deployed across Colombia.
 
-The system is designed as a distributed data acquisition and processing architecture:
-
-
 ![suggested structure](content/structure.png)
+
+The system is designed as a distributed data acquisition and processing architecture:
 
 
 ``` 
@@ -23,11 +22,14 @@ Edge Processing Layer (pure C)
 ↓
 Central API (Laravel/Node,Nest.js/FastAPI,flask,Django/Spring boot[java])
 ↓
-Database + Storage
+Database + Storage ()
 ↓
 Client Applications / Dashboard (Angular)
 
 ```
+
+
+![suggested structure](content/basicUML.png)
 
 
 
