@@ -1,7 +1,8 @@
 # software notes 
 ---
 ## API deploy 
-
+- **main goal:**  
+This project seeks to develop an API capable of receiving frequency spectrum data, storing, processing it, and exposing the results to support analysis and monitoring services, designed with future enhancements in mind, particularly the integration of machine learning techniques to enable advanced automation processes.
 
 ### project structure & system architecture 
 
@@ -16,13 +17,13 @@ The system is designed as a distributed data acquisition and processing architec
 
 ``` 
 
-SDR Nodes (Colombia)
+SDR Nodes (Colombia) -> massive series time 
 ↓
-Edge Processing Layer (pure C)
+Edge Processing Layer (pure C) -> protocol communication TCP/HTTP/JSON ; UDC 
 ↓
-Central API (Laravel/Node,Nest.js/FastAPI,flask,Django/Spring boot[java])
+Central API (Laravel/Node,Nest.js/FastAPI,flask,Django/Spring boot[java]) -> API REST (js + angular) + ML 
 ↓
-Database + Storage ()
+Database + Storage (PostgreSQL/MySQL) 
 ↓
 Client Applications / Dashboard (Angular)
 
@@ -33,7 +34,7 @@ Client Applications / Dashboard (Angular)
 
 
 
-## conceptual design 
+## conceptual design (high-level idea)
 
 
 Develop an API capable of:
@@ -43,26 +44,40 @@ Develop an API capable of:
 - Storing spectral and metadata information.
 - Exposing endpoints for querying frequency activity.
 - Supporting analysis and monitoring services.
+- Implement machine learning for automatic detection and alert. 
 
 ---
 - **Software view:**  
 High-level processing flow:
 
-    - Capture signal → Convert to digital samples → Generate frequency spectrum → 
-    - Filter by defined frequency range → Detect peaks / anomalies → Send data to API → store and expose results
+    - Capture signal → Convert to digital samples → Generate frequency spectrum  
+    → Filter by defined frequency range → Detect peaks / anomalies → Send data to API → store , process data and expose results
 
 
-Core logical agents (conceptual level):
+Core logical agents (conceptual level for general system):
 
 - **SDR Agent:** Captures RF signals.
-- **Processing Agent:** Performs FFT and filtering.
-- **Detection Agent:** Identifies signals within target ranges.
+    - SDR produces a continuous stream of raw spectrum data. 
+    - each measurment includes a timestamp, frequency, power level and associated node.
+- **Communication agent:** here define a specific protocol of communication (TCP/UDP). 
+- **Processing and storing Agent:** Receive data, Performs FFT and filtering. (sensors view)
 - **Backend Agent:** Stores and exposes processed data.
+- **Frontend agent:** responsible for data visualization and handling user requests.  
+
+services to implement: 
+
+- **Detection Agent:** Identifies signals within target ranges. (as anaylisis motor)
 - **Monitoring Agent:** Provides analysis endpoints.
+
 
 At this stage, we define *what components exist* and *their responsibilities*, not the implementation details.
 
+
+
 - **Database view:**  
+    
+    Entity-Relationship model: 
+    We need to use a datababe capable of handling massive time series, this implies a special indexing by time ranges. 
 
     Main entities:
 
@@ -83,9 +98,48 @@ At this stage, we define *what components exist* and *their responsibilities*, n
     - Users can subscribe to frequency alerts.
 
 
-  At this stage, we only define _what exists_ and _their relationships_, not the implementation.
+  At this stage, we only define _what entities exists_ and _their relationships_, for future ER diagram.
 
-## logical design 
+
+- **API view:**  
+
+In this stage, we define how is the system exposed to the outside and how do its consumers interact with it.
+This is the formal system interface layer, ie , defines the external and internal communication contracts of the system. 
+
+    API interaction categories: 
+    - `Ingestion API`
+        Manage high frequency, low latency , structural validation and message versioning. 
+    - `Monitoring`
+        Filter by range, node or any other index 
+    - `Alert`
+    - `Adminstration`
+        Register or update info, also manage users. 
+    
+    Capabilities: 
+
+    - `register nodes`
+    - `send data`
+    - `consult data` 
+
+
+    Communication model : (define as layers)
+    - Transport: `TCP` -> `UDP` 
+    - Protocol: `HTTP`
+    - Serialization : `JSON`
+    - schema : `UniversalDataCommunication` (UDC)
+    ` All messages follow a standardized schema, with versioning and validation applied.`
+
+    Architectural pattern: 
+
+    - `REST endpoints`
+    - `Event streaming chanel` (kafka-open source distributed event streaming platform for events/services)   
+    - `WebSocket` for rial time.  
+
+
+Here, we only define system capabilites. 
+This means that, the api exposes ingestion, monitoring, alerting, and administrative functionalities while enforcing structured data exchange and versioning.
+
+## logical design (formal model) 
 
 redirect to a relationated data base management and their implementation 
 
@@ -99,19 +153,6 @@ redirect to a relationated data base management and their implementation
     - `store_detection()`
     - `generate_alert()`
     - `get_frequency_activity()`
-
-    API Endpoints (example):
-```
-
-POST /api/sdr-data
-GET /api/frequencies
-GET /api/detections
-GET /api/detections/{range_id}
-GET /api/nodes
-GET /api/alerts
-
-```
-
 
 
 - **Database view (relational schema):**  
@@ -134,8 +175,20 @@ GET /api/alerts
 
   Here, we add attributes, primary/foreign keys, and define relations (1–N, N–M).
 
+- **API view ():**  
 
+given the software view, has some 
+    API Endpoints (as example):
+```
 
+POST /api/sdr-data
+GET /api/frequencies
+GET /api/detections
+GET /api/detections/{range_id}
+GET /api/nodes
+GET /api/alerts
+
+```
 ---
 ## physical design ( implementation ) 
 
@@ -150,7 +203,7 @@ GET /api/alerts
 
 
 
-##### deployment 
+##### deployment and proofs. 
 
 
 
