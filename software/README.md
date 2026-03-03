@@ -1,6 +1,6 @@
-# software notes 
+# software (iot) notes 
 
-## API deploy 
+## API deployment
 
 
 <details> 
@@ -9,15 +9,41 @@
 - **FIRST DEFINE REQUIREMENTS:**  
 ![Requirements](content/Requirements.png)
 
+
+```
+
+
+
+# Define Logical Non-Functional Constraints
+
+Now explicitly define:
+
+Max latency for detection (e.g., < 2 seconds)
+
+Expected throughput (samples per second)
+                    
+
+                     
+Expected storage growth per day
+
+Retention policy (e.g., raw data 6 months)
+
+These influence indexing and partitioning decisions.
+
+
+```
+
+
+
 </details>
 
+## Main goal
 
-- **main goal:**  
-This project seeks to develop an API capable of receiving frequency spectrum data, storing, processing it, and exposing the results to support analysis and monitoring services, designed with future enhancements in mind, particularly the integration of machine learning techniques to enable advanced automation processes.
+_This project seeks to develop an API capable of receiving frequency spectrum data, storing, processing it, and exposing the results to support analysis and monitoring services, designed with future enhancements in mind, particularly the integration of machine learning techniques to enable advanced automation processes._ 
 
-### project structure & system architecture 
+<details>
 
-
+<summary>Project & system architecture</summary>
 
 We apply the **conceptual → logical → physical** model to guide the development of a distributed frequency monitoring system based on Software Defined Radio (SDR) sensors deployed across Colombia.
 
@@ -45,7 +71,16 @@ Client Applications / Dashboard (Angular)
 
 
 
-## conceptual design (high-level idea)
+</details>
+
+--- 
+
+<details>
+
+<summary>Conceputal Design</summary>
+
+
+##  (high-level idea)
 
 
 Develop an API capable of: (requirements)
@@ -146,113 +181,85 @@ Here, we only define system capabilites.
 
 
 
+</details>
+
 --- 
 
-## logical design (formal model) 
+<details>
+
+<summary>Logical Design</summary>
+
+
+
+## (formal model)
 
 
 The agents will achieve their responsibilities using the following applications, techniques and supporting technologies.
 
 Here, define a logical architecture style: 
 
+We require:
 
 
+_Continuous data_
 
-```
+_High availability_
 
-🔷 STEP 2 — Define Logical Architecture Style
+_Detection in seconds_
 
-Because you require:
 
-Continuous data
+- **The correct logical architecture is an Event-Driven Microservices Architecture :** 
 
-High availability
+Define a pipeline, a parallel branch and the API structure: 
 
-Detection in seconds
+**PIPELINE:**
 
-The correct logical architecture is:
-
-Event-Driven Microservices Architecture
-
-Pipeline:
-
-SDR
+- ` SDR `
 → Ingestion Service
 → Message Broker
 → Storage Service
 → Time-Series Database
 
-Parallel branch:
+Here, we define the logical processing model. 
 
-Message Broker
+First, we need to know where does FFT happen. 
+
+_Two options logically:_
+
+A) On SDR device (edge computing)
+
+B) On Processing Service
+
+C) Agent control on raspberry pi. (as integration layer using C language) 
+
+
+**Known that the system require detection in seconds and want scalability:**
+
+__Better logical decision:__
+FFT at edge → send processed spectrum, in order to reduces backend CPU load dramatically.
+
+_also, its important notice that its necessary implement buffering to prevent data loss._
+
+Now, continue with the 
+
+**PARALLEL BRANCH**
+
+- `MESSAGE BROKER`
+
 → Detection Service
 → Alert Service
 
-API Gateway
+
+- `API GATEWAY`
+
 → Query Service
 → Database
 
-Frontend
+- `FRONT`
+
 → API Gateway
 
-...
 
-
-🔷 STEP 6 — Define Logical Processing Model
-
-Now decide:
-
-Where does FFT happen?
-
-Two options logically:
-
-A) On SDR device (edge computing)
-B) On Processing Service
-
-If you require detection in seconds and want scalability:
-
-Better logical decision:
-FFT at edge → send processed spectrum
-
-This reduces backend CPU load dramatically.
-
-🔷 STEP 7 — Define Logical Scaling Strategy
-
-High availability requires:
-
-Stateless API services
-
-Replicated database
-
-Distributed broker
-
-Horizontal scaling of detection service
-
-Logically define:
-
-Multiple ingestion instances
-
-Consumer groups for load balancing
-
-Read replicas for monitoring queries
-
-🔷 STEP 8 — Define Logical Non-Functional Constraints
-
-Now explicitly define:
-
-Max latency for detection (e.g., < 2 seconds)
-
-Expected throughput (samples per second)
-
-Expected storage growth per day
-
-Retention policy (e.g., raw data 6 months)
-
-These influence indexing and partitioning decisions.
-
-
-
-``` 
 
 
 ### Software view: 
@@ -269,27 +276,44 @@ These influence indexing and partitioning decisions.
     - `get_frequency_activity()`
     
   - **SDR Agent:** Captures RF signals and process data using a raspberry-pi (x). 
-      data acquisiton:
+
+      Data acquisiton:
 
       - `SDRs deploys across Colombia.`
+      - `Services listened to a specific PORT`
 
-
-      data preprocess: 
+      Data preprocess: 
 
       - ... C on raspi 
+      - `JSON serialized`
+      - `Publish to message queue`
 
   - **Communication agent:**  Manage protocol of communication between API and data using HTTP.
 
+      - `SDR-UDP/TCP communication`
+
       _scheme and proccess:_ 
       
+```
       - SDR → ADQUISITION → BROKER (API-GATEWAY)  → STORAGE (DB) → BROKER → DETECTION → ALERT → API → FRONT <-  
 
 
- 
+      {
+  "version": "1.0",
+  "node_id": 12,
+  "timestamp": "2026-02-26T21:15:00Z",
+  "frequency": 103.5,
+  "power": -45.3,
+  "metadata": {}
+} 
 
-      - define a standar scheme as input and manage this for the system .  
+``` 
+
+      - define a standar scheme as input and manage this for the system (JSON serialized).
+
   - **API:** here, we defined a microservices as architecture of the API. 
-      Microservices:
+      
+      _Microservices:_
 
       - `alert`
       - `ingestion`
@@ -303,11 +327,13 @@ These influence indexing and partitioning decisions.
 
 redirect to a relationated data base management and their implementation, ie , translate conceptual entities into structured tables.
 
-Lets define some tables: 
+Define _PostgreSQL_ as motor, and storage type partitioned by time range.  
+
+Lets define some tables
 
 _SDR NODE_ 
 
-_lOCATION_
+_LOCATION_
 
 _SPECTRUM SAMPLE (TSA)_
 
@@ -327,9 +353,13 @@ _ALERT_
 
     Key elements:
 
-    - Primary and foreign keys defined.
+    - Primary and foreign keys (relations) defined.
     - 1–N relationships between nodes and samples.
     - Many-to-many logic possible between users and monitored ranges.
+
+    Partition: 
+
+    - Measurement_2026_x. 
 
 <details>
 <summary>ER DIAGRAM</summary>
@@ -342,45 +372,137 @@ _ALERT_
 
 #### API view (): 
 
-given the software view and requirements , has some 
-    API Endpoints (as example):
-```
 
-POST /api/sdr-data
-GET /api/frequencies
-GET /api/detections
-GET /api/detections/{range_id}
-GET /api/nodes
-GET /api/alerts
-...
-POST ¿?   
 
-```
+_We define a logical scaling as software strategy_ 
 
-also, follow this structure : 
+High availability requires:
 
-    Communication model : (define as layers)
+- **Stateless API services** 
+
+- **Replicated database** 
+
+- **Distributed broker**
+
+- **Horizontal scalling of detection service** 
+
+
+_Logically define:_
+
+- **Multiple ingestion instances** 
+
+- **Consumer groups for load balancing**
+
+- **Read replicas for monitoring queries** 
+
+
+
+_Given the software view and requirements , has some  API Endpoints_ 
+
+(as example):
+
+ **DATA** 
+
+- `POST /api/sdr-data` → Upload SDR raw data
+- `GET /api/frequencies` → List monitored frequencies
+- `POST /api/frequencies` → Add new frequency
+
+
+ **DETECION**
+
+- `GET /api/detections` → Retrieve detections
+- `POST /api/detections` → Submit new detection
+- `GET /api/detections/{range_id}` → Get detection by range
+
+
+ **NODES**
+- `GET /api/nodes` → List nodes
+- `POST /api/nodes` → Register new node
+
+
+ **ALERTS**
+
+- `GET /api/alerts` → Retrieve alerts
+- `POST /api/alerts` → Create new alert
+
+
+_also, the API follow this structure:_
+
+```BACKEND-> NODE.js + Express -> ANGULAR``` 
+
+-**Communication model : (define as layers)** 
+
     - Transport: `TCP` -> `UDP` 
+
     - Protocol: `HTTP`
+
     - Serialization : `JSON`
+
     - schema : `UniversalDataCommunication` (UDC)
+
     ` All messages follow a standardized schema, with versioning and validation applied.`
+    (reference schema)
+    
 
-    Architectural pattern: 
+-**Architectural pattern:**
 
-    - `REST endpoints`
-    - `Event streaming chanel` (kafka-open source distributed event streaming platform for events/services)   
-    - `WebSocket` for rial time.  
+    - `REST endpoints.`
+
+    - `Event streaming chanel` (kafka-open source distributed event streaming platform for events/services).
+
+    - `WebSocket` for rial time.
+
+
+_LAST BUT NOT LEAST, we define the microservices architecture for our system_ 
+
+    - `Ingest_service`
+    - `Storage_service`
+    - `Ml_service`
+    - `Alert_service`
+    - `Auth_service`
+
+_Internal communication_ 
+
+    - HTTP REST o SMS (rabbitMQ/KAFKA)
+
+_FRONTEND_ 
+
+**MODULES**
+
+- Auth module.
+
+- Spectrum module.
+
+- Map module.
+
+- Alert module.
+
+- Admin module.
+
+**ANGULAR SERVICES** 
+
+- Api service.
+
+- Auth service.
+
+- WebSocket service (RT).
+
+
+</details>
 
 ---
 
 
-## physical design ( implementation ) 
+<details>
+<summary>Phyisical Design</summary>
 
 
 
+## ( Implementation ) 
 
-Provide a real code implementation of the system along with comprehensive process documentation to ensure clarity, reproducibility, and maintainability.
+
+
+_Provide a real code implementation of the system along with comprehensive process documentation to ensure clarity, reproducibility, and maintainability._
 
 
 <details>
@@ -430,14 +552,13 @@ Store and relationated data management using PostgreSQL.
 
 </details>
 
-### hardware implementation 
-
-
-
+---
 
 <details>
-<summary>SDR nodes implementation and so</summary>
+<summary>Hardware Implementation </summary>
 
+
+SDR nodes implementation and so
 here describe some notes about hardware implementation. (could go into the guide system model (intro))
 
 
@@ -445,9 +566,81 @@ here describe some notes about hardware implementation. (could go into the guide
 
 
 
+full implementation details 
+
+put here the API code deployment : 
+
+<details>
+<summary>CODE</summary>
+
+1. First we preprare the environment for manage and deploy the system 
+
+   - WSL2 -> local environment
+   - PostgreSQL -> DB
+   - Node 
+   - Angular 
+   - Git
+   - Docker 
+
+2. Continue with the database implementation 
+
+   - scheme 
+   - tables
+   - partitions 
+   - indices 
+   - massive data ingestion 
+   
+   _Proceed with the test_ 
+   
+   - insert 1M registers
+   - meassure time and request per range 
+
+3. Backend 
+   - create Express project
+   - connect PostgreSQL
+   - POST/Meassurments implement 
+   - GET implementation per range 
+   - JSON validated 
+
+   _TEST_
+
+   - unit test  
+   - load test 
+
+4. Frontend
+   - create angular project 
+   - API connection 
+   - show table
+   - show spectrum diag
+   - correlation matrix 
+
+   _TEST_ 
+
+   - Manual test
+   - Integration test
+
+5. ML integration 
+   - batch data extracted 
+   - train model 
+   - integrate microservice
+   - generate automatic alerts 
+   - send info via SMS/MAIL 
+
+  
+</details>
+
 ---
 
-##  FINALIZATION CONDITIONS
+</details>
+
+---
+
+
+##  Finalization conditions 
+
+<details>
+<summary>prototype</summary>
+
 
 ![final prototype](finalPrototype.png)
 
@@ -466,9 +659,11 @@ The task is considered complete when:
 
 
 
+</details>
+
 ---
 
-### deployment and proofs. 
+## Deployment and proofs. 
 
 
 ...
