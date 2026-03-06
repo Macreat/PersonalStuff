@@ -10,25 +10,26 @@
 ![Requirements](content/Requirements.png)
 
 
+
 ```
 
 
 
 # Define Logical Non-Functional Constraints
 
-Now explicitly define:
+such as : 
 
 Max latency for detection (e.g., < 2 seconds)
 
 Expected throughput (samples per second)
-                    
-
-                     
+                
+                
+_These influence indexing and partitioning decisions._
+            
 Expected storage growth per day
 
 Retention policy (e.g., raw data 6 months)
 
-These influence indexing and partitioning decisions.
 
 
 ```
@@ -107,8 +108,8 @@ Core Logical Agents (Conceptual Level for the General System). Each agent is def
 - **SDR Agent:** Captures RF signals.
     - SDR produces a continuous stream of raw spectrum data. 
     - each measurment includes a timestamp, frequency, power level and associated node.
-- **Communication agent:**  Manage protocol of communication between API and data. 
 - **Processing and storing Agent:** Receive and store data, Performs FFT and filtering. 
+- **Communication agent:**  Manage protocol of communication between API and data. 
 - **Backend Agent:** Handles storage, memory and communication with an API REST. 
 - **Frontend agent:** responsible for data visualization and handling user requests.  
 
@@ -116,8 +117,8 @@ also has those services to implement: (as microservices)
 
 - **Detection Agent:** Identifies signals within target ranges. (as anaylisis motor)
 - **Monitoring Agent:** Provides analysis endpoints.
-
 - **Alert Agent:** utilize collected data to drive the detection agent and automatically dispatch alerts via SMS or EMAIL. 
+    - The system must allow registering and querying financial transactions in real time, generating alerts when suspicious behaviors are detected, and providing a detailed history so that the security team can analyze possible frauds. Additionally, users must be able to view detailed reports that include metrics and statistics on transactions, highlighting those that present anomalous or unusual patterns.
 
 
 At this stage, we define *what components exist* and *their responsibilities*, not the implementation details.
@@ -158,7 +159,7 @@ This is the formal system interface layer, ie , defines the external and interna
 
 
     API interaction categories: 
-    - `Ingestion API`
+    - `Ingestion`
         Manage high frequency, low latency , structural validation and message versioning. 
     - `Monitoring`
         Filter by range, node or any other index 
@@ -178,6 +179,11 @@ _The agents implied on this stage are the communication, backend, frontend agent
 This means that, the api exposes ingestion, monitoring, alerting, and administrative functionalities while enforcing structured data exchange and versioning.
 
 Here, we only define system capabilites. 
+
+e.g ,  lets implement the _ML microservice_ 
+
+![ML requirements](content/microserviceDocumentation.png)
+
 
 
 
@@ -224,7 +230,7 @@ Here, we define the logical processing model.
 
 First, we need to know where does FFT happen. 
 
-_Two options logically:_
+_options logically:_
 
 A) On SDR device (edge computing)
 
@@ -246,14 +252,19 @@ Now, continue with the
 
 - `MESSAGE BROKER`
 
-→ Detection Service
+→ Detection Service: 
+
+    
 → Alert Service
 
 
 - `API GATEWAY`
 
 → Query Service
-→ Database
+
+→ microservices connection 
+
+→ Database connection 
 
 - `FRONT`
 
@@ -312,13 +323,20 @@ Now, continue with the
       - define a standar scheme as input and manage this for the system (JSON serialized).
 
   - **API:** here, we defined a microservices as architecture of the API. 
-      
-      _Microservices:_
 
+    - The system follows a microservices architecture where each component has a specific responsibility and communicates through APIs or real-time channels.
+    
+    _Microservices:_
+      - `MLDetection`
+         - Service responsible for analyzing transactions and detecting possible frauds using machine learning. 
       - `alert`
+        - Service responsible for notifying via alerts of possible frauds or anomalies in the information.
       - `ingestion`
+        - Servicee responsible for receiving raw data streams and submit to broker 
       - `monitoring`
+        - Service responsible for tracking the health and performance of the pipeline and microservices 
       - `admin`
+        - Responsible for configuration, user management and system orchestration.
 
 
 
@@ -341,25 +359,25 @@ _SIGNAL DETECTION_
 
 _ALERT_
   
-    Example relational structure:
+**Example relational structure:**
 
-    - `SDRNode(id, name, serial_number, location_id, status)`
-    - `Location(id, city, latitude, longitude)`
-    - `FrequencyRange(id, min_freq, max_freq, description)`
-    - `SpectrumSample(id, node_id, timestamp, raw_data_path)`
-    - `SignalDetection(id, sample_id, range_id, peak_frequency, power_level, timestamp)`
-    - `User(id, name, email, role)`
-    - `Alert(id, user_id, range_id, threshold, active)`
+- `SDRNode(id, name, serial_number, location_id, status)`
+- `Location(id, city, latitude, longitude)`
+- `FrequencyRange(id, min_freq, max_freq, description)`
+- `SpectrumSample(id, node_id, timestamp, raw_data_path)`
+- `SignalDetection(id, sample_id, range_id, peak_frequency, power_level, timestamp)`
+- `User(id, name, email, role)`
+- `Alert(id, user_id, range_id, threshold, active)`
 
-    Key elements:
+**Key elements:**
 
-    - Primary and foreign keys (relations) defined.
-    - 1–N relationships between nodes and samples.
-    - Many-to-many logic possible between users and monitored ranges.
+- Primary and foreign keys (relations) defined.
+- 1–N relationships between nodes and samples.
+- Many-to-many logic possible between users and monitored ranges.
 
-    Partition: 
+**Partition:**
 
-    - Measurement_2026_x. 
+- Measurement_2026_x. 
 
 <details>
 <summary>ER DIAGRAM</summary>
@@ -408,7 +426,7 @@ _Given the software view and requirements , has some  API Endpoints_
 - `POST /api/frequencies` → Add new frequency
 
 
- **DETECION**
+ **ML DETECTION**
 
 - `GET /api/detections` → Retrieve detections
 - `POST /api/detections` → Submit new detection
@@ -428,9 +446,9 @@ _Given the software view and requirements , has some  API Endpoints_
 
 _also, the API follow this structure:_
 
-```BACKEND-> NODE.js + Express -> ANGULAR``` 
+_BACKEND: NODE.js + Express -> ANGULAR_
 
--**Communication model : (define as layers)** 
+- **Communication model : (define as layers)** 
 
     - Transport: `TCP` -> `UDP` 
 
@@ -444,7 +462,7 @@ _also, the API follow this structure:_
     (reference schema)
     
 
--**Architectural pattern:**
+- **Architectural pattern:**
 
     - `REST endpoints.`
 
@@ -453,39 +471,66 @@ _also, the API follow this structure:_
     - `WebSocket` for rial time.
 
 
-_LAST BUT NOT LEAST, we define the microservices architecture for our system_ 
+LAST BUT NOT LEAST, we define the **microservices architecture** for our system
+
+- **Core microservices:**
 
     - `Ingest_service`
+        - This service is responsible for receiving data generated by the SDR sensors distributed across the monitoring infrastructure.
     - `Storage_service`
-    - `Ml_service`
-    - `Alert_service`
-    - `Auth_service`
+        - This service manages the persistence of the collected data.
+    - **Fraud detection** 
+        - `ML_service`
+            - The ML_service is responsible for analyzing incoming data and detecting anomalous or fraudulent activity within the monitored RF spectrum.
+            - **Purpose** 
+                - This microservice applies machine learning techniques to identify suspicious patterns in the spectrum data, such as:
+                    - abnormal transmission patterns
 
-_Internal communication_ 
+                    - unexpected frequency occupation
+
+                    - interference or unauthorized emissions
+
+                    - traffic patterns that may indicate malicious activity
+            - **Technology stack** 
+                - .. 
+            - **Data processing flow** 
+                - `Python -> Flask -> scikit-learn(MLModel)->Libraries` 
+            - **microservices communication**
+                - .. 
+        
+
+        - `Alert_service`
+            - The Alert_service is responsible for managing notifications generated by the system when suspicious or anomalous activity is detected.
+    - `Auth_service`
+        - The Auth_service manages authentication and authorization across the platform.
+
+
+
+- **Internal communication:**
 
     - HTTP REST o SMS (rabbitMQ/KAFKA)
 
 _FRONTEND_ 
 
-**MODULES**
+- **MODULES**
 
-- Auth module.
+    - Auth module.
 
-- Spectrum module.
+    - Spectrum module.
 
-- Map module.
+    - Map module.
 
-- Alert module.
+    - Alert module.
 
-- Admin module.
+    - Admin module.
 
-**ANGULAR SERVICES** 
+- **ANGULAR SERVICES** 
 
-- Api service.
+    - Api service.
 
-- Auth service.
+    - Auth service.
 
-- WebSocket service (RT).
+    - WebSocket service (RT).
 
 
 </details>

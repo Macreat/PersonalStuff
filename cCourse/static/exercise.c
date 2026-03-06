@@ -11,7 +11,7 @@ int sum(int num)
     /**
      * find sum to n numbers
      */
-    static int total = 0; // persists across calls
+    static int total = 0; // persists across calls 
     total += num;         // add current number to running total (THIS IS WHERE STATIC VARIABLES comes to be USEFULL)
     return total;
 }
