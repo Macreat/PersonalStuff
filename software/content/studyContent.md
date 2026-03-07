@@ -102,16 +102,34 @@ Stacks o conjuntos de software para desplegar programas.
 
 # on project, 
 
-1. project schematization 
+1. project schematization   
 
 2. documentation review  (autodocumentation for language specification; back and front)
     - e.g :https://docs.readthedocs.com/platform/stable/index.html
 
 3. software architectures
+    - monolyte
+    - microservices 
+    - back + front (apis interconnected)
 
 4. sofware methods development (SCRUM, etc) 
+    - how software is planned, build ,tested and delivered. 
+        - Waterfall: 
+            - sequential prototype where any sequence is continued by finishing the last. 
+        - Agile: 
+            - software development on iterations, enabling feedback and continue updates. 
+        - SCRUM :
+            - incremental (using sprints), enable adaptability and continue updates and issue parametrization.
+        - Lean development: 
+            -  on spiral ¿? 
 
 5.  relationated  databases
+    ... data path 
 
 6. special syntaxis for professional documentation 
 
+    ... some sort of idea 
+
+
+
+    
