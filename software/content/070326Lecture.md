@@ -39,6 +39,8 @@ divide project into steps
 
 ## objective
 
+![computing](edgeCloudCopmuting.png)
+
 - better meassurment quality signal (categorize errors )
 
     - Problemas de diseño electrónico 
@@ -62,7 +64,7 @@ divide project into steps
 - obtain main signal and process the parameters 
     - statistical inference
         - about PSD distribution (assume nonlineal distribution)
-        - power sepectral density vs probability density  
+    W    - power sepectral density vs probability density  
     - cailbrity means: 
         - inference and assumptions
 - dataset summary report
@@ -82,3 +84,26 @@ given the sensores deployed, a vga y gain specific
 ### categorize better model 
 
 use ML model for parameter recognition to select a basis PDF from a specific NODE. 
+
+
+## services
+
+
+- banda angosta (this is my path - software validation) 
+- banda ancha
+- servicio de voz
+
+
+# tools
+- excalidraw
+- tickets for control versions 
+
+
+### ML implement
+
+- use agents in order to verify the parameters used for any model that introduces and received the signal as input. 
+
+    
+
+
+
