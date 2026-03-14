@@ -2,7 +2,9 @@
 
 ANE2-Calibration-SDR — Python toolkit for SDR sensor network calibration and RF spectrum monitoring.
 
-Version: 0.2.0-dev | Objective: Improve RF signal quality through systematic calibration and anomaly detection across distributed sensors.
+Version: 0.1.0 
+
+Objective: Improve RF signal quality through systematic calibration and anomaly detection across distributed sensors.
 
 ---
 

@@ -8,24 +8,25 @@ Establish a standardized, scalable framework for RF signal quality assurance (QA
 ## Goals & Success Criteria
 
 ### Primary Goals
-1. **Canonical Data Dictionary** — Single source of truth for all signal QA variables (names, types, units, sources)
-2. **Structured Documentation** — Clear README and protocol guides for users and developers
-3. **Modular QA Routes** — Separate, testable implementations for three service types (wideband, narrowband, voice)
-4. **Code Consistency** — All modules use identical naming and units; validated via linting and schema checks
+1. **Canonical Data Dictionary** — Establish a definitive, version-controlled dictionary specifying all signal QA variables, including standardized names, data types, units, descriptions, and data sources. This ensures consistency across modules and facilitates schema validation.
+2. **Issue Categorization Framework** — Implement a structured approach for identifying, classifying, and documenting hardware and software issues. Provide concise summaries, root cause analysis, and actionable remediation steps to streamline troubleshooting and maintain system reliability.
+2. **Modular QA Routes** — Separate, testable implementations for three service types (wideband, narrowband, voice)
+3. **Code Consistency** — All modules use identical naming and units; validated via linting and schema checks
+4. **Structured Documentation** — Clear README and protocol guides for users and developers
+
 
 ### Success Criteria
-- ✅ README.md: Clear purpose, scope, structure, and quick pointers
-- ✅ DICTIONARY.md: All ~25 variables defined (name, type, unit, description, source, importance)
-- ✅ Database ingestion: CSVs validated against dictionary schema
-- ✅ QA modules: Each route (wideband, narrowband, voice) imports from canonical dictionary
-- ✅ Automated checks: Linters catch undefined/misnamed variables; unit mismatches flagged
-- ✅ Version control: Each significant change tagged with schema version
+- [x] DICTIONARY.md: All ~25 variables defined (name, type, unit, description, source, importance)
+- [] Database ingestion: CSVs validated against dictionary schema
+- [] QA modules: Each route (wideband, narrowband, voice) imports from canonical dictionary
+- [] Version control: Each significant change tagged with schema version
+- [] README.md: Clear purpose, scope, structure, and quick pointers
 
 ---
 
 ## Architecture Overview
 
-```
+```bash
 signalQualityValidation/
 ├── README.md                          [Main entry point; purpose, scope, structure]
 ├── DICTIONARY.md                      [Canonical variable definitions (~25 fields)]
@@ -118,7 +119,7 @@ signalQualityValidation/
 - All 3 routes run end-to-end without errors
 - Metrics output matches expected schema
 - Documentation is current and complete
-
+- Implement automated pipelines to process and track main representative variables
 ---
 
 ## Key Decisions & Rationale
@@ -155,7 +156,7 @@ signalQualityValidation/
 
 | Phase | Tasks | Target | Status |
 |-------|-------|--------|--------|
-| 1 | Documentation & dictionary | ✅ Pending review | In progress |
+| 1 | Documentation & dictionary | pending review | In progress |
 | 2 | Data validation & ingestion | Q2 2026 | Planned |
 | 3 | QA route implementation | Q2–Q3 2026 | Planned |
 | 4 | Integration & deployment | Q3 2026 | Planned |
@@ -192,5 +193,4 @@ signalQualityValidation/
 ---
 
 **Last Updated:** 2026-03-14  
-**Version:** 1.0  
-**Owner:** Signal Quality Validation Team  
+**Version:** 0.1.0  

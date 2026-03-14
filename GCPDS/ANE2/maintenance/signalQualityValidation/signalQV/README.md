@@ -202,7 +202,7 @@ ANE2-Calibration-SDR/
 ├──  install.sh / install.ps1           ← Setup automation
 ├── .env.example                          ← Configuration template
 │
-├── 📁 src/                               ← Main application code
+├──  src/                               ← Main application code
 │   ├── cfg.py                            ← Configuration & logging
 │   ├── main.py                           ← Entry point
 │   ├── libs/
@@ -210,7 +210,7 @@ ANE2-Calibration-SDR/
 │   │   └── data_request.py               ← API client
 │   └── example-*.ipynb                   ← Interactive notebooks
 │
-├── 📁 docs/                              ← Sphinx documentation
+├──  docs/                              ← Sphinx documentation
 │   ├── conf.py                           ← Sphinx config
 │   ├── index.rst
 │   ├── Makefile / make.bat
@@ -225,7 +225,7 @@ ANE2-Calibration-SDR/
 │       └── notes/
 │           └── 070326Lecture.md          ← Project objectives & inference
 │
-├── 📊 DATASET STRUCTURE
+├──  DB- DATASET STRUCTURE
 │   └── 11 sensors × 104 records × multiple campaigns
 │       └── Measurements: timestamp, pxx[4096], location, config
 ```
@@ -383,17 +383,17 @@ git tag v0.2.0 && git push origin v0.2.0
 - [ ] IQ balance checked (phase error < 5°, amplitude < 2 dB)
 - [ ] Gain automatically optimized per signal strength
 - [ ] Node synchronization verified (< 1ms misalignment)
-- [ ] Anomalies detected and classified (ML model)
+- [ ] Anomalies detected and classified (ML model to update) 
 
  **Data Integrity:**
 - [ ] 100% CSV validation before processing
-- [ ] PSD values in realistic range ([-120, -40] dB)
+- [ ] PSD values in realistic range ([-120, -40] dB) (MANAGE DATA RANGE)
 - [ ] No missing or corrupted measurements
 - [ ] Cross-node consistency verified
 
  **System Performance:**
 - [ ] Full analysis completes < 2 seconds (6 nodes, 104 records)
-- [ ] Memory usage < 500 MB
+- [ ] Memory usage < 500 MB (to define)
 - [ ] Reproducibility guaranteed (fixed seeds, logged parameters)
 
 ---

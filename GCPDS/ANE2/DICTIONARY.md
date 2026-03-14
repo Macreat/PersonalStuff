@@ -39,47 +39,6 @@
 
 ---
 
-## Naming Conventions
-
-### Primary Keys (for time-series alignment)
-- Use `node_id` + `timestamp` as composite primary key for per-node observations
-- Ensure both are always present in ingested data
-
-### Unit Consistency
-- **Frequencies:** All in Hz (never MHz, kHz without explicit context)
-- **Power:** PSD in dB or linear units (specify clearly in code)
-- **Temperature:** Celsius (°C), never Kelvin or Fahrenheit
-- **Percentages:** 0–100, not 0–1.0
-- **Time:** ISO8601 UTC (e.g., `2026-03-14T12:34:56Z`)
-- **Coordinates:** Decimal degrees (not DMS)
-
-### Naming Patterns
-- **Frequency-related:** suffix with `_hz` (e.g., `sample_rate_hz`, `cutoff_hz`)
-- **Power/Gain:** suffix with `_dB` (e.g., `gain_dB`, `noise_floor` if in dB)
-- **Resource metrics:** suffix with `_percent` (e.g., `ram_percent`, `cpu_percent`)
-- **Time:** use `timestamp` (ISO8601) or `created_at` (ingestion time)
-
-### Multi-Node Data
-- **Per-node arrays:** suffix with `_per_node` (e.g., `pxx_per_node`)
-- **Aggregated:** no suffix; use in scalar context
-
----
-
-## Data Type Mappings
-
-| Type | Python | NumPy | Notes |
-|------|--------|-------|-------|
-| Frequency (Hz) | `float` | `np.float64` | Use float; precision required |
-| Power/Gain (dB) | `float` | `np.float64` | dB is logarithmic; preserve precision |
-| Sample rate | `float` | `np.float32` or `np.float64` | Prefer float64 for FFT scaling |
-| IQ samples | `complex64` or `complex128` | `np.complex64` | complex128 for high precision; complex64 for storage |
-| Raw IQ | `int8` | `np.int8` | Interleaved: I,Q,I,Q,... |
-| Timestamp | `str` (ISO8601) | N/A | Store as string; parse to datetime when needed |
-| Node ID | `str` or `int` | N/A | Use string if includes non-numeric chars (e.g., MAC) |
-| Percentage | `float` (0–100) | `np.float64` | Not 0–1.0 |
-
----
-
 ## cannonical array 
 
 ```bash
@@ -122,6 +81,47 @@
 }
 
 ``` 
+## Naming Conventions
+
+### Primary Keys (for time-series alignment)
+- Use `node_id` + `timestamp` as composite primary key for per-node observations
+- Ensure both are always present in ingested data
+
+### Unit Consistency
+- **Frequencies:** All in Hz (never MHz, kHz without explicit context)
+- **Power:** PSD in dB or linear units (specify clearly in code)
+- **Temperature:** Celsius (°C), never Kelvin or Fahrenheit
+- **Percentages:** 0–100, not 0–1.0
+- **Time:** ISO8601 UTC (e.g., `2026-03-14T12:34:56Z`)
+- **Coordinates:** Decimal degrees (not DMS)
+
+### Naming Patterns
+- **Frequency-related:** suffix with `_hz` (e.g., `sample_rate_hz`, `cutoff_hz`)
+- **Power/Gain:** suffix with `_dB` (e.g., `gain_dB`, `noise_floor` if in dB)
+- **Resource metrics:** suffix with `_percent` (e.g., `ram_percent`, `cpu_percent`)
+- **Time:** use `timestamp` (ISO8601) or `created_at` (ingestion time)
+
+### Multi-Node Data
+- **Per-node arrays:** suffix with `_per_node` (e.g., `pxx_per_node`)
+- **Aggregated:** no suffix; use in scalar context
+
+---
+
+## Data Type Mappings
+
+| Type | Python | NumPy | Notes |
+|------|--------|-------|-------|
+| Frequency (Hz) | `float` | `np.float64` | Use float; precision required |
+| Power/Gain (dB) | `float` | `np.float64` | dB is logarithmic; preserve precision |
+| Sample rate | `float` | `np.float32` or `np.float64` | Prefer float64 for FFT scaling |
+| IQ samples | `complex64` or `complex128` | `np.complex64` | complex128 for high precision; complex64 for storage |
+| Raw IQ | `int8` | `np.int8` | Interleaved: I,Q,I,Q,... |
+| Timestamp | `str` (ISO8601) | N/A | Store as string; parse to datetime when needed |
+| Node ID | `str` or `int` | N/A | Use string if includes non-numeric chars (e.g., MAC) |
+| Percentage | `float` (0–100) | `np.float64` | Not 0–1.0 |
+
+---
+
 
 ## Validation Rules
 
@@ -163,5 +163,3 @@
 | 1.0 | 2026-03-14 | Initial canonical dictionary; 25 core variables |
 
 ---
-
-**Questions or suggestions?** Contact the Signal Quality Validation Team and update this DICTIONARY.md accordingly.
