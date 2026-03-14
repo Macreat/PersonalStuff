@@ -5,9 +5,9 @@
 
 ---
 
-## QUICK START FOR YOUR ROLE
+## QUICK START 
 
-### 🔶 **Banda Ancha (Wideband Spectrum)**
+###  **Banda Ancha (Wideband Spectrum)**
 **Your Focus:** Multi-frequency analysis, bandwidth optimization, spectrum mapping  
 **Entry Points:**
 - [Getting Started](#installation)
@@ -22,10 +22,10 @@
 
 ---
 
-### 📡 **Banda Angosta (Narrowband/Voice) [SOFTWARE VALIDATION PATH]**
+###  **Banda Angosta (Narrowband/Voice)**
 **Your Focus:** Signal quality validation, IQ distortion, noise floor calibration  
 **Entry Points:**
-- [Development Standards](docs/content/developStandars.md) ⭐ **START HERE**
+- [Development Standards](docs/content/developStandars.md)  **START HERE**
 - [Testing Protocol](docs/content/testingProtocol.md)
 - Notebook: `src/example-realtime.ipynb`
 - [Code Audit Report](CODE_AUDIT.md)
@@ -37,7 +37,7 @@
 
 ---
 
-### 🎙️ **Servicio de Voz (Voice Services)**
+###  **Servicio de Voz (Voice Services)**
 **Your Focus:** Network synchronization, quality metrics, anomaly detection  
 **Entry Points:**
 - [Workflow Protocol](docs/content/workFlowProtocol.md)
@@ -51,10 +51,10 @@
 
 ---
 
-### 💻 **SOFTWARE / API DEPLOYMENT**
+###  **SOFTWARE / API DEPLOYMENT**
 **Your Focus:** REST API integration, deployment automation, infrastructure  
 **Entry Points:**
-- [Deployment Guide](docs/content/deploymentGuide.md) ⭐ **START HERE**
+- [Deployment Guide](docs/content/deploymentGuide.md)  **START HERE**
 - [Architecture & Modules](docs/content/architectureModules.md)
 - [Control Version Reference](docs/content/controlVersionReference.md)
 
@@ -68,14 +68,14 @@
 
 ## PROJECT OBJECTIVE & GOAL
 
-> **Better Measurement Quality Signal** 🎯
+> **Better Measurement Quality Signal** 
 
 Current challenges affecting signal quality:
-- ⚠️ **High Noise Floor (Piso de Ruido Alto)** — Cannot distinguish genuine signals
-- ⚠️ **IQ Distortion (Asymmetry)** — Signal representation artifacts  
-- ⚠️ **Inadequate Power Levels (Potencia Inadecuada)** — Gain tuning suboptimal
-- ⚠️ **Synchronization Issues** — Multi-node timing misalignment
-- ⚠️ **Exogenous Events** — Unclassified anomalies in data
+-  **High Noise Floor (Piso de Ruido Alto)** — Cannot distinguish genuine signals
+-  **IQ Distortion (Asymmetry)** — Signal representation artifacts  
+-  **Inadequate Power Levels (Potencia Inadecuada)** — Gain tuning suboptimal
+-  **Synchronization Issues** — Multi-node timing misalignment
+- **Exogenous Events** — Unclassified anomalies in data
 
 **Solution:** Systematic calibration + parameter tuning + quality validation
 
@@ -150,7 +150,7 @@ Through empirical testing, establish optimal measurement setup.
                        │
 ┌──────────────────────▼──────────────────────────────────┐
 │ NOTEBOOKS (Jupyter interactive analysis)                │
-│ ⚠️ No modular processing pipeline Yet                    │
+│  No modular processing pipeline Yet                    │
 └──────────────────────┬──────────────────────────────────┘
 ```
 
@@ -191,10 +191,10 @@ Through empirical testing, establish optimal measurement setup.
 
 ```
 ANE2-Calibration-SDR/
-├── 📄 README.md                          ← You are here
-├── 📋 CODE_AUDIT.md                      ← Full audit report
-├── 📋 requirements.txt                   ← Runtime dependencies
-├── 🔧 install.sh / install.ps1           ← Setup automation
+├──  README.md                          
+├──  CODE_AUDIT.md                      ← Full audit report
+├──  requirements.txt                   ← Runtime dependencies
+├──  install.sh / install.ps1           ← Setup automation
 ├── .env.example                          ← Configuration template
 │
 ├── 📁 src/                               ← Main application code
@@ -373,20 +373,20 @@ git tag v0.2.0 && git push origin v0.2.0
 
 ### To Achieve **Better Measurement Quality Signal**
 
-✅ **Signal Quality Validation:**
+ **Signal Quality Validation:**
 - [ ] Noise floor estimated (< -100 dB for your band)
 - [ ] IQ balance checked (phase error < 5°, amplitude < 2 dB)
 - [ ] Gain automatically optimized per signal strength
 - [ ] Node synchronization verified (< 1ms misalignment)
 - [ ] Anomalies detected and classified (ML model)
 
-✅ **Data Integrity:**
+ **Data Integrity:**
 - [ ] 100% CSV validation before processing
 - [ ] PSD values in realistic range ([-120, -40] dB)
 - [ ] No missing or corrupted measurements
 - [ ] Cross-node consistency verified
 
-✅ **System Performance:**
+ **System Performance:**
 - [ ] Full analysis completes < 2 seconds (6 nodes, 104 records)
 - [ ] Memory usage < 500 MB
 - [ ] Reproducibility guaranteed (fixed seeds, logged parameters)
@@ -482,24 +482,24 @@ git push origin feature/your-feature
 
 ---
 
-## SUPPORT & CONTACT
+## SUPPORT 
 
-**For Questions About:**
-- 🔶 **Banda Ancha** → See `docs/content/architectureModules.md`
-- 📡 **Banda Angosta** → See `docs/content/developStandars.md`
-- 🎙️ **Servicio de Voz** → See `docs/content/workFlowProtocol.md`
-- 💻 **API Deployment** → See `docs/content/deploymentGuide.md`
-- 🐛 **Code Audit Issues** → See `CODE_AUDIT.md`
+** About:**
+-  **Banda Ancha** → See `docs/content/architectureModules.md`
+-  **Banda Angosta** → See `docs/content/developStandars.md`
+-  **Servicio de Voz** → See `docs/content/workFlowProtocol.md`
+-  **API Deployment** → See `docs/content/deploymentGuide.md`
+-  **Code Audit Issues** → See `CODE_AUDIT.md`
 
 ---
 
 ## VERSION HISTORY
 
 **v0.2.0** (In Progress - March 2026)
-- ✨ Signal quality improvement framework
-- 🔧 Refactored architecture
-- 📊 IQ calibration module (TBD)
-- ✅ 80% test coverage
+-  Signal quality improvement framework
+-  Refactored architecture
+-  IQ calibration module (TBD)
+-  80% test coverage
 - [Full Audit Report](CODE_AUDIT.md)
 
 **v0.1.0** (Initial Release)
@@ -509,8 +509,7 @@ git push origin feature/your-feature
 
 ---
 
-**Built with ❤️ for ANE (Agencia Nacional del Espectro)**  
-Last Updated: March 11, 2026 | Status: **Active Development**
+Last Updated: March, 2026 | Status: **Active Development**
 
 ## ENVIRONMENT CONFIGURATION (`.env`)
 
