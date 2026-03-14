@@ -1,6 +1,4 @@
 [submodule "web/LaravelMovil"]
 	path = web/LaravelMovil
 	url = https://github.com/joamontesgi/repaso_tecnologias_moviles
-[submodule "software/code/signalCalibration/ANE2-Calibration-SDR"]
-	path = software/code/signalCalibration/ANE2-Calibration-SDR
-	url = "https://github.com/dramirezbe/ANE2-Calibration-SDR#"
+
