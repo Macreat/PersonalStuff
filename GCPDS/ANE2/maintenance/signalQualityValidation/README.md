@@ -16,8 +16,10 @@ Entry points:
 - Notebook: content/src/example-campaign_nodes.ipynb
 - Data source: content/signalQualityValidation/DB/Database-FM-10Nodes/DataAcq.ipynb
 Key outputs: PSD aggregation, noise-floor estimates, multi-node comparisons.
-
-### Banda Angosta (Narrowband / Voice validation)
+Be kind.
+Explain your reasoning.
+Balance giving explicit directions with just pointing out problems and letting the developer decide.
+Encourage developers to simplify code or add code comments instead of just explaining the complexity to you.# Banda Angosta (Narrowband / Voice validation)
 Focus: channel-level IQ calibration, spectral mask checks, PSD per-node.
 Entry points:
 - Notebook: content/src/example-realtime.ipynb

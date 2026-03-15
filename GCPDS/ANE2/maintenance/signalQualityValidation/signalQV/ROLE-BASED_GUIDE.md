@@ -680,25 +680,25 @@ spec:
 
 ## SUCCESS METRICS (BY ROLE)
 
-### 🔶 Banda Ancha
+###  Banda Ancha
 - [ ] 2 normalization algorithms implemented
 - [ ] Band correlation analysis working
 - [ ] Integration tests passing (80%+ coverage)
 - [ ] Documentation: "Band Analysis Guide" published
 
-### 📡 Banda Angosta
+###  Banda Angosta
 - [ ] All 5 signal quality challenges addressed
 - [ ] Per-node baseline established
 - [ ] Quality score > 85 for all nodes
 - [ ] Documentation: "Software Validation Guide" published
 
-### 🎙️ Servicio de Voz
+###  Servicio de Voz
 - [ ] Quality metrics API endpoint deployed
 - [ ] Alert system detects degradation (< 5 min latency)
 - [ ] Weekly quality report generated
 - [ ] Dashboard updated in real-time
 
-### 💻 API Deployment
+###  API Deployment
 - [ ] REST API running with 99.9% uptime
 - [ ] Docker image pushed to registry
 - [ ] CI/CD pipeline fully automated

@@ -7,7 +7,7 @@
   <summary>REQUIREMENTS</summary>
 
 - **FIRST DEFINE REQUIREMENTS:**  
-![Requirements](content/Requirements.png)
+![Requirements](documentation/Requirements.png)
 
 
 
@@ -48,7 +48,7 @@ _This project seeks to develop an API capable of receiving frequency spectrum da
 
 We apply the **conceptual → logical → physical** model to guide the development of a distributed frequency monitoring system based on Software Defined Radio (SDR) sensors deployed across Colombia.
 
-![suggested structure](content/structure.png)
+![suggested structure](documentation/structure.png)
 
 The system is designed as a distributed data acquisition and processing architecture:
 
@@ -68,7 +68,7 @@ Client Applications / Dashboard (Angular)
 ```
 
 
-![ structure](content/basicUML.png)
+![ structure](documentation/basicUML.png)
 
 
 
@@ -182,7 +182,7 @@ Here, we only define system capabilites.
 
 e.g ,  lets implement the _ML microservice_ 
 
-![ML requirements](content/microserviceDocumentation.png)
+![ML requirements](documentation/microserviceDocumentation.png)
 
 
 
@@ -382,7 +382,7 @@ _ALERT_
 <details>
 <summary>ER DIAGRAM</summary>
 
-![ER](content/ER.png)
+![ER](documentation/ER.png)
 
 </details>
  
