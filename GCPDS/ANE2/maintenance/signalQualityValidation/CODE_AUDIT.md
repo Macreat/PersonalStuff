@@ -15,7 +15,7 @@ The ANE2-Calibration-SDR project aims to **improve RF signal measurement quality
 
 ### 1.1 Signal Quality & Calibration Issues
 
-#### ✗ **IQ Distortion & Asymmetry**
+####  **IQ Distortion & Asymmetry**
 - **Issue:** No IQ calibration/compensation mechanism implemented
 - **Impact:** Asymmetrical signal representation, reduced measurement precision
 - **Severity:** CRITICAL for RF measurements
@@ -41,7 +41,7 @@ class IQCalibrator:
         pass
 ```
 
-#### ✗ **High Noise Floor (Piso de Ruido Alto)**
+####  **High Noise Floor (Piso de Ruido Alto)**
 - **Issue:** Baseline noise not properly estimated or tracked
 - **Impact:** Cannot distinguish signal from noise, poor SNR
 - **Severity:** CRITICAL
@@ -51,7 +51,7 @@ class IQCalibrator:
   - Use histogram mode (Sturges' rule) or quantile-based methods
   - Per-node baseline calibration against reference standard
 
-#### ✗ **Inadequate Power Levels (Potencia Inadecuada)**
+####  **Inadequate Power Levels (Potencia Inadecuada)**
 - **Issue:** Gain settings (LNA, VGA) not automatically optimized
 - **Impact:** Some signals too weak, others saturated
 - **Severity:** HIGH
@@ -61,7 +61,7 @@ class IQCalibrator:
   - Add feedback loop from power measurements
   - Create lookup table: frequency → optimal gain mapping
 
-#### ✗ **No Power Spectral Density (PSD) Analysis**
+####  **No Power Spectral Density (PSD) Analysis**
 - **Issue:** Raw PSD data loaded but not analyzed for distribution
 - **Impact:** Cannot detect anomalies or model variations
 - **Severity:** HIGH
@@ -74,7 +74,7 @@ class IQCalibrator:
 
 ### 1.2 Architecture & Code Quality Issues
 
-#### ✗ **Incomplete Module Architecture**
+#### **Incomplete Module Architecture**
 **Current State:**
 ```
 src/
@@ -117,7 +117,7 @@ src/
 - [ ] Implement missing data validation layer
 - [ ] Add processing pipeline orchestrator
 
-#### ✗ **Inconsistent API Client Design**
+####  **Inconsistent API Client Design**
 **Location:** `src/libs/data_request.py`
 
 **Issues:**
@@ -178,13 +178,13 @@ class NodeRegistry:
 
 ### 1.3 Data Handling Issues
 
-#### ✗ **No Data Validation Pipeline**
+####  **No Data Validation Pipeline**
 - **Issue:** Raw API data loaded directly without verification
 - **Impact:** Silent failures, corrupted analyses
 - **Severity:** HIGH
 - **Missing:** Validation layer between fetch → process
 
-#### ✗ **Inadequate Error Handling**
+####  **Inadequate Error Handling**
 - **Location:** `data_request.py`
 - **Issues:**
   - No connection timeout handling
@@ -192,7 +192,7 @@ class NodeRegistry:
   - No validation of response structure
   - Silent failures in signal parsing
 
-#### ✗ **No Database Backend**
+#### **No Database Backend**
 - **Issue:** Results stored in memory/DataFrames only
 - **Impact:** Cannot persist calibration data, poor reproducibility
 - **Severity:** MEDIUM
@@ -206,7 +206,7 @@ class NodeRegistry:
 
 ### 1.4 Configuration & Environment Issues
 
-#### ⚠ **Environment Variables Not Validated**
+####  **Environment Variables Not Validated**
 - **Location:** `src/cfg.py`
 - **Issues:**
   ```python
@@ -216,12 +216,12 @@ class NodeRegistry:
   - No type validation (e.g., URL format)
   - Boolean parsing uses manual string comparison
 
-#### ⚠ **Logging Configuration Too Simple**
+####  **Logging Configuration Too Simple**
 - Only console output, no file logging
 - No log rotation configured
 - No structured logging (no JSON output for analysis)
 
-#### ✗ **Missing .env Validation**
+####  **Missing .env Validation**
 - No schema validation
 - No required variable checks
 - Silent defaults for critical settings
@@ -230,7 +230,7 @@ class NodeRegistry:
 
 ### 1.5 Testing & Quality Assurance
 
-#### ✗ **No Test Suite**
+####  **No Test Suite**
 - **Missing:**
   - `tests/` directory completely absent
   - No unit tests for data loading
@@ -238,12 +238,12 @@ class NodeRegistry:
   - No performance benchmarks
 - **Target Coverage:** ≥ 80% (from development standards)
 
-#### ✗ **No Type Checking**
+####  **No Type Checking**
 - No `mypy` configuration
 - Inconsistent type hints
 - Document suggests 100% type coverage, actual: <30%
 
-#### ✗ **No Code Formatting Standards**
+####  **No Code Formatting Standards**
 - No `black` configuration
 - No `flake8` linting
 - Inconsistent docstring format
@@ -252,18 +252,14 @@ class NodeRegistry:
 
 ### 1.6 Documentation Issues
 
-#### ⚠ **Duplicate Documentation**
-- Same content in multiple files (architectureModules.md, developStandars.md, etc.)
-- No single source of truth
-- Inconsistent formatting
 
-#### ⚠ **Incomplete Notebook Examples**
+####  **Incomplete Notebook Examples**
 - Two notebooks defined but purpose unclear:
   - `example-campaign_nodes.ipynb`
   - `example-realtime.ipynb`
 - No documentation of how to use them
 
-#### ⚠ **Missing Role-Based Documentation Paths**
+####  **Missing Role-Based Documentation Paths**
 - Roles mentioned but not implemented:
   - Banda Ancha
   - Banda Angosta
@@ -277,19 +273,17 @@ class NodeRegistry:
 
 ### Why Signal Quality is Suboptimal
 
-**From 070326Lecture.md notes:**
-
 1. **Orthogonal Signal Issues**
    - Signals measured between channels too close to noise floor
    - Cannot distinguish genuine signal from artifacts
    - **Cause:** No noise floor calibration implemented
 
-2. **Design Electronics Problems (Problemas de Diseño Electrónico)**
+2. **Design Electronics Problems**
    - IQ imbalance in hardware not addressed
    - DC offset not handled
    - **Cause:** No compensation mechanism in code
 
-3. **Parameter Tuning (Parameter Tunning HW+SW)**
+3. **Parameter Tuning (HW+SW)**
    - Hard-coded gains don't adapt to signal strength
    - No automatic optimization of RBW, span, sample rate
    - **Cause:** No adaptive algorithm + no parameter dictionary
@@ -299,7 +293,7 @@ class NodeRegistry:
    - Multiple nodes not phase-synchronized
    - **Cause:** No timestamp validation, no sync protocol
 
-5. **Exogenous Events (Eventos Exógenos)**
+5. **Exogenous Events**
    - Anomalies not detected or classified
    - No anomaly database
    - **Cause:** No statistical model for signal states
@@ -309,7 +303,7 @@ class NodeRegistry:
 ## 3. PRIORITY FIXES (3-Week Timeline)
 
 ### WEEK 1: Foundations
-- [ ] Refactor code architecture (package structure)
+- [x] Refactor code architecture (package structure)
 - [ ] Implement noise floor estimation
 - [ ] Add data validation layer
 - [ ] Fix environment configuration
@@ -328,21 +322,8 @@ class NodeRegistry:
 
 ---
 
-## 4. CODE METRICS SUMMARY
 
-| Metric | Current | Target | Gap |
-|--------|---------|--------|-----|
-| Test Coverage | 0% | 80% | -80% |
-| Docstring Coverage | ~40% | 100% | -60% |
-| Type Hint Coverage | ~30% | 100% | -70% |
-| Architecture Modularity | 2/8 modules | 8/8 modules | -75% |
-| Error Handling | Poor (0 try/catch blocks) | Comprehensive | CRITICAL |
-| Config Validation | None | Full schema validation | CRITICAL |
-| Signal Processing Features | 1/5 (raw load only) | 5/5 | -80% |
-
----
-
-## 5. QUALITY SIGNAL CHECKLIST
+## 4. QUALITY SIGNAL CHECKLIST
 
 To achieve **better measurement quality signal**, verify:
 
@@ -357,9 +338,8 @@ To achieve **better measurement quality signal**, verify:
 
 ---
 
-## 6. NEXT STEPS
+## 5. NEXT STEPS
 
-1. **Create session memory** with codebase improvements
 2. **Implement refactored architecture** (Week 1)
 3. **Add processing modules** (Week 2)
 4. **Full test coverage** (Week 3)

@@ -384,7 +384,7 @@ Cualquier contexto adicional
 - [ ] Unit tests: ___/___
 - [ ] Integration tests: ___/___
 - [ ] Manual testing: describe
-
+ 
 ## Checklist
 - [ ] Código sigue estándares
 - [ ] Tests agregados/actualizado
