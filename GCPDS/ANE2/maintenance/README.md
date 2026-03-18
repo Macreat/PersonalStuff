@@ -1,4 +1,8 @@
-# Signal Quality Validation — Implementation Plan
+# API maintenance 
+
+## Signal Quality
+
+>**Implementation Plan**
 
 ## Executive Summary
 Establish a standardized, scalable framework for RF signal quality assurance (QA) across distributed SDR sensors. Deliver canonical data sources, consistent naming conventions, and modular QA routes for wideband, narrowband, and voice services.
@@ -13,45 +17,46 @@ Establish a standardized, scalable framework for RF signal quality assurance (QA
 2. **Modular QA Routes** — Separate, testable implementations for three service types (wideband, narrowband, voice)
 3. **Code Consistency** — All modules use identical naming and units; validated via linting and schema checks
 4. **Structured Documentation** — Clear README and protocol guides for users and developers
-
+5. **Standarized workflow** - A precise, clear, and detailed workflow designed to ensure consistency and efficiency across all workshop activities
 
 ### Success Criteria
 - [x] DICTIONARY.md: All ~25 variables defined (name, type, unit, description, source, importance)
 - [] Database ingestion: CSVs validated against dictionary schema
 - [] QA modules: Each route (wideband, narrowband, voice) imports from canonical dictionary
 - [] Version control: Each significant change tagged with schema version
-- [] README.md: Clear purpose, scope, structure, and quick pointers
+- [x] README.md: Clear purpose, scope, structure, and quick pointers
 
 ---
 
 ## Architecture Overview
 
 ```bash
-signalQualityValidation/
-├── README.md                          [Main entry point; purpose, scope, structure]
+QualityAssurance/
+├── README.md                          [This file: Main entry point; purpose, scope, structure]
 ├── DICTIONARY.md                      [Canonical variable definitions (~25 fields)]
-├── plan.md                            [This file; high-level strategy]
 ├── DB/
 │   └── Database-FM-10Nodes/
 │       ├── DataAcq.ipynb              [ data acquisition  & preprocessing RULES]
 │       ├── Database-RF-FM-88...-RF/   [Per-node CSVs (10 nodes)]
 │       └── README.md                  [DB structure & ingestion guide]
-├── QA/Calbration/modules                            [Modular QA implementations]
-│   ├── wideband.py                    [Multi-freq spectrum, noise floor]
-│   ├── narrowband.py                  [IQ calibration, spectral masks]
-│   └── voice.py                       [Sync checks, service metrics]
+├── docs/                              [basis documentation & referece notes]
+│   └── notes/  
+│       ├── notes.md                   [reference notes]
+│   └── reference/
+│       ├── referenceDocs.md           [Modular reference docs]
+├── modules                            [Modular QA implementations]
+│   ├── wideband                       [validate Multi-freq spectrum, noise floor]
+│       ├── calibration/               [calibration directory for each module]
+│       ├── validation/                [validation directory for each module]
+│   ├── narrowband                     [IQ calibration, spectral masks]
+│       ├── calibration/               [calibration directory for each module]
+│       ├── validation/                [validate IQ calibration, spectral masks]
+│   └── voice service                  [Sync checks, service metrics]
+│       ├── calibration/               [calibration directory for each module]
+│       ├── validation/                [validate Sync checks, service metrics]
 ├── validators/                        [Schema & unit checkers]
 │   ├── schema.py                      [Validate CSV/Dict structure]
 │   └── units.py                       [Enforce unit consistency]
-├── QA/Validation/modules              [Modular QA implementations]
-│   ├── wideband.py                    [validate Multi-freq spectrum, noise floor]
-│   ├── narrowband.py                  [validate IQ calibration, spectral masks]
-│   └── voice.py                       [validate Sync checks, service metrics]
-├── validators/                        [Schema & unit checkers]
-│   ├── schema.py                      [Validate CSV/Dict structure]
-│   └── units.py                       [Enforce unit consistency]
-├── reference /                        [basis documentation & referece notes]
-│   ├── .md                            [reference notes]
 └── tests/                             [Unit & integration tests]
     ├── test_schema.py
     ├── test_routes.py
@@ -200,5 +205,5 @@ signalQualityValidation/
 
 ---
 
-**Last Updated:** 2026-03-14  
-**Version:** 0.1.0  
+**Last Updated:** 2026-03-18 
+**Version:** 0.2.0  

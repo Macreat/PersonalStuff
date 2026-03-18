@@ -1,4 +1,4 @@
-# ANE2-Calibration-SDR
+# ANE2-SDR- QA 
 > Python toolkit for SDR sensor network calibration & RF spectrum monitoring with **better measurement quality signal**.
 
 
@@ -6,9 +6,118 @@
 
 
 
-| **Objective:** Improve RF signal quality through systematic calibration and anomaly detection across 11 distributed sensors.
+| **Objective:** Improve RF signal quality through systematic calibration and anomaly detection across  distributed sensors.
 
 ---
+
+
+## PROJECT OBJECTIVE & GOAL
+
+> **Better Measurement Quality Signal** 
+
+Current challenges affecting signal quality:
+-  **High Noise Floor (Piso de Ruido Alto)** — Cannot distinguish genuine signals
+-  **IQ Distortion (Asymmetry)** — Signal representation artifacts  
+-  **Inadequate Power Levels (Potencia Inadecuada)** — Gain tuning suboptimal
+-  **Synchronization Issues** — Multi-node timing misalignment
+- **Exogenous Events** — Unclassified anomalies in data
+
+**Solution:** Systematic calibration + parameter tuning + quality validation
+
+---
+
+## CORE TOPICS & INFERENCE
+
+### 1. **SENSOR CALIBRATION**
+Given a specific context (RF environment), place sensors under defined circumstances and evaluate performance.
+
+**Implementation:**
+- Per-node baseline calibration against reference standards
+- Gain profile mapping: frequency → optimal LNA/VGA settings
+- Statistical inference on PSD distribution (non-linear models)
+
+**Outcome:** Consistent measurement baseline across 11 sensors
+
+### 2. **QUALITY EMISSIONS (RF)**
+Validate transmitted RF quality meets specifications.
+
+**Implementation:**
+- IQ calibration/compensation (hardware + software)
+- Spectral mask validation
+- Power level conformance testing
+
+**Outcome:** Certified, high-fidelity RF measurements
+
+### 3. **SIGNAL PROCESSING ALGORITHMS**
+Optimize SDR configuration parameters for signal acquisition.
+
+**Inputs:** 
+- Pxx (Power Spectral Density) [shape: 4096]
+- Spatial location (latitude, longitude)
+- Reference database parameters
+
+**Outputs:**
+- Optimized RBW, span, sample rate
+- Noise floor estimate
+- Signal quality metrics
+
+### 4. **IQ DISTORTION HANDLING**
+Detect and compensate for I/Q phase and amplitude imbalance.
+
+**Methods:**
+- Hardware-level: Pre-acquisition correction (attenuate DC offset, balance amplifiers)
+- Software-level: Post-acquisition compensation (numerical correction)
+- Validation: Cross-check symmetry across frequency bins
+
+### 5. **BETTER ACQUISITION CONDITIONS**
+Through empirical testing, establish optimal measurement setup.
+
+**Steps:**
+- Categorize measurement errors (electronic design, parameter tuning, exogenous events)
+- Document parameter dictionary: context → settings
+- Build ML classifier for signal state recognition
+
+---
+
+## REPOSITORY STRUCTURE
+
+
+```bash
+QualityAssurance/
+├── README.md                          [This file: Main entry point; purpose, scope, structure]
+├── DICTIONARY.md                      [Canonical variable definitions (~25 fields)]
+├── DB/
+│   └── Database-FM-10Nodes/           [11 sensors × 104 records × multiple campaigns
+│       └── Measurements               [timestamp, pxx[4096], location, config]
+│       ├── DataAcq.ipynb              [ data acquisition  & preprocessing RULES]
+│       ├── Database-RF-FM-88...-RF/   [Per-node CSVs (10 nodes)]
+│       └── README.md                  [DB structure & ingestion guide]
+├── docs/                              [basis documentation & referece notes]
+│   └── notes/  
+│       ├── notes.md                   [reference notes]
+│   └── reference/
+│       ├── referenceDocs.md           [Modular reference docs]
+├── modules                            [Modular QA implementations]
+│   ├── wideband                       [validate Multi-freq spectrum, noise floor]
+│       ├── calibration/               [calibration directory for each module]
+│       ├── validation/                [validation directory for each module]
+│   ├── narrowband                     [IQ calibration, spectral masks]
+│       ├── calibration/               [calibration directory for each module]
+│       ├── validation/                [validate IQ calibration, spectral masks]
+│   └── voice service                  [Sync checks, service metrics]
+│       ├── calibration/               [calibration directory for each module]
+│       ├── validation/                [validate Sync checks, service metrics]
+├── validators/                        [Schema & unit checkers]
+│   ├── schema.py                      [Validate CSV/Dict structure]
+│   └── units.py                       [Enforce unit consistency]
+└── tests/                             [Unit & integration tests]
+    ├── test_schema.py
+    ├── test_routes.py
+    └── test_integration.py
+```
+
+---
+
 
 ## QUICK START 
 
@@ -16,7 +125,7 @@
 **Your Focus:** Multi-frequency analysis, bandwidth optimization, spectrum mapping  
 **Entry Points:**
 - [Getting Started](#installation)
-- [API Documentation](docs/content/architectureModules.md)
+- [API Documentation](reference/architectureModules.md)
 - [Configuration Guide](#environment-configuration-env)
 - Notebook: `src/example-campaign_nodes.ipynb`
 
@@ -71,91 +180,97 @@
 
 ---
 
-## PROJECT OBJECTIVE & GOAL
+## INSTALLATION
 
-> **Better Measurement Quality Signal** 
+### Prerequisites
+- **Python 3.11+**
+- **pip** (or conda)
+- **Git**
 
-Current challenges affecting signal quality:
--  **High Noise Floor (Piso de Ruido Alto)** — Cannot distinguish genuine signals
--  **IQ Distortion (Asymmetry)** — Signal representation artifacts  
--  **Inadequate Power Levels (Potencia Inadecuada)** — Gain tuning suboptimal
--  **Synchronization Issues** — Multi-node timing misalignment
-- **Exogenous Events** — Unclassified anomalies in data
+### Linux / macOS
+```bash
+git clone https://github.com/dramirezbe/ANE2-Calibration-SDR.git
+cd ANE2-Calibration-SDR
+bash install.sh              # Create venv, install deps
+source venv/bin/activate
+python test/main.py           # Test installation
+```
 
-**Solution:** Systematic calibration + parameter tuning + quality validation
+### Windows (PowerShell)
+```powershell
+git clone https://github.com/dramirezbe/ANE2-Calibration-SDR.git
+cd ANE2-Calibration-SDR
+.\install.ps1                # Create .venv, install deps
+.\venv\Scripts\Activate.ps1
+python src/main.py           # Test installation
+```
 
----
+### Both platform install scripts perform:
+1. Create virtual environment (`venv/` or `.venv/`)
+2. Upgrade pip/setuptools
+3. Install `requirements.txt` dependencies
+4. Create `.env` from `.env.example` (if missing)
+5. Print system diagnostics
 
-## CORE TOPICS & INFERENCE
+## ENVIRONMENT CONFIGURATION (`.env`)
 
-### 1. **SENSOR CALIBRATION **
-Given a specific context (RF environment), place sensors under defined circumstances and evaluate performance.
+Create `.env` in project root:
 
-**Implementation:**
-- Per-node baseline calibration against reference standards
-- Gain profile mapping: frequency → optimal LNA/VGA settings
-- Statistical inference on PSD distribution (non-linear models)
+```bash
+# API CONFIGURATION
+API_URL=https://rsm.ane.gov.co:12443/api
 
-**Outcome:** Consistent measurement baseline across 11 sensors
+# APPLICATION
+APP_NAME=ANE2-Calibration-SDR
+APP_VERSION=0.2.0
+COUNTRY=America/Bogota
 
-### 2. **QUALITY EMISSIONS (RF) **
-Validate transmitted RF quality meets specifications.
+# DEBUG & LOGGING
+DEBUG=false              # Enable detailed logging
+VERBOSE=true             # Print all log levels
+DEVELOPMENT=false        # Development mode features
+```
 
-**Implementation:**
-- IQ calibration/compensation (hardware + software)
-- Spectral mask validation
-- Power level conformance testing
-
-**Outcome:** Certified, high-fidelity RF measurements
-
-### 3. **SIGNAL PROCESSING ALGORITHMS **
-Optimize SDR configuration parameters for signal acquisition.
-
-**Inputs:** 
-- Pxx (Power Spectral Density) [shape: 4096]
-- Spatial location (latitude, longitude)
-- Reference database parameters
-
-**Outputs:**
-- Optimized RBW, span, sample rate
-- Noise floor estimate
-- Signal quality metrics
-
-### 4. **IQ DISTORTION HANDLING **
-Detect and compensate for I/Q phase and amplitude imbalance.
-
-**Methods:**
-- Hardware-level: Pre-acquisition correction (attenuate DC offset, balance amplifiers)
-- Software-level: Post-acquisition compensation (numerical correction)
-- Validation: Cross-check symmetry across frequency bins
-
-### 5. **BETTER ACQUISITION CONDITIONS **
-Through empirical testing, establish optimal measurement setup.
-
-**Steps:**
-- Categorize measurement errors (electronic design, parameter tuning, exogenous events)
-- Document parameter dictionary: context → settings
-- Build ML classifier for signal state recognition
+**Configuration Priority:**
+1. Environment variables (`.env` file)
+2. Hardcoded defaults in `src/cfg.py`
+3. CLI arguments (TBD)
 
 ---
 
+## CONFIGURATION MODULE (`cfg.py`)
+
+Central configuration hub managing:
+- Environment variables loading
+- Logger setup (rotating file + console)
+- Path management (SRC_DIR, ROOT_DIR)
+- Application constants
+
+**Usage:**
+```python
+import cfg
+log = cfg.set_logger()
+log.info(f"App name: {cfg.APP_NAME} v{cfg.APP_VERSION}")
+```
+
+---
 ## ARCHITECTURE & DATA FLOW
 
 ### Current State
 ```
 ┌─────────────────────────────────────────────────────────┐
-│ REST API (rsm.ane.gov.co:12443/api)                     │
-│ → Campaign data & Real-time signals                      │
+│ REST API (rsm.ane.gov.co:12443/api and DB)              │
+│ → Campaign data & Real-time signals                     │
 └──────────────────────┬──────────────────────────────────┘
                        │
 ┌──────────────────────▼──────────────────────────────────┐
-│ DATA LAYER (libs/data_request.py)                        │
-│ → Fetch & parse signals into pandas DataFrames           │
+│ DATA LAYER (libs/data_request.py)                       │
+│ → Fetch & parse signals into pandas DataFrames          │
 └──────────────────────┬──────────────────────────────────┘
                        │
 ┌──────────────────────▼──────────────────────────────────┐
 │ NOTEBOOKS (Jupyter interactive analysis)                │
-│  No modular processing pipeline Yet                    │
+│  No modular processing pipeline Yet (to implement)      │
 └──────────────────────┬──────────────────────────────────┘
 ```
 
@@ -192,98 +307,7 @@ Through empirical testing, establish optimal measurement setup.
 
 ---
 
-## REPOSITORY STRUCTURE
 
-```
-ANE2-Calibration-SDR/
-├──  README.md                          
-├──  CODE_AUDIT.md                      ← Full audit report
-├──  requirements.txt                   ← Runtime dependencies
-├──  install.sh / install.ps1           ← Setup automation
-├── .env.example                          ← Configuration template
-│
-├──  src/                               ← Main application code
-│   ├── cfg.py                            ← Configuration & logging
-│   ├── main.py                           ← Entry point
-│   ├── libs/
-│   │   ├── __init__.py
-│   │   └── data_request.py               ← API client
-│   └── example-*.ipynb                   ← Interactive notebooks
-│
-├──  docs/                              ← Sphinx documentation
-│   ├── conf.py                           ← Sphinx config
-│   ├── index.rst
-│   ├── Makefile / make.bat
-│   ├── requirements.txt
-│   └── content/                          ← Technical documentation
-│       ├── architectureModules.md        ← Module architecture
-│       ├── controlVersionReference.md    ← Git workflow
-│       ├── deploymentGuide.md            ← Deployment steps
-│       ├── developStandars.md            ← Code quality standards
-│       ├── testingProtocol.md            ← Testing guidelines
-│       ├── workFlowProtocol.md           ← Team workflow
-│       └── notes/
-│           └── 070326Lecture.md          ← Project objectives & inference
-│
-├──  DB- DATASET STRUCTURE
-│   └── 11 sensors × 104 records × multiple campaigns
-│       └── Measurements: timestamp, pxx[4096], location, config
-```
-
----
-
-## INSTALLATION
-
-### Prerequisites
-- **Python 3.11+**
-- **pip** (or conda)
-- **Git**
-
-### Linux / macOS
-```bash
-git clone https://github.com/dramirezbe/ANE2-Calibration-SDR.git
-cd ANE2-Calibration-SDR
-bash install.sh              # Create venv, install deps
-source venv/bin/activate
-python src/main.py           # Test installation
-```
-
-### Windows (PowerShell)
-```powershell
-git clone https://github.com/dramirezbe/ANE2-Calibration-SDR.git
-cd ANE2-Calibration-SDR
-.\install.ps1                # Create .venv, install deps
-.\venv\Scripts\Activate.ps1
-python src/main.py           # Test installation
-```
-
-### Both platform install scripts perform:
-1. Create virtual environment (`venv/` or `.venv/`)
-2. Upgrade pip/setuptools
-3. Install `requirements.txt` dependencies
-4. Create `.env` from `.env.example` (if missing)
-5. Print system diagnostics
-
----
-
-## JUPYTER NOTEBOOKS (Interactive Analysis)
-
-### 1. `example-realtime.ipynb`
-**Purpose:** Monitor real-time signal from single node
-- Fetch latest measurements
-- Plot live PSD spectrum
-- Display signal metrics
-- **Use Case:** Banda Angosta - signal quality validation
-
-### 2. `example-campaign_nodes.ipynb`
-**Purpose:** Analyze historical campaign data across multiple nodes
-- Load multi-node campaign data
-- Compare noise floors
-- Correlate signals between nodes
-- Identify anomalies by location
-- **Use Case:** System-wide calibration & improvement
-
----
 
 ## DEVELOPMENT PROCESS
 
@@ -455,16 +479,6 @@ See [CODE_AUDIT.md](CODE_AUDIT.md#quality-signal-checklist) for systematic troub
 - [ ] Document role-based paths
 - [ ] Final release: v0.2.0
 
----
-
-## KEY METRICS
-
-| Metric | Current | Target | Progress |
-|--------|---------|--------|----------|
-| Test Coverage | 0% | 80% | ⬜️ |
-| Architecture Modularity | 2/8 | 8/8 | ⬜️⬜️|
-| Signal Processing Features | 1/5 | 5/5 | ⬜⬜️ |
-| Documentation Completeness | 60% | 100% | ⬜️⬜️⬜️⬜️ |
 
 ---
 
@@ -489,12 +503,12 @@ git push origin feature/your-feature
 
 ## SUPPORT 
 
-** About:**
--  **Banda Ancha** → See `docs/content/architectureModules.md`
--  **Banda Angosta** → See `docs/content/developStandars.md`
--  **Servicio de Voz** → See `docs/content/workFlowProtocol.md`
--  **API Deployment** → See `docs/content/deploymentGuide.md`
--  **Code Audit Issues** → See `CODE_AUDIT.md`
+**About:**
+-  **Banda Ancha** → See `GCPDS\ANE2\maintenance\signalQualityValidation\QA(qualityAssurance)\narrowband\`
+-  **Banda Angosta** → See `GCPDS\ANE2\maintenance\signalQualityValidation\QA(qualityAssurance)\wideband\`
+-  **Servicio de Voz** → See `GCPDS\ANE2\maintenance\signalQualityValidation\QA(qualityAssurance)\voiceService\`
+-  **API Deployment** → See `GCPDS\ANE2\software\`
+-  **Code Audit Issues** → See `signalQualityValidation/CODE_AUDIT.md`
 
 ---
 
@@ -514,71 +528,5 @@ git push origin feature/your-feature
 
 ---
 
-Last Updated: March, 2026 | Status: **Active Development**
+Last Updated: March 18, 2026 | Status: **Active Development**
 
-## ENVIRONMENT CONFIGURATION (`.env`)
-
-Create `.env` in project root:
-
-```bash
-# API CONFIGURATION
-API_URL=https://rsm.ane.gov.co:12443/api
-
-# APPLICATION
-APP_NAME=ANE2-Calibration-SDR
-APP_VERSION=0.2.0
-COUNTRY=America/Bogota
-
-# DEBUG & LOGGING
-DEBUG=false              # Enable detailed logging
-VERBOSE=true             # Print all log levels
-DEVELOPMENT=false        # Development mode features
-```
-
-**Configuration Priority:**
-1. Environment variables (`.env` file)
-2. Hardcoded defaults in `src/cfg.py`
-3. CLI arguments (TBD)
-
----
-
-## CONFIGURATION MODULE (`cfg.py`)
-
-Central configuration hub managing:
-- Environment variables loading
-- Logger setup (rotating file + console)
-- Path management (SRC_DIR, ROOT_DIR)
-- Application constants
-
-**Usage:**
-```python
-import cfg
-log = cfg.set_logger()
-log.info(f"App name: {cfg.APP_NAME} v{cfg.APP_VERSION}")
-```
-
----
-
-## DATA REQUEST & API CLIENT
-
-### Load Campaign Data
-```python
-from libs.data_request import DataRequest
-
-dr = DataRequest(log=log, base_url="https://rsm.ane.gov.co:12443/api")
-
-# Fetch real-time signal for Node 1
-signal = dr.get_realtime_signal(node_id=1)
-
-# Get campaign parameters
-params = dr.get_campaign_params(campaign_id=42)
-
-# Load historical campaign data for multiple nodes
-campaigns = {"240Hz": 1, "960Hz": 2}  # name → campaign_id
-node_ids = list(range(1, 11))         # Node 1-10
-df_full = dr.load_campaigns_and_nodes(campaigns, node_ids)
-# Returns: {"240Hz": {"Node1": DataFrame, "Node2": DataFrame, ...}, ...}
-```
-
-### Data Structure
-**DataFrame Columns:** `timestamp`, `pxx[4096]`, `frequency_range`, `latitude`, `longitude`, `gain_config`
