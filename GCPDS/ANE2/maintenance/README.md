@@ -46,14 +46,14 @@ QualityAssurance/
 │       ├── referenceDocs.md           [Modular reference docs]
 ├── modules                            [Modular QA implementations]
 │   ├── wideband                       [validate Multi-freq spectrum, noise floor]
-│       ├── calibration/               [calibration directory for each module]
-│       ├── validation/                [validation directory for each module]
+│       ├── dataAcq/                   [calibration directory for each module]
+│       ├── preprocess/                [validation directory for each module]
 │   ├── narrowband                     [IQ calibration, spectral masks]
-│       ├── calibration/               [calibration directory for each module]
-│       ├── validation/                [validate IQ calibration, spectral masks]
+│       ├── dataAcq/                   [calibration directory for each module]
+│       ├── preprocess/                [validate IQ calibration, spectral masks]
 │   └── voice service                  [Sync checks, service metrics]
-│       ├── calibration/               [calibration directory for each module]
-│       ├── validation/                [validate Sync checks, service metrics]
+│       ├── dataAcq/                   [calibration directory for each module]
+│       ├── preprocess/                [validate Sync checks, service metrics]
 ├── validators/                        [Schema & unit checkers]
 │   ├── schema.py                      [Validate CSV/Dict structure]
 │   └── units.py                       [Enforce unit consistency]
@@ -71,21 +71,22 @@ QualityAssurance/
 - [x] **analyze-db** — Inspect DataAcq.ipynb and Database-RF; extract all variables and rules
 - [x] **extract-dictionary** — Create canonical dictionary with ~25 fields (name, type, unit, description, source, importance)
 - [x] **draft-readme** — Write minimal README: purpose, scope, structure, quick pointers
-- [ ] **correct data aqcuisiton** — Apply reference for acquisition rules.
+- [ ] **correct data aqcuisiton** — Apply reference for acquisition rules. **see dataAcq.ipynb** 
 - [ ] **review-with-user** — Present draft README and DICTIONARY to user for feedback
 - [ ] **finalize-readme** — Incorporate feedback and commit to version control
 
 ### Deliverables
 - **README.md** —  purpose, scope (3 routes), DB sources, canonical dictionary, naming scheme, quick pointers and version control
 - **DICTIONARY.md** — Table format (name | type | unit | description | source | importance); ~25 core variables; final notes on unit consistency and primary keys
-- **plan.md** — This file; strategy, phases, success criteria
-
 ---
 
 ## Phase 2: Data Validation & Ingestion (PLANNED)
 
 ### Tasks
-1. **schema-validator** — Python module to validate CSV columns against DICTIONARY.md schema
+1. **schema-validator** — Python module to validate CSV columns against DICTIONARY.md schema 
+
+>    **see DatasetFM1-2 NB**
+
 2. **unit-converter** — Helper functions for dB ↔ linear, Hz conversions, timestamp normalization
 3. **csv-ingestion** — Load per-node CSVs; validate schema; ingest into consolidated structure
 4. **test-ingestion** — Unit tests for schema and unit validation
@@ -133,6 +134,13 @@ QualityAssurance/
 - Metrics output matches expected schema
 - Documentation is current and complete
 - Implement automated pipelines to process and track main representative variables
+
+###  API Deployment
+- [ ] REST API running with 99.9% uptime
+- [ ] Docker image pushed to registry
+- [ ] CI/CD pipeline fully automated
+- [ ] API documentation (OpenAPI) complete
+
 ---
 
 ## Key Decisions & Rationale
@@ -193,15 +201,6 @@ QualityAssurance/
 2. **Finalize documentation** — Incorporate feedback
 3. **Begin Phase 2** — Implement schema validator and ingestion pipeline
 4. **Track progress** — Update plan.md as phases complete
-
----
-
-## Questions & Open Items
-
-- [ ] Confirm canonical dictionary is complete (any missing variables?)
-- [ ] Approve unit choices (dB vs. linear for PSD; Hz for frequencies)
-- [ ] Timeline confirmation for Phase 2 & 3 start dates
-- [ ] Any additional routes or QA metrics required?
 
 ---
 

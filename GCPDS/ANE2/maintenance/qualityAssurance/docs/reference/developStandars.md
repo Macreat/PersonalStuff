@@ -82,7 +82,7 @@ rf_spectrum_analysis/
 └── .gitignore
 ```
 
-### 2. ESTÁNDARES DE ODIGO
+### 2. ESTÁNDARES DE CODIGO
 
 
 #### **2.1 PEP 8 - Formatting**
@@ -197,6 +197,8 @@ def normalize_psd(
 ```
 
 ### 3. TESTING REQUIREMENTS
+
+
 #### 3.1 Unit Test Template
 
 
@@ -279,6 +281,49 @@ class TestEndToEndPipeline:
         assert (tmp_path / "results.json").exists()
 
 ```
+
+
+
+### TEST MATRIX
+
+```
+┌──────────────────┬──────────┬──────┬─────────┬─────────┐
+│ Test Type        │ Location │ Tool │ Coverage│ Trigger │ 
+├──────────────────┼──────────┼──────┼─────────┼─────────┤
+│ Unit Tests       │  tests/  │pytest│ ≥80%    │ commit  │ 
+│ Integration Test │tests/    │Pytest│ ≥70%    │ PR      │ 
+│ Data Validation  │scripts/  │custom│ 100%    │ weekly  │ 
+│ Performance      │bench/    │custom│ -       │ release │ 
+│ Documentation    │docs/     │check │ 100%    │    PR   │  
+└──────────────────┴──────────┴──────┴─────────┴─────────┘
+```
+
+
+### UNIT TEST CHECKLIST
+
+- [ ] Cada función pública tiene ≥2 tests (happy path + edge case)
+- [ ] Casos de error probados (ValueError, TypeError, etc.)
+- [ ] Boundaries testados (empty input, max size, etc.)
+- [ ] Fixtures reutilizables en conftest.py
+- [ ] Parametrized tests para múltiples inputs
+- [ ] Reproducibilidad con seed=42
+
+### INTEGRATION TEST CHECKLIST
+
+- [ ] Pipeline completo (load → process → output)
+- [ ] Todas las etapas se ejecutan sin errores
+- [ ] Output tiene estructura esperada
+- [ ] Datos no se pierden entre etapas
+- [ ] Mismo resultado con ejecuciones múltiples
+
+### PERFORMANCE TEST CHECKLIST
+
+- [ ] Full pipeline < 2 segundos (6 nodes, 104 records)
+- [ ] Memory usage < 500 MB
+- [ ] File I/O no bottleneck
+- [ ] Correlation computation optimizado
+
+---
 ### 4. ERROR HANDLING
 
 ```python

@@ -1,11 +1,11 @@
 # ROLE-BASED DOCUMENTATION & COLLABORATION GUIDE
-**Version:** 1.0 | **Date:** March 11, 2026
+**Version:** 0.2 | **Date:** March 18, 2026
 
 ---
 
 ## OVERVIEW
 
-This document provides **role-specific navigation paths** for collaborators working on the ANE2-Calibration-SDR project. Each role (Banda Ancha, Banda Angosta, Servicio de Voz, API Deployment) has dedicated entry points, documentation, and code modules.
+This document provides **role-specific navigation paths** for collaborators working on the ANE2-Calibration-SDR project. Each role (wide band, narrow band and service voice) has dedicated entry points, documentation, and code modules.
 
 ---
 
@@ -13,23 +13,20 @@ This document provides **role-specific navigation paths** for collaborators work
 
 | Role | Entry Point | Primary Challenge | Key Module | Status |
 |------|-------------|-------------------|-----------|--------|
-| 🔶 Banda Ancha | [Link](#banda-ancha-wideband) | Multi-frequency analysis | `processing.normalization` | 📋 Planning |
-| 📡 Banda Angosta | [Link](#banda-angosta-narrowband-software-validation) | Signal quality validation | `processing.noise_floor` | 🔧 In Progress |
-| 🎙️ Servicio de Voz | [Link](#servicio-de-voz-voice-services) | Network sync & metrics | `processing.correlation` | 📋 Planning |
-| 💻 API Deployment | [Link](#api-deployment-infrastructure) | Integration & deployment | `src/cfg.py`, `libs/data_request.py` | ✅ Active |
-
+| wide band | [Link](#wideband) | Multi-frequency analysis | `processing.normalization` | Planning |
+| narrow band | [Link](#narrowband) | Signal quality validation | `processing.noise_floor` |  Planning  |
+| voice services | [Link](#voice-services) | Network sync & metrics | `processing.correlation` |  Planning |
 ---
 
-## 🔶 BANDA ANCHA (WIDEBAND)
+## WIDEBAND
 
 **Focus:** Multi-frequency spectrum analysis, bandwidth optimization, cross-band correlation
 
-### Your Starting Point
-1. **First Read:** [README.md - Banda Ancha Section](README.md#-banda-ancha-wideband-spectrum)
-2. **Architecture Reference:** [architectureModules.md](docs/content/architectureModules.md)
+### Starting Point
+1. **First Read:** [README.md - wide band section](README.md###-Wideband)
 3. **Implementation Notebook:** `src/example-campaign_nodes.ipynb`
 
-### Your Code Modules
+### Code Modules
 ```
 src/
 ├── libs/data_request.py           ← Campaign data fetching
@@ -97,7 +94,7 @@ band_correlation = analyzer.compute_band_correlation(normalized)
 - [ ] Coverage: ≥ 80%
 
 ### Code Quality Standards
-- Follow [developStandars.md](docs/content/developStandars.md)
+- Follow [developStandars.md](docs/reference/developStandars.md)
 - Type hints on all functions
 - Docstring: Google format
 - Commits: `feat(banda-ancha): ...`
@@ -114,17 +111,15 @@ band_correlation = analyzer.compute_band_correlation(normalized)
 
 ---
 
-## 📡 BANDA ANGOSTA (NARROWBAND) [SOFTWARE VALIDATION PATH]
+## NARROWBAND
 
 **Focus:** Signal quality validation, IQ distortion, noise floor calibration, software compensation
 
-### Your Starting Point
-1. **First Read:** [SIGNAL_QUALITY_VALIDATION.md](SIGNAL_QUALITY_VALIDATION.md) ⭐ **PRIORITY**
-2. **Code Audit:** [CODE_AUDIT.md](CODE_AUDIT.md)
-3. **Development Standards:** [developStandars.md](docs/content/developStandars.md)
-4. **Real-time Notebook:** `src/example-realtime.ipynb`
+### Starting Point
+1. **First Read:** [README.md - narrow band section](README.md###-Narrowband)
+2. **Real-time Notebook implementation:** `src/example-realtime.ipynb`
 
-### Your Code Modules (PRIORITY ORDER)
+### Code Modules 
 ```
 src/
 ├── processing/                    ← YOUR PRIMARY RESPONSIBILITY
@@ -155,7 +150,7 @@ src/
 
 ### CRITICAL: The 5 Signal Quality Challenges
 
-Read [SIGNAL_QUALITY_VALIDATION.md](SIGNAL_QUALITY_VALIDATION.md) Section 1 for:
+Read [the main maintenance readme](../README.md) PHASES SECTION FOR understand implementation about:
 1. **Orthogonal Signal** (Noise floor too high)
 2. **IQ Distortion** (Phase & amplitude imbalance)
 3. **Inadequate Power** (Gain not optimized)
@@ -201,7 +196,7 @@ Before Each Commit:
 - [ ] Commit message: feat(banda-angosta): ...
 ```
 
-### Your Database Structure (NEW)
+###  Database Structure (NEW)
 Design and implement:
 ```python
 # Noise floor baseline per node
@@ -264,15 +259,13 @@ Your PR to `main` must have:
 
 ---
 
-## 🎙️ SERVICIO DE VOZ (VOICE SERVICES)
+##  VOICE SERVICES
 
 **Focus:** Network synchronization, quality metrics, multi-node anomaly correlation
 
-### Your Starting Point
-1. **First Read:** [README.md - Voice Services Section](README.md#-servicio-de-voz-voice-services)
-2. **Workflow Protocol:** [workFlowProtocol.md](docs/content/workFlowProtocol.md)
-3. **Testing Protocol:** [testingProtocol.md](docs/content/testingProtocol.md)
-
+###  Starting Point
+1. **First Read:** [README.md - Voice Services Section](README.md###voice-Services)
+2. **Notebook implementation** tests or implementation about network sync, quality metrics, node anomaly correlation 
 ### Your Code Modules
 ```
 src/
@@ -355,7 +348,7 @@ reporter.export_csv('metrics.csv', report)
 reporter.publish_to_web('https://ane-internal.gov.co/reports/v0.2.0')
 ```
 
-### Team Assignments
+### Team Assignments - USE TICKETS ¿? 
 - **Person A:** Network synchronization implementation
 - **Person B:** Quality metrics calculation & database
 - **Person C:** Alert system & thresholds
@@ -372,273 +365,7 @@ reporter.publish_to_web('https://ane-internal.gov.co/reports/v0.2.0')
 - Week 2: Metrics engine & thresholds
 - Week 3: Alerts & reporting, dashboard
 
----
 
-## 💻 API DEPLOYMENT (INFRASTRUCTURE)
-
-**Focus:** REST API integration, automation, deployment, infrastructure-as-code
-
-### Your Starting Point
-1. **First Read:** [README.md - API Deployment Section](README.md#-software--api-deployment)
-2. **Deployment Guide:** [deploymentGuide.md](docs/content/deploymentGuide.md)
-3. **Control Version Reference:** [controlVersionReference.md](docs/content/controlVersionReference.md)
-4. **Architecture:** [architectureModules.md](docs/content/architectureModules.md)
-
-### Your Code/Infrastructure Modules
-```
-project-root/
-├── src/
-│   ├── cfg.py                     ← Config management (IMPROVE)
-│   ├── main.py                    ← Entry point
-│   ├── libs/data_request.py       ← API client (REFACTOR)
-│   └── api/                        ← NEW: REST API server
-│       ├── app.py                 ← Flask/FastAPI app
-│       ├── routes.py              ← Endpoints
-│       └── models.py              ← Request/response schemas
-│
-├── docker/                         ← Container deployment
-│   ├── Dockerfile
-│   ├── docker-compose.yml
-│   └── .dockerignore
-│
-├── kubernetes/                     ← K8s orchestration (optional)
-│   ├── deployment.yaml
-│   └── service.yaml
-│
-├── deploy/                         ← Infrastructure-as-code
-│   ├── terraform/                 ← AWS/Azure resources
-│   └── ansible/                   ← Configuration management
-│
-├── tests/
-│   ├── test_api_integration.py
-│   └── test_deployment.py
-│
-└── ci-cd/                          ← GitHub Actions workflows
-    ├── .github/workflows/
-    │   ├── test.yml              ← Run tests on PR
-    │   ├── build.yml             ← Build containers
-    │   └── deploy.yml            ← Deploy to production
-```
-
-### Critical Improvements Needed
-
-#### 1. Fix `cfg.py`
-**Issue:** API_URL has typo, no validation
-```python
-# CURRENT (WRONG)
-API_URL = os.getenv("API_URL", "https://rsm/ane.gov.co/api")  # ← Missing dot
-
-# FIXED
-API_URL = os.getenv("API_URL", "https://rsm.ane.gov.co:12443/api")
-
-# ADD VALIDATION
-def validate_api_url(url: str) -> bool:
-    """Validate API URL format."""
-    from urllib.parse import urlparse
-    try:
-        result = urlparse(url)
-        return all([result.scheme in ['http', 'https'], result.netloc])
-    except:
-        return False
-```
-
-#### 2. Refactor `libs/data_request.py`
-**Current Issues:**
-- Pagination too simplistic
-- No retry logic
-- No timeout handling
-- MAC addresses hard-coded
-
-**Solution:**
-```python
-# SEPARATION OF CONCERNS
-
-class APIClient:
-    """Pure HTTP client."""
-    def get(self, endpoint: str, params: dict = None) -> dict:
-        """Make HTTP request, return raw JSON."""
-        pass
-
-class SignalParser:
-    """Parse API responses into dataframes."""
-    @staticmethod
-    def parse_signal(raw_json: dict) -> pd.DataFrame:
-        pass
-
-class NodeRegistry:
-    """Manage node/MAC mappings."""
-    def __init__(self, config_file: str):
-        self.nodes = self._load_from_file(config_file)
-    
-    def get_mac(self, node_id: int) -> str:
-        return self.nodes[node_id]['mac']
-```
-
-#### 3. Create REST API Endpoints
-```python
-# New file: src/api/app.py
-
-from fastapi import FastAPI, HTTPException
-import cfg
-
-app = FastAPI(
-    title="ANE2-Calibration-SDR API",
-    version="0.2.0",
-    description="RF Spectrum Monitoring & Calibration"
-)
-
-log = cfg.set_logger()
-
-# Endpoints needed:
-@app.get("/health")
-def health_check():
-    """Service health status."""
-    return {"status": "healthy", "api_url": cfg.API_URL}
-
-@app.get("/nodes")
-def list_nodes():
-    """Get all registered sensor nodes."""
-    pass
-
-@app.get("/nodes/{node_id}/realtime")
-def get_realtime_signal(node_id: int):
-    """Fetch latest spectrum for node."""
-    pass
-
-@app.get("/campaigns/{campaign_id}/data")
-def get_campaign_data(campaign_id: int, node_ids: list = None):
-    """Download campaign data."""
-    pass
-
-@app.get("/quality/report")
-def get_quality_report(days: int = 7):
-    """Get quality metrics for last N days."""
-    pass
-
-@app.post("/config/update")
-def update_node_config(node_id: int, config: dict):
-    """Update node parameters."""
-    pass
-```
-
-#### 4. Docker Deployment
-```dockerfile
-# Dockerfile
-
-FROM python:3.11-slim
-
-WORKDIR /app
-
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY src/ ./src/
-COPY docs/ ./docs/
-
-ENV API_URL="https://rsm.ane.gov.co:12443/api"
-ENV DEBUG=false
-ENV VERBOSE=true
-
-CMD ["uvicorn", "src.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
-```
-
-#### 5. CI/CD Pipeline
-```yaml
-# .github/workflows/deploy.yml
-
-name: Deploy
-
-on:
-  push:
-    branches: [main]
-    tags: ['v*']
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - run: pip install -r requirements.txt
-      - run: pytest tests/ --cov=src
-      - run: black --check src/
-      - run: mypy src/
-
-  build:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - run: docker build -t ane2-sdr:${{ github.sha }} .
-      - run: docker tag ane2-sdr:${{ github.sha }} ane2-sdr:latest
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
-    steps:
-      - run: kubectl set image deployment/ane2-sdr \
-              ane2-sdr=ane2-sdr:${{ github.sha }}
-```
-
-### Deployment Checklist
-
-Before releasing v0.2.0:
-- [ ] All tests passing in CI/CD
-- [ ] Code coverage ≥ 80%
-- [ ] Docker image builds successfully
-- [ ] API documentation generated (OpenAPI/Swagger)
-- [ ] Security scan passes (no vulnerabilities)
-- [ ] Load test: API handles 100 req/sec
-- [ ] Database migrations tested
-- [ ] Backup & recovery procedure documented
-- [ ] Rollback plan prepared
-- [ ] Release notes written
-
-### Kubernetes Deployment (Optional Future)
-```yaml
-# kubernetes/deployment.yaml
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: ane2-sdr
-spec:
-  replicas: 3
-  selector:
-    matchLabels:
-      app: ane2-sdr
-  template:
-    metadata:
-      labels:
-        app: ane2-sdr
-    spec:
-      containers:
-      - name: api
-        image: ane2-sdr:latest
-        ports:
-        - containerPort: 8000
-        env:
-        - name: API_URL
-          valueFrom:
-            configMapKeyRef:
-              name: ane2-config
-              key: api_url
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-```
-
-### Timeline
-- Week 1: Fix cfg.py, refactor data_request.py
-- Week 2: Create REST API, Docker image
-- Week 3: CI/CD pipeline, testing, deployment
 
 ---
 
@@ -650,49 +377,34 @@ spec:
 | **Signal processing** | ✓ | ✓✓ | ✓ | PROVIDES |
 | **Quality metrics** | ✓ | ✓✓ | ✓✓ | EXPOSES |
 | **Testing** | ALL | ALL | ALL | ALL |
-| **Documentation** | Module docs | Performance guide | User guide | API docs |
-| **Deployment** | Uses | Uses | Uses | CREATES |
+| **Documentation** | wideband docs | narrowband docs | voice services docs | API docs |
+
 
 **Key Dependencies:**
 1. API Deployment team → All others (provides infrastructure)
-2. Banda Angosta → Banda Ancha (signal quality affects band analysis)
-3. Banda Ancha + Banda Angosta → Voz (feeds metrics system)
+2. Narrow band → wide band (signal quality affects band analysis)
+3. 3 MODULES → (feeds metrics system)
 4. Voz → API (exposes quality endpoints)
 
 ---
 
-## COMMUNICATION CHANNELS
 
-### Daily Standup (10 minutes)
-- **When:** 9:00 AM
-- **Where:** Slack #ane2-standup
-- **Format:** Quick status, blockers, help needed
-
-### Weekly Sync (30 minutes)
-- **Tuesday 14:00:** Cross-team architecture review
-- **Thursday 14:00:** Integration test results & next steps
-
-### Documentation Review
-- **Monday:** PR code review for new documentation
-- **Friday:** Weekly documentation completeness check
-
----
 
 ## SUCCESS METRICS (BY ROLE)
 
-###  Banda Ancha
+###  wide band
 - [ ] 2 normalization algorithms implemented
 - [ ] Band correlation analysis working
 - [ ] Integration tests passing (80%+ coverage)
 - [ ] Documentation: "Band Analysis Guide" published
 
-###  Banda Angosta
+###  narrow band
 - [ ] All 5 signal quality challenges addressed
 - [ ] Per-node baseline established
 - [ ] Quality score > 85 for all nodes
 - [ ] Documentation: "Software Validation Guide" published
 
-###  Servicio de Voz
+###  voice services
 - [ ] Quality metrics API endpoint deployed
 - [ ] Alert system detects degradation (< 5 min latency)
 - [ ] Weekly quality report generated
@@ -709,8 +421,8 @@ spec:
 ## TROUBLESHOOTING
 
 ### I don't know where to start
-1. Find your role above ⬆️
-2. Click "Your Starting Point"
+1. Find your role above 
+2. read "Starting Point"
 3. Read first priority document
 4. Join role-specific Slack channel
 
@@ -722,11 +434,6 @@ See the [Code Review Checklist](#code-review-checklist-for-prs) in your role sec
 - @mention the responsible team
 - Reference CODE_AUDIT.md if security-related
 
-### I need to change API behavior
-- Discuss in #ane2-architecture-review
-- Get API Deployment team sign-off
-- Document breaking changes in CHANGELOG.md
-
 ---
 
-**Last Updated:** March 11, 2026 | **Maintained By:** Project Lead
+_**Last Updated:** March 18, 2026_

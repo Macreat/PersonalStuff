@@ -6,7 +6,7 @@
 
 
 
-| **Objective:** Improve RF signal quality through systematic calibration and anomaly detection across  distributed sensors.
+| **Objective:** Improve RF signal quality through systematic calibration and anomaly detection across  distributed sensors given the [DataBase-RF-FM-88MHz-108MHz-Bogota-Funza](database/Database-FM-10Nodes/) database.
 
 ---
 
@@ -99,14 +99,14 @@ QualityAssurance/
 │       ├── referenceDocs.md           [Modular reference docs]
 ├── modules                            [Modular QA implementations]
 │   ├── wideband                       [validate Multi-freq spectrum, noise floor]
-│       ├── calibration/               [calibration directory for each module]
-│       ├── validation/                [validation directory for each module]
+│       ├── dataAcq/               [calibration directory for each module]
+│       ├── preprocessing/                [validation directory for each module]
 │   ├── narrowband                     [IQ calibration, spectral masks]
-│       ├── calibration/               [calibration directory for each module]
-│       ├── validation/                [validate IQ calibration, spectral masks]
+│       ├── dataAcq/               [calibration directory for each module]
+│       ├── preprocessing/                [validate IQ calibration, spectral masks]
 │   └── voice service                  [Sync checks, service metrics]
-│       ├── calibration/               [calibration directory for each module]
-│       ├── validation/                [validate Sync checks, service metrics]
+│       ├── dataAcq/               [calibration directory for each module]
+│       ├── preprocessing/                [validate Sync checks, service metrics]
 ├── validators/                        [Schema & unit checkers]
 │   ├── schema.py                      [Validate CSV/Dict structure]
 │   └── units.py                       [Enforce unit consistency]
@@ -121,13 +121,19 @@ QualityAssurance/
 
 ## QUICK START 
 
-###  **Banda Ancha (Wideband Spectrum)**
-**Your Focus:** Multi-frequency analysis, bandwidth optimization, spectrum mapping  
-**Entry Points:**
+### *for each module*
 - [Getting Started](#installation)
-- [API Documentation](reference/architectureModules.md)
+- [architecture by modules](docs/reference/architectureModules.md)
 - [Configuration Guide](#environment-configuration-env)
-- Notebook: `src/example-campaign_nodes.ipynb`
+- [Development Standards](docs/reference/developStandars.md)  
+- [Code Audit Report](CODE_AUDIT.md)
+- [deployment Guide](docs/reference/deploymentGuide.md)
+
+then, see the - [role base guide](ROLE-BASED_GUIDE.md).
+
+
+###  **Wideband**
+**Focus:** Multi-frequency analysis, bandwidth optimization, spectrum mapping  
 
 **Key Modules:**
 - `data_request.DataRequest` — Campaign data fetching
@@ -136,13 +142,8 @@ QualityAssurance/
 
 ---
 
-###  **Banda Angosta (Narrowband/Voice)**
-**Your Focus:** Signal quality validation, IQ distortion, noise floor calibration  
-**Entry Points:**
-- [Development Standards](docs/content/developStandars.md)  **START HERE**
-- [Testing Protocol](docs/content/testingProtocol.md)
-- Notebook: `src/example-realtime.ipynb`
-- [Code Audit Report](CODE_AUDIT.md)
+###  **Narrowband**
+**Focus:** Signal quality validation, IQ distortion, noise floor calibration  
 
 **Key Modules:**
 - `processing.iq_calibration` — I/Q compensation (TBD)
@@ -151,12 +152,8 @@ QualityAssurance/
 
 ---
 
-###  **Servicio de Voz (Voice Services)**
-**Your Focus:** Network synchronization, quality metrics, anomaly detection  
-**Entry Points:**
-- [Workflow Protocol](docs/content/workFlowProtocol.md)
-- [Testing Protocol](docs/content/testingProtocol.md)
-- Deployment pipeline (TBD)
+###  **Voice Services**
+**Focus:** Network synchronization, quality metrics, anomaly detection  
 
 **Key Modules:**
 - `processing.correlation` — Node synchronization  
@@ -165,95 +162,7 @@ QualityAssurance/
 
 ---
 
-###  **SOFTWARE / API DEPLOYMENT**
-**Your Focus:** REST API integration, deployment automation, infrastructure  
-**Entry Points:**
-- [Deployment Guide](docs/content/deploymentGuide.md)  **START HERE**
-- [Architecture & Modules](docs/content/architectureModules.md)
-- [Control Version Reference](docs/content/controlVersionReference.md)
 
-**Key Components:**
-- `src/cfg.py` — Environment & config management
-- `src/libs/data_request.py` — API client integration
-- `src/main.py` — Application entry point
-- Installation scripts: `install.sh` | `install.ps1`
-
----
-
-## INSTALLATION
-
-### Prerequisites
-- **Python 3.11+**
-- **pip** (or conda)
-- **Git**
-
-### Linux / macOS
-```bash
-git clone https://github.com/dramirezbe/ANE2-Calibration-SDR.git
-cd ANE2-Calibration-SDR
-bash install.sh              # Create venv, install deps
-source venv/bin/activate
-python test/main.py           # Test installation
-```
-
-### Windows (PowerShell)
-```powershell
-git clone https://github.com/dramirezbe/ANE2-Calibration-SDR.git
-cd ANE2-Calibration-SDR
-.\install.ps1                # Create .venv, install deps
-.\venv\Scripts\Activate.ps1
-python src/main.py           # Test installation
-```
-
-### Both platform install scripts perform:
-1. Create virtual environment (`venv/` or `.venv/`)
-2. Upgrade pip/setuptools
-3. Install `requirements.txt` dependencies
-4. Create `.env` from `.env.example` (if missing)
-5. Print system diagnostics
-
-## ENVIRONMENT CONFIGURATION (`.env`)
-
-Create `.env` in project root:
-
-```bash
-# API CONFIGURATION
-API_URL=https://rsm.ane.gov.co:12443/api
-
-# APPLICATION
-APP_NAME=ANE2-Calibration-SDR
-APP_VERSION=0.2.0
-COUNTRY=America/Bogota
-
-# DEBUG & LOGGING
-DEBUG=false              # Enable detailed logging
-VERBOSE=true             # Print all log levels
-DEVELOPMENT=false        # Development mode features
-```
-
-**Configuration Priority:**
-1. Environment variables (`.env` file)
-2. Hardcoded defaults in `src/cfg.py`
-3. CLI arguments (TBD)
-
----
-
-## CONFIGURATION MODULE (`cfg.py`)
-
-Central configuration hub managing:
-- Environment variables loading
-- Logger setup (rotating file + console)
-- Path management (SRC_DIR, ROOT_DIR)
-- Application constants
-
-**Usage:**
-```python
-import cfg
-log = cfg.set_logger()
-log.info(f"App name: {cfg.APP_NAME} v{cfg.APP_VERSION}")
-```
-
----
 ## ARCHITECTURE & DATA FLOW
 
 ### Current State
@@ -304,8 +213,81 @@ log.info(f"App name: {cfg.APP_NAME} v{cfg.APP_VERSION}")
 │ └── CorrelationHeatmaps                                  │
 └─────────────────────────────────────────────────────────┘
 ```
+## INSTALLATION
+
+### Prerequisites
+- **Python 3.11+**
+- **pip** (or conda)
+- **Git**
+
+### Linux / macOS
+```bash
+git clone https://github.com/.git
+cd clonning project
+bash install.sh              # Create venv, install deps
+source venv/bin/activate
+python test/main.py           # Test installation
+```
+
+### Windows (PowerShell)
+```powershell
+git clone https://github.com/.git
+cd clonning project
+.\install.ps1                # Create .venv, install deps
+.\venv\Scripts\Activate.ps1
+python src/main.py           # Test installation
+```
+
+### Both platform install scripts perform:
+1. Create virtual environment (`venv/` or `.venv/`)
+2. Upgrade pip/setuptools
+3. Install `requirements.txt` dependencies
+4. Create `.env` from `.env.example` (if missing)
+5. Print system diagnostics
+
+## ENVIRONMENT CONFIGURATION (`.env`)
+
+Create `.env` in project root:
+
+```bash
+# API CONFIGURATION
+API_URL=https://rsm.ane.gov.co:12443/api
+
+# APPLICATION
+APP_NAME=ANE2-QA 
+APP_VERSION=0.2.0
+COUNTRY=America/Bogota
+
+# DEBUG & LOGGING
+DEBUG=false              # Enable detailed logging
+VERBOSE=true             # Print all log levels
+DEVELOPMENT=false        # Development mode features
+```
+
+**Configuration Priority:**
+1. Environment variables (`.env` file)
+2. Hardcoded defaults in `src/cfg.py`
+3. CLI arguments (TBD)
 
 ---
+
+## CONFIGURATION MODULE (`cfg.py`)
+
+Central configuration hub managing:
+- Environment variables loading
+- Logger setup (rotating file + console)
+- Path management (SRC_DIR, ROOT_DIR)
+- Application constants
+
+**Usage:**
+```python
+import cfg
+log = cfg.set_logger()
+log.info(f"App name: {cfg.APP_NAME} v{cfg.APP_VERSION}")
+```
+
+---
+
 
 
 
@@ -343,21 +325,13 @@ log.info(f"App name: {cfg.APP_NAME} v{cfg.APP_VERSION}")
 - No secrets in commits (use .gitignore)
 
 ### More Details
-See [Full Development Standards](docs/content/developStandars.md)
+See [Full Development Standards](docs/reference/developStandars.md)
 
 ---
 
 ## TESTING & QUALITY ASSURANCE
 
-From [Testing Protocol](docs/content/testingProtocol.md):
-
-### Test Matrix
-| Type | Location | Tool | Coverage | Trigger |
-|------|----------|------|----------|---------|
-| Unit | `tests/` | pytest | ≥80% | Each commit |
-| Integration | `tests/` | pytest | ≥70% | Pull request |
-| Data Validation | `scripts/` | custom | 100% | Weekly |
-| Performance | `bench/` | custom | — | Release |
+From [Testing Protocol](docs/reference/developStandars.md):
 
 ### Quick Commands
 ```bash
@@ -377,7 +351,7 @@ pytest && black src/ && flake8 src/
 
 ## DEPLOYMENT & RELEASES
 
-From [Deployment Guide](docs/content/deploymentGuide.md):
+From [Deployment Guide](docs/reference/deploymentGuide.md):
 
 ### Release Checklist
 - [ ] All tests passing (`pytest tests/ --cov=src`)
@@ -398,69 +372,28 @@ git tag v0.2.0 && git push origin v0.2.0
 
 ---
 
-## VALIDATION & QUALITY CHECKLIST
+## CONTRIBUTING
 
-### To Achieve **Better Measurement Quality Signal**
+See [workFlowProtocol.md](docs/reference/deploymentGuide.md) for:
+- Branch naming conventions
+- Pull request process
+- Code review checklist
+- Release versioning
 
- **Signal Quality Validation:**
-- [ ] Noise floor estimated (< -100 dB for your band)
-- [ ] IQ balance checked (phase error < 5°, amplitude < 2 dB)
-- [ ] Gain automatically optimized per signal strength
-- [ ] Node synchronization verified (< 1ms misalignment)
-- [ ] Anomalies detected and classified (ML model to update) 
-
- **Data Integrity:**
-- [ ] 100% CSV validation before processing
-- [ ] PSD values in realistic range ([-120, -40] dB) (MANAGE DATA RANGE)
-- [ ] No missing or corrupted measurements
-- [ ] Cross-node consistency verified
-
- **System Performance:**
-- [ ] Full analysis completes < 2 seconds (6 nodes, 104 records)
-- [ ] Memory usage < 500 MB (to define)
-- [ ] Reproducibility guaranteed (fixed seeds, logged parameters)
-
----
-
-## TROUBLESHOOTING
-
-### API Connection Issues
+**Quick Branch Checklist:**
+```bash
+git checkout -b feature/your-feature
+# ... make changes, test locally ...
+pytest tests/ && black src/ && flake8 src/  # Validate
+git push origin feature/your-feature
+# → Create PR on GitHub
 ```
-Error: "ConnectionError: rsm.ane.gov.co connection refused"
-```
-- Verify `.env` API_URL is correct
-- Check network connectivity: `ping rsm.ane.gov.co`
-- Confirm VPN/proxy if needed for ANE network
-
-### High Memory Usage
-```
-MemoryError: Unable to allocate X GB for array
-```
-- Reduce campaign/node count in notebook
-- Process in batches instead of all-at-once
-- Check for data leaks (open files, circular references)
-
-### Signal Quality Degradation
-See [CODE_AUDIT.md](CODE_AUDIT.md#quality-signal-checklist) for systematic troubleshooting.
-
----
-
-## DOCUMENTATION ROADMAP
-
-| Document | Status | Purpose |
-|----------|--------|---------|
-| [architectureModules.md](docs/content/architectureModules.md) | ⏳ In progress | Module design + API reference |
-| [developStandars.md](docs/content/developStandars.md) | ✓ Complete | Code quality standards |
-| [testingProtocol.md](docs/content/testingProtocol.md) | ✓ Complete | Testing guidelines |
-| [workFlowProtocol.md](docs/content/workFlowProtocol.md) | ✓ Complete | Team workflow & roles |
-| [deploymentGuide.md](docs/content/deploymentGuide.md) | ⏳ In progress | Release & deployment |
-| [CODE_AUDIT.md](CODE_AUDIT.md) | ✓ NEW | Full code audit + quality issues |
 
 ---
 
 ## PROJECT TIMELINE (3 Weeks)
 
-### Week 1: Refactor Architecture
+### Week 1: Refactor Architecture and data acquisiton 
 - [ ] Restructure code into `src/rf_spectrum/` package
 - [ ] Implement data validation layer
 - [ ] Fix environment configuration
@@ -482,33 +415,54 @@ See [CODE_AUDIT.md](CODE_AUDIT.md#quality-signal-checklist) for systematic troub
 
 ---
 
-## CONTRIBUTING
 
-See [workFlowProtocol.md](docs/content/workFlowProtocol.md) for:
-- Branch naming conventions
-- Pull request process
-- Code review checklist
-- Release versioning
 
-**Quick Branch Checklist:**
-```bash
-git checkout -b feature/your-feature
-# ... make changes, test locally ...
-pytest tests/ && black src/ && flake8 src/  # Validate
-git push origin feature/your-feature
-# → Create PR on GitHub
-```
+## DOCUMENTATION ROADMAP
+
+| Document | Status | Purpose |
+|----------|--------|---------|
+| [architectureModules.md](docs/reference/architectureModules.md) |  Complete | Module design + API reference |
+| [developStandars.md](docs/reference/developStandars.md) |  In progress | Code quality standards |
+| [deploymentGuide.md](docs/reference/deploymentGuide.md) |  Complete | Release & deployment |
+| [CODE_AUDIT.md](CODE_AUDIT.md) | Complete | Full code audit + quality issues |
 
 ---
 
-## SUPPORT 
+
+
+## SUPPORT by MODULES
 
 **About:**
--  **Banda Ancha** → See `GCPDS\ANE2\maintenance\signalQualityValidation\QA(qualityAssurance)\narrowband\`
--  **Banda Angosta** → See `GCPDS\ANE2\maintenance\signalQualityValidation\QA(qualityAssurance)\wideband\`
--  **Servicio de Voz** → See `GCPDS\ANE2\maintenance\signalQualityValidation\QA(qualityAssurance)\voiceService\`
+-  **wide band** → See `GCPDS\ANE2\maintenance\signalQualityValidation\QA(qualityAssurance)\modules\spectrum\wideBand`
+-  **narrow band** → See `GCPDS\ANE2\maintenance\signalQualityValidation\QA(qualityAssurance)\modules\spectrum\narrowBand\`
+-  **voice services** → See `GCPDS\ANE2\maintenance\signalQualityValidation\QA(qualityAssurance)\modules\voiceService\`
 -  **API Deployment** → See `GCPDS\ANE2\software\`
 -  **Code Audit Issues** → See `signalQualityValidation/CODE_AUDIT.md`
+
+---
+
+## VALIDATION & QUALITY CHECKLIST
+
+### To Achieve **Better Measurement Quality Signal**
+
+ **Signal Quality Validation:**
+- [ ] Noise floor estimated (< -100 dB for your band)
+- [ ] IQ balance checked (phase error < 5°, amplitude < 2 dB)
+- [ ] Gain automatically optimized per signal strength
+- [ ] Node synchronization verified (< 1ms misalignment)
+- [ ] Anomalies detected and classified (ML model to update) 
+
+ **Data Integrity:**
+- [ ] clear and concise dictionary for principal reference 
+- [ ] 100% CSV validation before processing
+- [ ] PSD values in realistic range ([-120, -40] dB) (MANAGE DATA RANGE)
+- [ ] No missing or corrupted measurements
+- [ ] Cross-node consistency verified
+
+ **System Performance:**
+- [ ] Full analysis completes < 2 seconds (6 nodes, 104 records)
+- [ ] Memory usage < 500 MB (to define)
+- [ ] Reproducibility guaranteed (fixed seeds, logged parameters)
 
 ---
 
