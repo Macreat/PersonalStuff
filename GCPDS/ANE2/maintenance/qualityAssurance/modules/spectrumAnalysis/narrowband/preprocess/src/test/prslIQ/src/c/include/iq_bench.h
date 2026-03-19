@@ -76,6 +76,8 @@ typedef struct
 /* profiler.c */
 double now_ms(void);
 double process_rss_mb(void);
+double process_peak_rss_mb(void);
+double system_ram_percent(void);
 void mem_tracker_init(mem_tracker_t *mt);
 void *mt_alloc(mem_tracker_t *mt, size_t bytes);
 void mt_free(mem_tracker_t *mt, void *ptr, size_t bytes);

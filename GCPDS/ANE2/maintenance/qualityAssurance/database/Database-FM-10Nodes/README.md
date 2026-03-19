@@ -17,3 +17,4 @@
 
     - use control versions agents (e.g : git)
 
+![alt text](structureAudited.png)

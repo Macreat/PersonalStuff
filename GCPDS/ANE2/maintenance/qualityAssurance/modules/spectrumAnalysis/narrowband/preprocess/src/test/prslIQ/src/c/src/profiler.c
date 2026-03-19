@@ -42,6 +42,31 @@ double process_rss_mb(void)
     return 0.0;
 }
 
+double process_peak_rss_mb(void)
+{
+#ifdef _WIN32
+    PROCESS_MEMORY_COUNTERS pmc;
+    if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc)))
+    {
+        return (double)pmc.PeakWorkingSetSize / (1024.0 * 1024.0);
+    }
+#endif
+    return 0.0;
+}
+
+double system_ram_percent(void)
+{
+#ifdef _WIN32
+    MEMORYSTATUSEX st;
+    st.dwLength = sizeof(st);
+    if (GlobalMemoryStatusEx(&st))
+    {
+        return (double)st.dwMemoryLoad;
+    }
+#endif
+    return 0.0;
+}
+
 void mem_tracker_init(mem_tracker_t *mt)
 {
     /* Internal tracker, not a replacement for ASan/Valgrind. */

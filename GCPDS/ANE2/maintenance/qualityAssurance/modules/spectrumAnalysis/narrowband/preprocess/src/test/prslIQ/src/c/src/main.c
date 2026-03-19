@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 static void print_usage(const char *exe)
 {
@@ -27,7 +28,17 @@ static void print_usage(const char *exe)
 static int write_json_summary(const char *path,
                               const perf_timing_t *t,
                               double total_samples,
+                              double expected_samples,
                               double throughput,
+                              double throughput_eff,
+                              double drop_rate_pct,
+                              double cpu_ms,
+                              double cpu_percent,
+                              double ram_percent,
+                              double rss_peak,
+                              double avg_file_ms,
+                              double file_jitter_ms,
+                              double latency_ratio,
                               double mean_snr,
                               double std_snr,
                               double mean_noise,
@@ -48,7 +59,17 @@ static int write_json_summary(const char *path,
     fprintf(f, "  \"files_requested\": %d,\n", files_req);
     fprintf(f, "  \"files_processed\": %d,\n", files_ok);
     fprintf(f, "  \"samples_total\": %.0f,\n", total_samples);
+    fprintf(f, "  \"samples_expected\": %.0f,\n", expected_samples);
     fprintf(f, "  \"throughput_sps\": %.6f,\n", throughput);
+    fprintf(f, "  \"throughput_efficiency\": %.6f,\n", throughput_eff);
+    fprintf(f, "  \"drop_rate_pct\": %.6f,\n", drop_rate_pct);
+    fprintf(f, "  \"cpu_ms\": %.6f,\n", cpu_ms);
+    fprintf(f, "  \"cpu_percent\": %.6f,\n", cpu_percent);
+    fprintf(f, "  \"ram_percent\": %.6f,\n", ram_percent);
+    fprintf(f, "  \"rss_peak_mb\": %.6f,\n", rss_peak);
+    fprintf(f, "  \"avg_file_ms\": %.6f,\n", avg_file_ms);
+    fprintf(f, "  \"file_jitter_ms\": %.6f,\n", file_jitter_ms);
+    fprintf(f, "  \"latency_ratio\": %.6f,\n", latency_ratio);
     fprintf(f, "  \"total_ms\": %.6f,\n", t->total_ms);
     fprintf(f, "  \"load_ms\": %.6f,\n", t->load_ms);
     fprintf(f, "  \"convert_ms\": %.6f,\n", t->convert_ms);
@@ -71,7 +92,17 @@ static int write_json_summary(const char *path,
 static int write_csv_summary(const char *path,
                              const perf_timing_t *t,
                              double total_samples,
+                             double expected_samples,
                              double throughput,
+                             double throughput_eff,
+                             double drop_rate_pct,
+                             double cpu_ms,
+                             double cpu_percent,
+                             double ram_percent,
+                             double rss_peak,
+                             double avg_file_ms,
+                             double file_jitter_ms,
+                             double latency_ratio,
                              double mean_snr,
                              double std_snr,
                              double mean_noise,
@@ -88,9 +119,10 @@ static int write_csv_summary(const char *path,
         return 0;
     }
 
-    fprintf(f, "files_requested,files_processed,samples_total,throughput_sps,total_ms,load_ms,convert_ms,preprocess_ms,welch_ms,metric_ms,snr_mean_db,snr_std_db,noise_mean_dbm,center_mean_dbm,score,rss_start_mb,rss_end_mb\n");
-    fprintf(f, "%d,%d,%.0f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f\n",
-            files_req, files_ok, total_samples, throughput,
+    fprintf(f, "files_requested,files_processed,samples_total,samples_expected,throughput_sps,throughput_efficiency,drop_rate_pct,cpu_ms,cpu_percent,ram_percent,rss_peak_mb,avg_file_ms,file_jitter_ms,latency_ratio,total_ms,load_ms,convert_ms,preprocess_ms,welch_ms,metric_ms,snr_mean_db,snr_std_db,noise_mean_dbm,center_mean_dbm,score,rss_start_mb,rss_end_mb\n");
+    fprintf(f, "%d,%d,%.0f,%.0f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f\n",
+            files_req, files_ok, total_samples, expected_samples, throughput, throughput_eff, drop_rate_pct,
+            cpu_ms, cpu_percent, ram_percent, rss_peak, avg_file_ms, file_jitter_ms, latency_ratio,
             t->total_ms, t->load_ms, t->convert_ms, t->preprocess_ms, t->welch_ms, t->metric_ms,
             mean_snr, std_snr, mean_noise, mean_center, score, rss_start, rss_end);
 
@@ -201,6 +233,7 @@ int main(int argc, char **argv)
     perf_timing_t t = {0};
     double total_start = now_ms();
     double rss_start = process_rss_mb();
+    clock_t cpu_start = clock();
 
     double sum_noise = 0.0;
     double sum_center = 0.0;
@@ -216,6 +249,9 @@ int main(int argc, char **argv)
     printf("max_complex=%llu nperseg=%d overlap=%.2f chunk_bytes=%llu\n\n", (unsigned long long)max_complex, nperseg, overlap, (unsigned long long)chunk_bytes);
 
     int files_processed = 0;
+    double sum_file_ms = 0.0;
+    double sum_file_ms2 = 0.0;
+    double first_sample_rate = 0.0;
 
     for (int i = 0; i < files_to_use; i++)
     {
@@ -235,6 +271,11 @@ int main(int argc, char **argv)
             printf("[WARN] Meta parse failed: %s\n", pairs[i].meta_path);
             file_ok = 0;
             goto file_cleanup;
+        }
+
+        if (first_sample_rate <= 0.0)
+        {
+            first_sample_rate = (double)meta.sample_rate;
         }
 
         double s = now_ms();
@@ -281,9 +322,12 @@ int main(int argc, char **argv)
         sum_snr += m.snr_center_db;
         sum_snr2 += m.snr_center_db * m.snr_center_db;
         files_processed++;
+        double file_ms = now_ms() - file_start;
+        sum_file_ms += file_ms;
+        sum_file_ms2 += file_ms * file_ms;
 
         printf("%02d) SNR=%7.3f dB | NF=%8.3f dBm | CP=%8.3f dBm | file_ms=%8.2f\n",
-               i + 1, m.snr_center_db, m.noise_floor_dbm, m.center_power_dbm, now_ms() - file_start);
+               i + 1, m.snr_center_db, m.noise_floor_dbm, m.center_power_dbm, file_ms);
 
     file_cleanup:
         if (!file_ok)
@@ -294,6 +338,8 @@ int main(int argc, char **argv)
 
     t.total_ms = now_ms() - total_start;
     double rss_end = process_rss_mb();
+    clock_t cpu_end = clock();
+    double cpu_ms = ((double)(cpu_end - cpu_start) * 1000.0) / (double)CLOCKS_PER_SEC;
 
     int n = files_processed;
     double mean_noise = (n > 0) ? (sum_noise / n) : 0.0;
@@ -307,6 +353,25 @@ int main(int argc, char **argv)
 
     double score = mean_snr - 2.0 * sqrt(var_snr) - (mean_noise + 90.0);
     double throughput = (t.total_ms > 0.0) ? (total_samples / (t.total_ms / 1000.0)) : 0.0;
+    double cpu_percent = (t.total_ms > 0.0) ? (100.0 * cpu_ms / t.total_ms) : 0.0;
+    double expected_samples = (double)files_to_use * (double)max_complex;
+    double throughput_eff = (expected_samples > 0.0) ? (total_samples / expected_samples) : 0.0;
+    double drop_rate_pct = (expected_samples > 0.0) ? (100.0 * (expected_samples - total_samples) / expected_samples) : 0.0;
+    if (drop_rate_pct < 0.0)
+    {
+        drop_rate_pct = 0.0;
+    }
+    double avg_file_ms = (files_processed > 0) ? (sum_file_ms / (double)files_processed) : 0.0;
+    double var_file_ms = (files_processed > 1) ? ((sum_file_ms2 - (sum_file_ms * sum_file_ms) / (double)files_processed) / (double)(files_processed - 1)) : 0.0;
+    if (var_file_ms < 0.0)
+    {
+        var_file_ms = 0.0;
+    }
+    double file_jitter_ms = sqrt(var_file_ms);
+    double chunk_duration_ms = (first_sample_rate > 0.0) ? ((1000.0 * (double)max_complex) / first_sample_rate) : 0.0;
+    double latency_ratio = (chunk_duration_ms > 0.0) ? (avg_file_ms / chunk_duration_ms) : 0.0;
+    double ram_percent = system_ram_percent();
+    double rss_peak = process_peak_rss_mb();
 
     printf("\n================================================================================\n");
     printf("SUMMARY\n");
@@ -320,6 +385,15 @@ int main(int argc, char **argv)
     printf("files_processed   : %d\n", files_processed);
     printf("samples_total     : %.0f\n", total_samples);
     printf("throughput_sps    : %.2f\n", throughput);
+    printf("throughput_eff    : %.2f %%\n", throughput_eff * 100.0);
+    printf("drop_rate_pct     : %.4f %%\n", drop_rate_pct);
+    printf("cpu_ms            : %.3f\n", cpu_ms);
+    printf("cpu_percent       : %.2f\n", cpu_percent);
+    printf("ram_percent       : %.2f %%\n", ram_percent);
+    printf("rss_peak_mb       : %.3f\n", rss_peak);
+    printf("avg_file_ms       : %.3f\n", avg_file_ms);
+    printf("file_jitter_ms    : %.3f\n", file_jitter_ms);
+    printf("latency_ratio     : %.3f x_chunk\n", latency_ratio);
     printf("snr_mean_db       : %.4f\n", mean_snr);
     printf("snr_std_db        : %.4f\n", sqrt(var_snr));
     printf("noise_mean_dbm    : %.4f\n", mean_noise);
@@ -328,6 +402,20 @@ int main(int argc, char **argv)
     printf("rss_start_mb      : %.3f\n", rss_start);
     printf("rss_end_mb        : %.3f\n", rss_end);
     printf("rss_delta_mb      : %.3f\n", rss_end - rss_start);
+
+    /* Exact key block for terminal copy/paste and downstream QA parsers. */
+    printf("\nCOMPUTATIONAL_METRICS\n");
+    printf("total_ms: %.4f\n", t.total_ms);
+    printf("throughput_sps: %.5f\n", throughput);
+    printf("cpu_percent: %.6f\n", cpu_percent);
+    printf("ram_percent: %.1f\n", ram_percent);
+    printf("rss_peak_mb: %.6f\n", rss_peak);
+    printf("throughput_efficiency: %.6f\n", throughput_eff);
+    printf("drop_rate_pct: %.6f\n", drop_rate_pct);
+    printf("avg_file_ms: %.5f\n", avg_file_ms);
+    printf("file_jitter_ms: %.5f\n", file_jitter_ms);
+    printf("latency_ratio: %.5f\n", latency_ratio);
+    printf("snr_mean_db: %.6f\n", mean_snr);
 
     printf("\nComponent share:\n");
     printf("- Load      %8.2f %%\n", (t.total_ms > 0.0) ? (100.0 * t.load_ms / t.total_ms) : 0.0);
@@ -338,7 +426,7 @@ int main(int argc, char **argv)
 
     if (json_out)
     {
-        if (!write_json_summary(json_out, &t, total_samples, throughput, mean_snr, sqrt(var_snr), mean_noise, mean_center, score, rss_start, rss_end, files_processed, files_to_use))
+        if (!write_json_summary(json_out, &t, total_samples, expected_samples, throughput, throughput_eff, drop_rate_pct, cpu_ms, cpu_percent, ram_percent, rss_peak, avg_file_ms, file_jitter_ms, latency_ratio, mean_snr, sqrt(var_snr), mean_noise, mean_center, score, rss_start, rss_end, files_processed, files_to_use))
         {
             printf("[WARN] Failed to write JSON summary: %s\n", json_out);
         }
@@ -346,7 +434,7 @@ int main(int argc, char **argv)
 
     if (csv_out)
     {
-        if (!write_csv_summary(csv_out, &t, total_samples, throughput, mean_snr, sqrt(var_snr), mean_noise, mean_center, score, rss_start, rss_end, files_processed, files_to_use))
+        if (!write_csv_summary(csv_out, &t, total_samples, expected_samples, throughput, throughput_eff, drop_rate_pct, cpu_ms, cpu_percent, ram_percent, rss_peak, avg_file_ms, file_jitter_ms, latency_ratio, mean_snr, sqrt(var_snr), mean_noise, mean_center, score, rss_start, rss_end, files_processed, files_to_use))
         {
             printf("[WARN] Failed to write CSV summary: %s\n", csv_out);
         }
