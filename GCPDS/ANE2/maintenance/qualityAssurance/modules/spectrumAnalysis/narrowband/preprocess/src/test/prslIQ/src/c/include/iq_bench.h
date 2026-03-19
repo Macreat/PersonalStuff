@@ -59,6 +59,20 @@ typedef struct
     size_t bytes_peak;
 } mem_tracker_t;
 
+typedef struct
+{
+    size_t nperseg;
+    size_t step;
+    float overlap;
+    float window_power;
+    float *window;
+    complexf_t *fft_buf;
+    size_t *bitrev;
+    float *psd_acc;
+    float *freq_hz;
+    float *psd_shifted;
+} welch_workspace_t;
+
 /* profiler.c */
 double now_ms(void);
 double process_rss_mb(void);
@@ -72,22 +86,23 @@ int discover_sigmf_pairs(const char *db_dir, sigmf_pair_t *out_pairs, int max_pa
 /* sigmf_io.c */
 int parse_sigmf_meta(const char *meta_path, sigmf_meta_t *out_meta);
 int load_iq_int8_limited(const char *data_path, int8_t **out_raw, size_t *out_bytes, size_t max_complex_samples, mem_tracker_t *mt);
+int load_iq_int8_limited_chunked_into(const char *data_path, int8_t *raw_buf, size_t raw_capacity, size_t *out_bytes, size_t chunk_bytes);
 void int8_to_complexf(const int8_t *raw, size_t raw_bytes, complexf_t *out_complex, size_t out_n);
 
 /* method3.c */
 void method3_dc_rms_norm(complexf_t *x, size_t n);
 
 /* welch.c */
-int welch_naive_shifted(
+int welch_workspace_init(welch_workspace_t *ws, int nperseg, float overlap, mem_tracker_t *mt);
+void welch_workspace_free(welch_workspace_t *ws, mem_tracker_t *mt);
+int welch_fft_shifted(
     const complexf_t *x,
     size_t n,
     uint32_t fs,
-    int nperseg,
-    float overlap,
-    float **out_freq_hz,
-    float **out_psd_linear,
-    size_t *out_bins,
-    mem_tracker_t *mt);
+    welch_workspace_t *ws,
+    const float **out_freq_hz,
+    const float **out_psd_linear,
+    size_t *out_bins);
 
 void compute_metrics_from_psd(
     const float *freq_hz,

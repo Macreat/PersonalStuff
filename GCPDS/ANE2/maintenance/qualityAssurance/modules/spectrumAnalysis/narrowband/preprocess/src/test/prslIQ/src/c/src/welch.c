@@ -2,7 +2,7 @@
 
 /*
  * welch.c
- * Reference Welch PSD implementation (naive DFT) and PSD-based metrics.
+ * FFT-based Welch PSD using reusable workspace buffers.
  */
 
 #include <math.h>
@@ -12,116 +12,215 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-int welch_naive_shifted(
-    const complexf_t *x,
-    size_t n,
-    uint32_t fs,
-    int nperseg,
-    float overlap,
-    float **out_freq_hz,
-    float **out_psd_linear,
-    size_t *out_bins,
-    mem_tracker_t *mt)
+static int is_power_of_two(size_t n)
 {
-    /* Guardrails for invalid runtime configuration. */
-    if (!x || n == 0 || nperseg < 8 || overlap < 0.0f || overlap >= 1.0f)
+    return (n != 0) && ((n & (n - 1U)) == 0U);
+}
+
+static void fft_inplace(complexf_t *buf, size_t n, const size_t *bitrev)
+{
+    for (size_t i = 0; i < n; i++)
     {
-        return 0;
-    }
-
-    size_t seg_len = (size_t)nperseg;
-    if (n < seg_len)
-    {
-        return 0;
-    }
-
-    size_t step = (size_t)((1.0f - overlap) * (float)seg_len);
-    if (step == 0)
-    {
-        step = 1;
-    }
-
-    size_t segments = 1 + (n - seg_len) / step;
-
-    float *window = (float *)mt_alloc(mt, seg_len * sizeof(float));
-    float *psd_acc = (float *)mt_alloc(mt, seg_len * sizeof(float));
-    float *freq = (float *)mt_alloc(mt, seg_len * sizeof(float));
-    float *psd_shifted = (float *)mt_alloc(mt, seg_len * sizeof(float));
-
-    if (!window || !psd_acc || !freq || !psd_shifted)
-    {
-        if (window)
-            mt_free(mt, window, seg_len * sizeof(float));
-        if (psd_acc)
-            mt_free(mt, psd_acc, seg_len * sizeof(float));
-        if (freq)
-            mt_free(mt, freq, seg_len * sizeof(float));
-        if (psd_shifted)
-            mt_free(mt, psd_shifted, seg_len * sizeof(float));
-        return 0;
-    }
-
-    for (size_t i = 0; i < seg_len; i++)
-    {
-        window[i] = 0.5f - 0.5f * cosf((float)(2.0 * M_PI * (double)i / (double)(seg_len - 1)));
-        psd_acc[i] = 0.0f;
-    }
-
-    float window_power = 0.0f;
-    for (size_t i = 0; i < seg_len; i++)
-    {
-        window_power += window[i] * window[i];
-    }
-
-    /* Naive DFT Welch reference implementation.
-       Replace with FFTWf/KissFFT for production speed. */
-    for (size_t s = 0; s < segments; s++)
-    {
-        size_t start = s * step;
-
-        for (size_t k = 0; k < seg_len; k++)
+        size_t j = bitrev[i];
+        if (j > i)
         {
-            float re = 0.0f;
-            float im = 0.0f;
-
-            for (size_t t = 0; t < seg_len; t++)
-            {
-                size_t idx = start + t;
-                float wr = x[idx].re * window[t];
-                float wi = x[idx].im * window[t];
-
-                float ang = (float)(-2.0 * M_PI * (double)k * (double)t / (double)seg_len);
-                float ca = cosf(ang);
-                float sa = sinf(ang);
-
-                re += wr * ca - wi * sa;
-                im += wr * sa + wi * ca;
-            }
-
-            float p = (re * re + im * im) / (window_power * (float)fs + 1e-20f);
-            psd_acc[k] += p;
+            complexf_t tmp = buf[i];
+            buf[i] = buf[j];
+            buf[j] = tmp;
         }
     }
 
-    for (size_t k = 0; k < seg_len; k++)
+    for (size_t len = 2; len <= n; len <<= 1U)
     {
-        psd_acc[k] /= (float)segments;
+        float ang = (float)(-2.0 * M_PI / (double)len);
+        float wlen_re = cosf(ang);
+        float wlen_im = sinf(ang);
+
+        for (size_t i = 0; i < n; i += len)
+        {
+            float w_re = 1.0f;
+            float w_im = 0.0f;
+            size_t half = len >> 1U;
+
+            for (size_t j = 0; j < half; j++)
+            {
+                complexf_t u = buf[i + j];
+                complexf_t v = buf[i + j + half];
+
+                float vr = v.re * w_re - v.im * w_im;
+                float vi = v.re * w_im + v.im * w_re;
+
+                buf[i + j].re = u.re + vr;
+                buf[i + j].im = u.im + vi;
+                buf[i + j + half].re = u.re - vr;
+                buf[i + j + half].im = u.im - vi;
+
+                float nw_re = w_re * wlen_re - w_im * wlen_im;
+                float nw_im = w_re * wlen_im + w_im * wlen_re;
+                w_re = nw_re;
+                w_im = nw_im;
+            }
+        }
+    }
+}
+
+int welch_workspace_init(welch_workspace_t *ws, int nperseg, float overlap, mem_tracker_t *mt)
+{
+    if (!ws || !mt || nperseg < 8 || overlap < 0.0f || overlap >= 1.0f)
+    {
+        return 0;
     }
 
-    size_t half = seg_len / 2U;
-    for (size_t k = 0; k < seg_len; k++)
+    memset(ws, 0, sizeof(*ws));
+    ws->nperseg = (size_t)nperseg;
+    ws->overlap = overlap;
+    ws->step = (size_t)((1.0f - overlap) * (float)ws->nperseg);
+    if (ws->step == 0)
     {
-        size_t src = (k + half) % seg_len;
-        psd_shifted[k] = psd_acc[src];
-        freq[k] = ((float)((int)k - (int)half) * (float)fs) / (float)seg_len;
+        ws->step = 1;
     }
 
-    mt_free(mt, psd_acc, seg_len * sizeof(float));
-    mt_free(mt, window, seg_len * sizeof(float));
+    if (!is_power_of_two(ws->nperseg))
+    {
+        return 0;
+    }
 
-    *out_freq_hz = freq;
-    *out_psd_linear = psd_shifted;
-    *out_bins = seg_len;
+    ws->window = (float *)mt_alloc(mt, ws->nperseg * sizeof(float));
+    ws->fft_buf = (complexf_t *)mt_alloc(mt, ws->nperseg * sizeof(complexf_t));
+    ws->bitrev = (size_t *)mt_alloc(mt, ws->nperseg * sizeof(size_t));
+    ws->psd_acc = (float *)mt_alloc(mt, ws->nperseg * sizeof(float));
+    ws->freq_hz = (float *)mt_alloc(mt, ws->nperseg * sizeof(float));
+    ws->psd_shifted = (float *)mt_alloc(mt, ws->nperseg * sizeof(float));
+
+    if (!ws->window || !ws->fft_buf || !ws->bitrev || !ws->psd_acc || !ws->freq_hz || !ws->psd_shifted)
+    {
+        welch_workspace_free(ws, mt);
+        return 0;
+    }
+
+    ws->window_power = 0.0f;
+    for (size_t i = 0; i < ws->nperseg; i++)
+    {
+        ws->window[i] = 0.5f - 0.5f * cosf((float)(2.0 * M_PI * (double)i / (double)(ws->nperseg - 1U)));
+        ws->window_power += ws->window[i] * ws->window[i];
+    }
+
+    size_t bits = 0;
+    for (size_t t = ws->nperseg; t > 1U; t >>= 1U)
+    {
+        bits++;
+    }
+
+    for (size_t i = 0; i < ws->nperseg; i++)
+    {
+        size_t x = i;
+        size_t r = 0;
+        for (size_t b = 0; b < bits; b++)
+        {
+            r = (r << 1U) | (x & 1U);
+            x >>= 1U;
+        }
+        ws->bitrev[i] = r;
+    }
+
+    return 1;
+}
+
+void welch_workspace_free(welch_workspace_t *ws, mem_tracker_t *mt)
+{
+    if (!ws || !mt)
+    {
+        return;
+    }
+
+    if (ws->psd_shifted)
+    {
+        mt_free(mt, ws->psd_shifted, ws->nperseg * sizeof(float));
+    }
+    if (ws->freq_hz)
+    {
+        mt_free(mt, ws->freq_hz, ws->nperseg * sizeof(float));
+    }
+    if (ws->psd_acc)
+    {
+        mt_free(mt, ws->psd_acc, ws->nperseg * sizeof(float));
+    }
+    if (ws->bitrev)
+    {
+        mt_free(mt, ws->bitrev, ws->nperseg * sizeof(size_t));
+    }
+    if (ws->fft_buf)
+    {
+        mt_free(mt, ws->fft_buf, ws->nperseg * sizeof(complexf_t));
+    }
+    if (ws->window)
+    {
+        mt_free(mt, ws->window, ws->nperseg * sizeof(float));
+    }
+
+    memset(ws, 0, sizeof(*ws));
+}
+
+int welch_fft_shifted(
+    const complexf_t *x,
+    size_t n,
+    uint32_t fs,
+    welch_workspace_t *ws,
+    const float **out_freq_hz,
+    const float **out_psd_linear,
+    size_t *out_bins)
+{
+    if (!x || !ws || !out_freq_hz || !out_psd_linear || !out_bins)
+    {
+        return 0;
+    }
+
+    if (n < ws->nperseg)
+    {
+        return 0;
+    }
+
+    size_t segments = 1U + (n - ws->nperseg) / ws->step;
+    memset(ws->psd_acc, 0, ws->nperseg * sizeof(float));
+
+    for (size_t s = 0; s < segments; s++)
+    {
+        size_t start = s * ws->step;
+
+        for (size_t t = 0; t < ws->nperseg; t++)
+        {
+            size_t idx = start + t;
+            ws->fft_buf[t].re = x[idx].re * ws->window[t];
+            ws->fft_buf[t].im = x[idx].im * ws->window[t];
+        }
+
+        fft_inplace(ws->fft_buf, ws->nperseg, ws->bitrev);
+
+        for (size_t k = 0; k < ws->nperseg; k++)
+        {
+            float re = ws->fft_buf[k].re;
+            float im = ws->fft_buf[k].im;
+            float p = (re * re + im * im) / (ws->window_power * (float)fs + 1e-20f);
+            ws->psd_acc[k] += p;
+        }
+    }
+
+    for (size_t k = 0; k < ws->nperseg; k++)
+    {
+        ws->psd_acc[k] /= (float)segments;
+    }
+
+    size_t half = ws->nperseg / 2U;
+    for (size_t k = 0; k < ws->nperseg; k++)
+    {
+        size_t src = (k + half) % ws->nperseg;
+        ws->psd_shifted[k] = ws->psd_acc[src];
+        ws->freq_hz[k] = ((float)((int)k - (int)half) * (float)fs) / (float)ws->nperseg;
+    }
+
+    *out_freq_hz = ws->freq_hz;
+    *out_psd_linear = ws->psd_shifted;
+    *out_bins = ws->nperseg;
     return 1;
 }
 

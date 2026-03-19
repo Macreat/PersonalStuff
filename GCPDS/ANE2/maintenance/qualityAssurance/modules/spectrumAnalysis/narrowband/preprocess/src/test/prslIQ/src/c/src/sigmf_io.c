@@ -168,6 +168,61 @@ cleanup:
     return ok;
 }
 
+int load_iq_int8_limited_chunked_into(const char *data_path, int8_t *raw_buf, size_t raw_capacity, size_t *out_bytes, size_t chunk_bytes)
+{
+    if (!data_path || !raw_buf || raw_capacity == 0 || !out_bytes)
+    {
+        return 0;
+    }
+
+    if (chunk_bytes == 0)
+    {
+        chunk_bytes = 64U * 1024U;
+    }
+
+    FILE *f = fopen(data_path, "rb");
+    if (!f)
+    {
+        return 0;
+    }
+
+    int ok = 0;
+    size_t total = 0;
+
+    while (total < raw_capacity)
+    {
+        size_t remain = raw_capacity - total;
+        size_t to_read = (remain < chunk_bytes) ? remain : chunk_bytes;
+        size_t nread = fread(raw_buf + total, 1, to_read, f);
+
+        total += nread;
+
+        if (nread < to_read)
+        {
+            if (feof(f))
+            {
+                break;
+            }
+            if (ferror(f))
+            {
+                goto cleanup;
+            }
+        }
+    }
+
+    if (total == 0)
+    {
+        goto cleanup;
+    }
+
+    *out_bytes = total;
+    ok = 1;
+
+cleanup:
+    fclose(f);
+    return ok;
+}
+
 void int8_to_complexf(const int8_t *raw, size_t raw_bytes, complexf_t *out_complex, size_t out_n)
 {
     /* Interleaved input format: I,Q,I,Q... -> complex float. */

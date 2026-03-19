@@ -14,13 +14,88 @@ static void print_usage(const char *exe)
 {
     /* Keep options minimal and reproducible for benchmark comparisons. */
     printf("Usage:\n");
-    printf("  %s [--db <path>] [--files <N>] [--max-complex <N>] [--nperseg <N>] [--overlap <0..0.9>]\n", exe);
+    printf("  %s [--db <path>] [--files <N>] [--max-complex <N>] [--nperseg <N>] [--overlap <0..0.9>] [--chunk-bytes <N>] [--json-out <file>] [--csv-out <file>]\n", exe);
     printf("\nDefaults:\n");
     printf("  --db D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/modules/db/DataBase-IQ-FM-88MHz-108MHz\n");
     printf("  --files 6\n");
     printf("  --max-complex 262144\n");
     printf("  --nperseg 512\n");
     printf("  --overlap 0.5\n");
+    printf("  --chunk-bytes 65536\n");
+}
+
+static int write_json_summary(const char *path,
+                              const perf_timing_t *t,
+                              double total_samples,
+                              double throughput,
+                              double mean_snr,
+                              double std_snr,
+                              double mean_noise,
+                              double mean_center,
+                              double score,
+                              double rss_start,
+                              double rss_end,
+                              int files_ok,
+                              int files_req)
+{
+    FILE *f = fopen(path, "w");
+    if (!f)
+    {
+        return 0;
+    }
+
+    fprintf(f, "{\n");
+    fprintf(f, "  \"files_requested\": %d,\n", files_req);
+    fprintf(f, "  \"files_processed\": %d,\n", files_ok);
+    fprintf(f, "  \"samples_total\": %.0f,\n", total_samples);
+    fprintf(f, "  \"throughput_sps\": %.6f,\n", throughput);
+    fprintf(f, "  \"total_ms\": %.6f,\n", t->total_ms);
+    fprintf(f, "  \"load_ms\": %.6f,\n", t->load_ms);
+    fprintf(f, "  \"convert_ms\": %.6f,\n", t->convert_ms);
+    fprintf(f, "  \"preprocess_ms\": %.6f,\n", t->preprocess_ms);
+    fprintf(f, "  \"welch_ms\": %.6f,\n", t->welch_ms);
+    fprintf(f, "  \"metric_ms\": %.6f,\n", t->metric_ms);
+    fprintf(f, "  \"snr_mean_db\": %.6f,\n", mean_snr);
+    fprintf(f, "  \"snr_std_db\": %.6f,\n", std_snr);
+    fprintf(f, "  \"noise_mean_dbm\": %.6f,\n", mean_noise);
+    fprintf(f, "  \"center_mean_dbm\": %.6f,\n", mean_center);
+    fprintf(f, "  \"score\": %.6f,\n", score);
+    fprintf(f, "  \"rss_start_mb\": %.6f,\n", rss_start);
+    fprintf(f, "  \"rss_end_mb\": %.6f\n", rss_end);
+    fprintf(f, "}\n");
+
+    fclose(f);
+    return 1;
+}
+
+static int write_csv_summary(const char *path,
+                             const perf_timing_t *t,
+                             double total_samples,
+                             double throughput,
+                             double mean_snr,
+                             double std_snr,
+                             double mean_noise,
+                             double mean_center,
+                             double score,
+                             double rss_start,
+                             double rss_end,
+                             int files_ok,
+                             int files_req)
+{
+    FILE *f = fopen(path, "w");
+    if (!f)
+    {
+        return 0;
+    }
+
+    fprintf(f, "files_requested,files_processed,samples_total,throughput_sps,total_ms,load_ms,convert_ms,preprocess_ms,welch_ms,metric_ms,snr_mean_db,snr_std_db,noise_mean_dbm,center_mean_dbm,score,rss_start_mb,rss_end_mb\n");
+    fprintf(f, "%d,%d,%.0f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f,%.6f\n",
+            files_req, files_ok, total_samples, throughput,
+            t->total_ms, t->load_ms, t->convert_ms, t->preprocess_ms, t->welch_ms, t->metric_ms,
+            mean_snr, std_snr, mean_noise, mean_center, score, rss_start, rss_end);
+
+    fclose(f);
+    return 1;
 }
 
 int main(int argc, char **argv)
@@ -31,6 +106,9 @@ int main(int argc, char **argv)
     size_t max_complex = 262144;
     int nperseg = 512;
     float overlap = 0.5f;
+    size_t chunk_bytes = 65536;
+    const char *json_out = NULL;
+    const char *csv_out = NULL;
 
     for (int i = 1; i < argc; i++)
     {
@@ -54,6 +132,18 @@ int main(int argc, char **argv)
         else if (strcmp(argv[i], "--overlap") == 0 && i + 1 < argc)
         {
             overlap = (float)atof(argv[++i]);
+        }
+        else if (strcmp(argv[i], "--chunk-bytes") == 0 && i + 1 < argc)
+        {
+            chunk_bytes = (size_t)strtoull(argv[++i], NULL, 10);
+        }
+        else if (strcmp(argv[i], "--json-out") == 0 && i + 1 < argc)
+        {
+            json_out = argv[++i];
+        }
+        else if (strcmp(argv[i], "--csv-out") == 0 && i + 1 < argc)
+        {
+            csv_out = argv[++i];
         }
         else if (strcmp(argv[i], "--help") == 0 || strcmp(argv[i], "-h") == 0)
         {
@@ -85,6 +175,29 @@ int main(int argc, char **argv)
     mem_tracker_t mt;
     mem_tracker_init(&mt);
 
+    int exit_code = 0;
+    int8_t *raw_buf = NULL;
+    complexf_t *iq_buf = NULL;
+    welch_workspace_t ws;
+    memset(&ws, 0, sizeof(ws));
+
+    size_t raw_capacity = max_complex * 2U;
+    raw_buf = (int8_t *)mt_alloc(&mt, raw_capacity);
+    iq_buf = (complexf_t *)mt_alloc(&mt, max_complex * sizeof(complexf_t));
+    if (!raw_buf || !iq_buf)
+    {
+        printf("[ERR] Failed to allocate reusable raw/IQ buffers\n");
+        exit_code = 2;
+        goto cleanup_all;
+    }
+
+    if (!welch_workspace_init(&ws, nperseg, overlap, &mt))
+    {
+        printf("[ERR] Welch workspace init failed (nperseg must be power-of-two and allocations must succeed)\n");
+        exit_code = 2;
+        goto cleanup_all;
+    }
+
     perf_timing_t t = {0};
     double total_start = now_ms();
     double rss_start = process_rss_mb();
@@ -100,61 +213,62 @@ int main(int argc, char **argv)
     printf("================================================================================\n");
     printf("DB: %s\n", db_dir);
     printf("Files: %d / %d\n", files_to_use, total_pairs);
-    printf("max_complex=%llu nperseg=%d overlap=%.2f\n\n", (unsigned long long)max_complex, nperseg, overlap);
+    printf("max_complex=%llu nperseg=%d overlap=%.2f chunk_bytes=%llu\n\n", (unsigned long long)max_complex, nperseg, overlap, (unsigned long long)chunk_bytes);
+
+    int files_processed = 0;
 
     for (int i = 0; i < files_to_use; i++)
     {
-        /* Per-file ownership: allocate, process, free in the same scope. */
+        /* Single cleanup path per file stage, even with reusable buffers. */
         sigmf_meta_t meta = {0};
-        int8_t *raw = NULL;
         size_t raw_bytes = 0;
-        complexf_t *iq = NULL;
-        float *freq = NULL;
-        float *psd = NULL;
+        const float *freq = NULL;
+        const float *psd = NULL;
         size_t bins = 0;
         iq_metrics_t m = {0};
+        int file_ok = 1;
 
         double file_start = now_ms();
 
         if (!parse_sigmf_meta(pairs[i].meta_path, &meta))
         {
             printf("[WARN] Meta parse failed: %s\n", pairs[i].meta_path);
-            continue;
+            file_ok = 0;
+            goto file_cleanup;
         }
 
         double s = now_ms();
-        if (!load_iq_int8_limited(pairs[i].data_path, &raw, &raw_bytes, max_complex, &mt))
+        if (!load_iq_int8_limited_chunked_into(pairs[i].data_path, raw_buf, raw_capacity, &raw_bytes, chunk_bytes))
         {
             printf("[WARN] Data load failed: %s\n", pairs[i].data_path);
-            continue;
+            file_ok = 0;
+            goto file_cleanup;
         }
         t.load_ms += now_ms() - s;
 
         size_t n_complex = raw_bytes / 2U;
+        if (n_complex == 0 || n_complex > max_complex)
+        {
+            printf("[WARN] Invalid sample count for: %s\n", pairs[i].data_path);
+            file_ok = 0;
+            goto file_cleanup;
+        }
         total_samples += (double)n_complex;
 
         s = now_ms();
-        iq = (complexf_t *)mt_alloc(&mt, n_complex * sizeof(complexf_t));
-        if (!iq)
-        {
-            printf("[ERR] Out of memory for IQ buffer\n");
-            mt_free(&mt, raw, raw_bytes);
-            return 2;
-        }
-        int8_to_complexf(raw, raw_bytes, iq, n_complex);
+        int8_to_complexf(raw_buf, raw_bytes, iq_buf, n_complex);
         t.convert_ms += now_ms() - s;
 
         s = now_ms();
-        method3_dc_rms_norm(iq, n_complex);
+        method3_dc_rms_norm(iq_buf, n_complex);
         t.preprocess_ms += now_ms() - s;
 
         s = now_ms();
-        if (!welch_naive_shifted(iq, n_complex, meta.sample_rate, nperseg, overlap, &freq, &psd, &bins, &mt))
+        if (!welch_fft_shifted(iq_buf, n_complex, meta.sample_rate, &ws, &freq, &psd, &bins))
         {
             printf("[WARN] Welch failed for: %s\n", pairs[i].data_path);
-            mt_free(&mt, iq, n_complex * sizeof(complexf_t));
-            mt_free(&mt, raw, raw_bytes);
-            continue;
+            file_ok = 0;
+            goto file_cleanup;
         }
         t.welch_ms += now_ms() - s;
 
@@ -166,20 +280,22 @@ int main(int argc, char **argv)
         sum_center += m.center_power_dbm;
         sum_snr += m.snr_center_db;
         sum_snr2 += m.snr_center_db * m.snr_center_db;
+        files_processed++;
 
         printf("%02d) SNR=%7.3f dB | NF=%8.3f dBm | CP=%8.3f dBm | file_ms=%8.2f\n",
                i + 1, m.snr_center_db, m.noise_floor_dbm, m.center_power_dbm, now_ms() - file_start);
 
-        mt_free(&mt, psd, bins * sizeof(float));
-        mt_free(&mt, freq, bins * sizeof(float));
-        mt_free(&mt, iq, n_complex * sizeof(complexf_t));
-        mt_free(&mt, raw, raw_bytes);
+    file_cleanup:
+        if (!file_ok)
+        {
+            printf("[INFO] File skipped: %s\n", pairs[i].data_path);
+        }
     }
 
     t.total_ms = now_ms() - total_start;
     double rss_end = process_rss_mb();
 
-    int n = files_to_use;
+    int n = files_processed;
     double mean_noise = (n > 0) ? (sum_noise / n) : 0.0;
     double mean_center = (n > 0) ? (sum_center / n) : 0.0;
     double mean_snr = (n > 0) ? (sum_snr / n) : 0.0;
@@ -201,6 +317,7 @@ int main(int argc, char **argv)
     printf("preprocess_ms     : %.3f\n", t.preprocess_ms);
     printf("welch_ms          : %.3f\n", t.welch_ms);
     printf("metric_ms         : %.3f\n", t.metric_ms);
+    printf("files_processed   : %d\n", files_processed);
     printf("samples_total     : %.0f\n", total_samples);
     printf("throughput_sps    : %.2f\n", throughput);
     printf("snr_mean_db       : %.4f\n", mean_snr);
@@ -219,6 +336,33 @@ int main(int argc, char **argv)
     printf("- Welch     %8.2f %%\n", (t.total_ms > 0.0) ? (100.0 * t.welch_ms / t.total_ms) : 0.0);
     printf("- Metric    %8.2f %%\n", (t.total_ms > 0.0) ? (100.0 * t.metric_ms / t.total_ms) : 0.0);
 
+    if (json_out)
+    {
+        if (!write_json_summary(json_out, &t, total_samples, throughput, mean_snr, sqrt(var_snr), mean_noise, mean_center, score, rss_start, rss_end, files_processed, files_to_use))
+        {
+            printf("[WARN] Failed to write JSON summary: %s\n", json_out);
+        }
+    }
+
+    if (csv_out)
+    {
+        if (!write_csv_summary(csv_out, &t, total_samples, throughput, mean_snr, sqrt(var_snr), mean_noise, mean_center, score, rss_start, rss_end, files_processed, files_to_use))
+        {
+            printf("[WARN] Failed to write CSV summary: %s\n", csv_out);
+        }
+    }
+
+cleanup_all:
+    welch_workspace_free(&ws, &mt);
+    if (iq_buf)
+    {
+        mt_free(&mt, iq_buf, max_complex * sizeof(complexf_t));
+    }
+    if (raw_buf)
+    {
+        mt_free(&mt, raw_buf, raw_capacity);
+    }
+
     printf("\nMemory tracker:\n");
     printf("- alloc_count      : %llu\n", (unsigned long long)mt.alloc_count);
     printf("- free_count       : %llu\n", (unsigned long long)mt.free_count);
@@ -227,13 +371,16 @@ int main(int argc, char **argv)
 
     if (mt.bytes_current != 0 || mt.alloc_count != mt.free_count)
     {
-        /* Internal tracker is advisory; use external tooling for deep leak checks. */
-        printf("[LEAK WARNING] Potential memory leak detected in internal allocation tracking.\n");
+        printf("[LEAK BLOCKER] Allocation tracker mismatch detected.\n");
+        if (exit_code == 0)
+        {
+            exit_code = 3;
+        }
     }
     else
     {
         printf("[OK] Internal allocation tracker reports no leaks.\n");
     }
 
-    return 0;
+    return exit_code;
 }
