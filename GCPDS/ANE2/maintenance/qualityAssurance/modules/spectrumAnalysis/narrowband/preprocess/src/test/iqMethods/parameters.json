@@ -1,0 +1,23 @@
+{
+  "sample_rate_hz": 30000000,
+  "fft_size": 1024,
+  "window": "hamming",
+  "filter_taps": 101,
+  "dtype": "float32",
+  "buffer_files": 30,
+  "kde_points": 500,
+  "overlap_percent": 50,
+  "decimation": 1,
+  "embedded_rpi_suggested": {
+    "sample_rate_hz": 30000000,
+    "fft_size": 512,
+    "window": "hamming",
+    "filter_taps": 51,
+    "dtype": "float32",
+    "buffer_files": 10,
+    "kde_points": 256,
+    "overlap_percent": 50,
+    "decimation": 2
+  },
+  "source": "extracted from compare_iq_methods.ipynb and verification scripts; defaults noted where missing"
+}

@@ -5,7 +5,7 @@
 >**Implementation Plan**
 
 ## Executive Summary
-Establish a standardized, scalable framework for RF signal quality assurance (QA) across distributed SDR sensors. Deliver canonical data sources, consistent naming conventions, and modular QA routes for wideband, narrowband, and voice services.
+Establish a standardized, scalable framework for RF signal quality assurance (QA) across distributed SDR sensors. Deliver canonical data sources, consistent naming conventions, and modular QA routes for wideband, narrowband,  and voice services.
 
 ---
 
@@ -143,26 +143,6 @@ QualityAssurance/
 
 ---
 
-## Key Decisions & Rationale
-
-### 1. Single Canonical Dictionary
-**Why:** Eliminates variable name mismatches and unit inconsistencies across routes and code.
-**How:** DICTIONARY.md is the single source of truth; all code imports/validates against it.
-
-### 2. Modular Routes
-**Why:** Each service type (wideband, narrowband, voice) has different inputs, processing logic, and outputs.
-**How:** Separate modules under `routes/`; shared validators and utilities in `validators/`.
-
-### 3. CSV as Primary Source
-**Why:** Per-node data already in CSV; minimal parsing overhead; easy versioning.
-**How:** Schema validator ensures consistency; ingestion pipeline normalizes units and types.
-
-### 4. ISO8601 Timestamps
-**Why:** Standard, sortable, human-readable; avoids timezone ambiguity.
-**How:** Ingestion pipeline auto-converts; DICTIONARY specifies UTC timezone.
-
----
-
 ## Dependencies & External References
 
 - **DataAcq.ipynb** — Reference for acquisition rules, DC-blocker parameters (alpha, cutoff_hz), IQ conversion
@@ -181,17 +161,6 @@ QualityAssurance/
 | 2 | Data validation & ingestion | Q2 2026 | Planned |
 | 3 | QA route implementation | Q2–Q3 2026 | Planned |
 | 4 | Integration & deployment | Q3 2026 | Planned |
-
----
-
-## Risk & Mitigation
-
-| Risk | Impact | Mitigation |
-|------|--------|-----------|
-| Schema changes require code updates | High | Version DICTIONARY; use schema validation layer |
-| Per-node data inconsistency | High | Strict CSV schema checks; unit validators |
-| Performance on large datasets | Medium | Vectorized NumPy/Pandas; async processing |
-| Integration test failures | Medium | Test each route independently first; CI/CD pipeline |
 
 ---
 

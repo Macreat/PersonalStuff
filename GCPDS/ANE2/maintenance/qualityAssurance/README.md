@@ -123,8 +123,8 @@ QualityAssurance/
 
 ### *for each module*
 - [Getting Started](#installation)
-- [architecture by modules](docs/reference/architectureModules.md)
 - [Configuration Guide](#environment-configuration-env)
+- [architecture by modules](docs/reference/architectureModules.md)
 - [Development Standards](docs/reference/developStandars.md)  
 - [Code Audit Report](CODE_AUDIT.md)
 - [deployment Guide](docs/reference/deploymentGuide.md)
@@ -272,23 +272,9 @@ DEVELOPMENT=false        # Development mode features
 ---
 
 ## CONFIGURATION MODULE (`cfg.py`)
-
-Central configuration hub managing:
-- Environment variables loading
-- Logger setup (rotating file + console)
-- Path management (SRC_DIR, ROOT_DIR)
-- Application constants
-
-**Usage:**
-```python
-import cfg
-log = cfg.set_logger()
-log.info(f"App name: {cfg.APP_NAME} v{cfg.APP_VERSION}")
-```
+...
 
 ---
-
-
 
 
 ## DEVELOPMENT PROCESS
@@ -454,7 +440,7 @@ git push origin feature/your-feature
 
  **Data Integrity:**
 - [ ] clear and concise dictionary for principal reference 
-- [ ] 100% CSV validation before processing
+- [ ] 100% CSV validation before processing (REVIEW LECTURE SigMF-BINARIO)
 - [ ] PSD values in realistic range ([-120, -40] dB) (MANAGE DATA RANGE)
 - [ ] No missing or corrupted measurements
 - [ ] Cross-node consistency verified
