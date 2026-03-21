@@ -1,8 +1,8 @@
 #include "iq_bench.h"
 
-/*
- * main.c
- * CLI entrypoint for Method 3 benchmark and audit reporting.
+/**
+ * @file main.c
+ * @brief Punto de entrada CLI del benchmark Metodo 3 IQ.
  */
 
 #include <math.h>
@@ -11,9 +11,9 @@
 #include <string.h>
 #include <time.h>
 
-/*
- * print_usage
- * Muestra opciones CLI soportadas y valores por defecto del benchmark.
+/**
+ * @brief Muestra opciones CLI y valores por defecto del benchmark.
+ * @param exe Nombre o ruta del ejecutable.
  */
 static void print_usage(const char *exe)
 {
@@ -29,10 +29,32 @@ static void print_usage(const char *exe)
     printf("  --chunk-bytes 65536\n");
 }
 
-/*
- * write_json_summary
- * Serializa el resumen global de la corrida en formato JSON.
- * Retorna 1 si el archivo se escribio correctamente, 0 en error.
+/**
+ * @brief Escribe resumen consolidado en formato JSON.
+ * @param path Ruta del archivo de salida.
+ * @param t Tiempos agregados por etapa.
+ * @param total_samples Muestras procesadas totales.
+ * @param expected_samples Muestras esperadas segun configuracion.
+ * @param throughput Throughput en muestras por segundo.
+ * @param throughput_eff Eficiencia de throughput [0,1].
+ * @param drop_rate_pct Porcentaje de perdida estimada.
+ * @param cpu_ms Tiempo CPU consumido en ms.
+ * @param cpu_percent Uso relativo de CPU respecto al wall time.
+ * @param ram_percent Carga de RAM del sistema.
+ * @param rss_peak Pico de RSS en MB.
+ * @param avg_file_ms Tiempo promedio por archivo.
+ * @param file_jitter_ms Jitter entre archivos en ms.
+ * @param latency_ratio Ratio latencia por archivo frente a chunk teorico.
+ * @param mean_snr SNR medio.
+ * @param std_snr Desviacion estandar de SNR.
+ * @param mean_noise Piso de ruido medio.
+ * @param mean_center Potencia central media.
+ * @param score Puntaje compuesto de salud.
+ * @param rss_start RSS al inicio.
+ * @param rss_end RSS al final.
+ * @param files_ok Cantidad de archivos procesados exitosamente.
+ * @param files_req Cantidad de archivos solicitados.
+ * @return 1 si se escribio correctamente; 0 en error.
  */
 static int write_json_summary(const char *path,
                               const perf_timing_t *t,
@@ -98,10 +120,32 @@ static int write_json_summary(const char *path,
     return 1;
 }
 
-/*
- * write_csv_summary
- * Serializa el resumen global de la corrida en formato CSV (una fila).
- * Retorna 1 si el archivo se escribio correctamente, 0 en error.
+/**
+ * @brief Escribe resumen consolidado en formato CSV de una fila.
+ * @param path Ruta del archivo de salida.
+ * @param t Tiempos agregados por etapa.
+ * @param total_samples Muestras procesadas totales.
+ * @param expected_samples Muestras esperadas segun configuracion.
+ * @param throughput Throughput en muestras por segundo.
+ * @param throughput_eff Eficiencia de throughput [0,1].
+ * @param drop_rate_pct Porcentaje de perdida estimada.
+ * @param cpu_ms Tiempo CPU consumido en ms.
+ * @param cpu_percent Uso relativo de CPU respecto al wall time.
+ * @param ram_percent Carga de RAM del sistema.
+ * @param rss_peak Pico de RSS en MB.
+ * @param avg_file_ms Tiempo promedio por archivo.
+ * @param file_jitter_ms Jitter entre archivos en ms.
+ * @param latency_ratio Ratio latencia por archivo frente a chunk teorico.
+ * @param mean_snr SNR medio.
+ * @param std_snr Desviacion estandar de SNR.
+ * @param mean_noise Piso de ruido medio.
+ * @param mean_center Potencia central media.
+ * @param score Puntaje compuesto de salud.
+ * @param rss_start RSS al inicio.
+ * @param rss_end RSS al final.
+ * @param files_ok Cantidad de archivos procesados exitosamente.
+ * @param files_req Cantidad de archivos solicitados.
+ * @return 1 si se escribio correctamente; 0 en error.
  */
 static int write_csv_summary(const char *path,
                              const perf_timing_t *t,
@@ -144,15 +188,11 @@ static int write_csv_summary(const char *path,
     return 1;
 }
 
-/*
- * main
- * Flujo principal del benchmark:
- * 1) Parseo CLI
- * 2) Descubrimiento de pares SigMF
- * 3) Inicializacion de buffers/workspace reutilizables
- * 4) Pipeline por archivo (load -> convert -> method3 -> welch -> metric)
- * 5) Agregacion de metricas globales y salida terminal/JSON/CSV
- * 6) Liberacion de memoria y validacion de tracker de asignaciones
+/**
+ * @brief Ejecuta el benchmark completo sobre el dataset IQ configurado.
+ * @param argc Cantidad de argumentos CLI.
+ * @param argv Arreglo de argumentos CLI.
+ * @return 0 en exito; codigo no cero en error de ejecucion o auditoria.
  */
 int main(int argc, char **argv)
 {

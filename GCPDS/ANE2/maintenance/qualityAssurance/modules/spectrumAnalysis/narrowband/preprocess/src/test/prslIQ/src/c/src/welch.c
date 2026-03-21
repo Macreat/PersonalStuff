@@ -1,8 +1,8 @@
 #include "iq_bench.h"
 
-/*
- * welch.c
- * FFT-based Welch PSD using reusable workspace buffers.
+/**
+ * @file welch.c
+ * @brief Welch PSD con FFT radix-2 y workspace reutilizable.
  */
 
 #include <math.h>
@@ -12,19 +12,21 @@
 #define M_PI 3.14159265358979323846
 #endif
 
-/*
- * is_power_of_two
- * Verifica si n es potencia de 2. Requisito para FFT radix-2.
+/**
+ * @brief Verifica si un valor es potencia de dos.
+ * @param n Valor a evaluar.
+ * @return 1 si n es potencia de 2, 0 en caso contrario.
  */
 static int is_power_of_two(size_t n)
 {
     return (n != 0) && ((n & (n - 1U)) == 0U);
 }
 
-/*
- * fft_inplace
- * FFT iterativa Cooley-Tukey radix-2 en sitio.
- * bitrev contiene el reordenamiento precomputado para evitar recalculo.
+/**
+ * @brief Ejecuta FFT radix-2 in-place usando indices bit-reversal precomputados.
+ * @param buf Buffer complejo de trabajo.
+ * @param n Cantidad de puntos FFT.
+ * @param bitrev Tabla de reordenamiento bit-reversal.
  */
 static void fft_inplace(complexf_t *buf, size_t n, const size_t *bitrev)
 {
@@ -73,11 +75,13 @@ static void fft_inplace(complexf_t *buf, size_t n, const size_t *bitrev)
     }
 }
 
-/*
- * welch_workspace_init
- * Reserva y precomputa recursos reutilizables de Welch:
- * ventana Hann, indices bit-reversal y buffers de acumulacion/salida.
- * Retorna 1 en exito y 0 en error.
+/**
+ * @brief Inicializa workspace Welch y buffers reutilizables.
+ * @param ws Workspace de salida.
+ * @param nperseg Tamano de segmento FFT (potencia de 2).
+ * @param overlap Solape entre segmentos en rango [0,1).
+ * @param mt Tracker de memoria.
+ * @return 1 en exito; 0 en error.
  */
 int welch_workspace_init(welch_workspace_t *ws, int nperseg, float overlap, mem_tracker_t *mt)
 {
@@ -144,9 +148,10 @@ int welch_workspace_init(welch_workspace_t *ws, int nperseg, float overlap, mem_
     return 1;
 }
 
-/*
- * welch_workspace_free
- * Libera todos los buffers asociados al workspace Welch.
+/**
+ * @brief Libera todos los buffers del workspace Welch.
+ * @param ws Workspace a liberar.
+ * @param mt Tracker de memoria.
  */
 void welch_workspace_free(welch_workspace_t *ws, mem_tracker_t *mt)
 {
@@ -183,10 +188,16 @@ void welch_workspace_free(welch_workspace_t *ws, mem_tracker_t *mt)
     memset(ws, 0, sizeof(*ws));
 }
 
-/*
- * welch_fft_shifted
- * Calcula PSD promedio via Welch y retorna espectro centrado en 0 Hz.
- * Usa buffers del workspace para minimizar asignaciones y overhead.
+/**
+ * @brief Calcula PSD por Welch y retorna espectro desplazado a 0 Hz.
+ * @param x Senal compleja de entrada.
+ * @param n Numero de muestras de entrada.
+ * @param fs Frecuencia de muestreo.
+ * @param ws Workspace Welch reutilizable.
+ * @param out_freq_hz Salida de eje de frecuencias.
+ * @param out_psd_linear Salida de PSD lineal.
+ * @param out_bins Salida de cantidad de bins.
+ * @return 1 en exito; 0 en error.
  */
 int welch_fft_shifted(
     const complexf_t *x,
@@ -261,12 +272,12 @@ int welch_fft_shifted(
     return 1;
 }
 
-/*
- * compute_metrics_from_psd
- * Deriva metricas de calidad desde PSD lineal:
- * - noise_floor_dbm: promedio espectral en dB
- * - center_power_dbm: potencia del bin central
- * - snr_center_db: diferencia centro - ruido
+/**
+ * @brief Deriva metricas de calidad desde PSD lineal.
+ * @param freq_hz Eje de frecuencias.
+ * @param psd_linear PSD lineal.
+ * @param bins Numero de bins.
+ * @param out_metrics Salida con ruido, potencia central y SNR.
  */
 void compute_metrics_from_psd(
     const float *freq_hz,

@@ -1,8 +1,8 @@
 #include "iq_bench.h"
 
-/*
- * fs_utils.c
- * Discovers .sigmf-data/.sigmf-meta pairs in local DB directory.
+/**
+ * @file fs_utils.c
+ * @brief Descubrimiento de pares SigMF en directorio local.
  */
 
 #include <stdio.h>
@@ -13,10 +13,11 @@
 #include <windows.h>
 #endif
 
-/*
- * has_suffix
- * Valida si una cadena termina con un sufijo especifico.
- * Uso: filtrar extensiones .sigmf-data.
+/**
+ * @brief Verifica si una cadena termina con un sufijo dado.
+ * @param s Cadena de entrada.
+ * @param suffix Sufijo esperado.
+ * @return 1 si coincide; 0 en caso contrario.
  */
 static int has_suffix(const char *s, const char *suffix)
 {
@@ -30,10 +31,11 @@ static int has_suffix(const char *s, const char *suffix)
     return strcmp(s + (ls - lx), suffix) == 0;
 }
 
-/*
- * pair_cmp
- * Comparador para qsort: orden lexicografico por ruta de data.
- * Permite ejecuciones reproducibles en el mismo dataset.
+/**
+ * @brief Comparador para ordenar pares SigMF por ruta de data.
+ * @param a Primer elemento.
+ * @param b Segundo elemento.
+ * @return <0, 0, >0 segun orden lexicografico.
  */
 static int pair_cmp(const void *a, const void *b)
 {
@@ -43,10 +45,12 @@ static int pair_cmp(const void *a, const void *b)
     return strcmp(pa->data_path, pb->data_path);
 }
 
-/*
- * discover_sigmf_pairs
- * Recorre db_dir y construye pares validos data/meta.
- * Retorna cantidad de pares encontrados (0 si no hay pares o falla).
+/**
+ * @brief Recorre un directorio y construye pares .sigmf-data/.sigmf-meta.
+ * @param db_dir Directorio base del dataset.
+ * @param out_pairs Arreglo de salida con pares validos.
+ * @param max_pairs Capacidad maxima de salida.
+ * @return Cantidad de pares validos encontrados.
  */
 int discover_sigmf_pairs(const char *db_dir, sigmf_pair_t *out_pairs, int max_pairs)
 {

@@ -1,8 +1,8 @@
 #include "iq_bench.h"
 
-/*
- * profiler.c
- * Timing, process RSS sampling, and simple internal allocation accounting.
+/**
+ * @file profiler.c
+ * @brief Utilidades de tiempo, memoria de proceso y tracking de asignaciones.
  */
 
 #include <stdlib.h>
@@ -12,9 +12,9 @@
 #include <psapi.h>
 #endif
 
-/*
- * now_ms
- * Retorna tiempo monotono en milisegundos para medir etapas del pipeline.
+/**
+ * @brief Retorna tiempo monotono en milisegundos.
+ * @return Tiempo en ms.
  */
 double now_ms(void)
 {
@@ -33,9 +33,9 @@ double now_ms(void)
 #endif
 }
 
-/*
- * process_rss_mb
- * Snapshot de RSS actual del proceso (MB).
+/**
+ * @brief Obtiene RSS actual del proceso.
+ * @return Memoria RSS en MB.
  */
 double process_rss_mb(void)
 {
@@ -50,9 +50,9 @@ double process_rss_mb(void)
     return 0.0;
 }
 
-/*
- * process_peak_rss_mb
- * Retorna RSS pico observado por el SO para el proceso actual (MB).
+/**
+ * @brief Obtiene RSS pico reportado por el sistema operativo.
+ * @return Memoria RSS pico en MB.
  */
 double process_peak_rss_mb(void)
 {
@@ -66,9 +66,9 @@ double process_peak_rss_mb(void)
     return 0.0;
 }
 
-/*
- * system_ram_percent
- * Retorna porcentaje de carga de RAM del sistema reportado por el SO.
+/**
+ * @brief Retorna porcentaje de carga de RAM del sistema.
+ * @return Porcentaje de RAM en uso.
  */
 double system_ram_percent(void)
 {
@@ -83,9 +83,9 @@ double system_ram_percent(void)
     return 0.0;
 }
 
-/*
- * mem_tracker_init
- * Inicializa contadores del tracker interno de asignaciones.
+/**
+ * @brief Inicializa contadores del tracker interno.
+ * @param mt Tracker de memoria.
  */
 void mem_tracker_init(mem_tracker_t *mt)
 {
@@ -96,9 +96,11 @@ void mem_tracker_init(mem_tracker_t *mt)
     mt->bytes_peak = 0;
 }
 
-/*
- * mt_alloc
- * Envoltura de malloc con contabilidad de bytes y cantidad de allocs.
+/**
+ * @brief Reserva memoria y actualiza contadores del tracker.
+ * @param mt Tracker de memoria.
+ * @param bytes Cantidad de bytes a reservar.
+ * @return Puntero reservado o NULL.
  */
 void *mt_alloc(mem_tracker_t *mt, size_t bytes)
 {
@@ -117,10 +119,11 @@ void *mt_alloc(mem_tracker_t *mt, size_t bytes)
     return p;
 }
 
-/*
- * mt_free
- * Envoltura de free con contabilidad de bytes liberados.
- * Requiere que bytes coincida con la reserva original para audit correcto.
+/**
+ * @brief Libera memoria y actualiza contadores del tracker.
+ * @param mt Tracker de memoria.
+ * @param ptr Puntero a liberar.
+ * @param bytes Bytes asociados a la reserva original.
  */
 void mt_free(mem_tracker_t *mt, void *ptr, size_t bytes)
 {

@@ -1,18 +1,20 @@
 #include "iq_bench.h"
 
-/*
- * sigmf_io.c
- * Lightweight SigMF metadata extraction and bounded raw IQ loading.
+/**
+ * @file sigmf_io.c
+ * @brief Utilidades de parseo SigMF y carga de IQ int8.
  */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-/*
- * extract_u64
- * Extrae un valor numerico no negativo asociado a una clave JSON-like.
- * Parser intencionalmente simple para campos fijos de SigMF.
+/**
+ * @brief Extrae un valor numerico no negativo asociado a una clave textual.
+ * @param text Texto fuente.
+ * @param key Clave a buscar.
+ * @param out_value Valor extraido.
+ * @return 1 en exito; 0 si no se encuentra o no parsea.
  */
 static int extract_u64(const char *text, const char *key, uint64_t *out_value)
 {
@@ -52,10 +54,11 @@ static int extract_u64(const char *text, const char *key, uint64_t *out_value)
     return 1;
 }
 
-/*
- * parse_sigmf_meta
- * Lee metadata SigMF y extrae sample_rate y center_freq.
- * Retorna 1 en exito, 0 en error de I/O o parseo.
+/**
+ * @brief Lee metadata SigMF y extrae sample_rate y center_freq.
+ * @param meta_path Ruta del archivo metadata.
+ * @param out_meta Estructura de salida.
+ * @return 1 en exito; 0 en error.
  */
 int parse_sigmf_meta(const char *meta_path, sigmf_meta_t *out_meta)
 {
@@ -120,10 +123,14 @@ cleanup:
     return ok;
 }
 
-/*
- * load_iq_int8_limited
- * Carga archivo IQ completo o truncado a max_complex_samples.
- * Reserva memoria via mem_tracker_t para auditar asignaciones.
+/**
+ * @brief Carga IQ int8 con limite de muestras complejas.
+ * @param data_path Ruta del archivo data.
+ * @param out_raw Buffer de salida reservado dinamicamente.
+ * @param out_bytes Bytes cargados.
+ * @param max_complex_samples Limite de muestras complejas.
+ * @param mt Tracker de memoria para auditar reserva/liberacion.
+ * @return 1 en exito; 0 en error.
  */
 int load_iq_int8_limited(const char *data_path, int8_t **out_raw, size_t *out_bytes, size_t max_complex_samples, mem_tracker_t *mt)
 {
@@ -183,10 +190,14 @@ cleanup:
     return ok;
 }
 
-/*
- * load_iq_int8_limited_chunked_into
- * Carga IQ en un buffer preasignado mediante chunks para limitar picos de memoria.
- * Garantiza salida en numero par de bytes para mantener pares I/Q completos.
+/**
+ * @brief Carga IQ en buffer preasignado por bloques (chunked I/O).
+ * @param data_path Ruta del archivo data.
+ * @param raw_buf Buffer destino preasignado.
+ * @param raw_capacity Capacidad total del buffer destino.
+ * @param out_bytes Bytes efectivamente leidos.
+ * @param chunk_bytes Tamano de bloque de lectura.
+ * @return 1 en exito; 0 en error.
  */
 int load_iq_int8_limited_chunked_into(const char *data_path, int8_t *raw_buf, size_t raw_capacity, size_t *out_bytes, size_t chunk_bytes)
 {
@@ -253,10 +264,12 @@ cleanup:
     return ok;
 }
 
-/*
- * int8_to_complexf
- * Convierte flujo intercalado I,Q (int8) a arreglo complejo float.
- * El numero de muestras convertidas nunca excede out_n.
+/**
+ * @brief Convierte IQ int8 intercalado a complejo float.
+ * @param raw Buffer de entrada intercalado I,Q.
+ * @param raw_bytes Tamano del buffer de entrada en bytes.
+ * @param out_complex Buffer de salida complejo.
+ * @param out_n Capacidad de salida en muestras complejas.
  */
 void int8_to_complexf(const int8_t *raw, size_t raw_bytes, complexf_t *out_complex, size_t out_n)
 {

@@ -3,6 +3,9 @@
 ## Objetivo
 Este documento describe de forma minimalista y profesional la arquitectura, todos los modulos y todas las funciones implementadas en el proyecto C.
 
+Estado de documentacion:
+- El codigo fuente en src y la API en include ya estan anotados con formato Doxygen (@file, @brief, @param, @return).
+
 ## Arquitectura de alto nivel
 Pipeline de procesamiento:
 1. Descubrimiento de pares SigMF
@@ -225,6 +228,14 @@ Cuellos de botella esperados:
 2. Documentar cada funcion con: objetivo, entradas, salida y errores.
 3. Registrar complejidad O(n) cuando aplique en funciones de procesamiento.
 4. Mantener comentarios de optimizacion solo donde exista impacto real en rendimiento.
+
+Plantilla minima Doxygen:
+
+/**
+ * @brief Descripcion corta de la funcion.
+ * @param nombre_param Descripcion del parametro.
+ * @return Valor de retorno y condicion de exito/error.
+ */
 
 ## Checklist operativo
 - Build Release correcto.

@@ -1,18 +1,23 @@
 #include "iq_bench.h"
 
-/*
- * method3.c
- * Method 3 preprocessing: DC removal + RMS normalization in-place.
+/**
+ * @file method3.c
+ * @brief Implementacion del preproceso Metodo 3 (DC + RMS).
  */
 
 #include <math.h>
 
-/*
- * method3_dc_rms_norm
- * Aplica Metodo 3 en sitio:
- * 1) estimacion/remocion DC en I y Q
- * 2) normalizacion RMS global
- * Complejidad temporal: O(n). Memoria extra: O(1).
+/**
+ * @brief Aplica Metodo 3 en sitio sobre un arreglo complejo.
+ *
+ * Pasos:
+ * 1) estimacion y remocion de DC en I y Q
+ * 2) normalizacion por RMS global
+ *
+ * Complejidad temporal: O(n). Memoria adicional: O(1).
+ *
+ * @param x Buffer complejo de entrada/salida.
+ * @param n Numero de muestras complejas.
  */
 void method3_dc_rms_norm(complexf_t *x, size_t n)
 {
