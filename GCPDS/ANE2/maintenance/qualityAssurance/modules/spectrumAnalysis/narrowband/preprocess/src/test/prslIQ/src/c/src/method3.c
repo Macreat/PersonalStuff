@@ -7,6 +7,13 @@
 
 #include <math.h>
 
+/*
+ * method3_dc_rms_norm
+ * Aplica Metodo 3 en sitio:
+ * 1) estimacion/remocion DC en I y Q
+ * 2) normalizacion RMS global
+ * Complejidad temporal: O(n). Memoria extra: O(1).
+ */
 void method3_dc_rms_norm(complexf_t *x, size_t n)
 {
     if (!x || n == 0)

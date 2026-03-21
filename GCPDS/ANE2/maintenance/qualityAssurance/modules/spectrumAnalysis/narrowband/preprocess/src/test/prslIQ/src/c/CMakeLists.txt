@@ -4,11 +4,14 @@ project(iq_method3_bench C)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-if(MSVC)
-    add_compile_options(/W4 /O2)
-else()
-    add_compile_options(-Wall -Wextra -O3)
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+    set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
 endif()
+
+option(IQBENCH_NATIVE_OPT "Enable native CPU optimizations for local benchmarking" OFF)
+
+include(CheckIPOSupported)
+check_ipo_supported(RESULT IPO_SUPPORTED OUTPUT IPO_ERROR)
 
 add_executable(iq_method3_bench
     src/main.c
@@ -20,6 +23,21 @@ add_executable(iq_method3_bench
 )
 
 target_include_directories(iq_method3_bench PRIVATE include)
+
+if(MSVC)
+    target_compile_options(iq_method3_bench PRIVATE /W4)
+    target_compile_options(iq_method3_bench PRIVATE $<$<CONFIG:Release>:/O2>)
+else()
+    target_compile_options(iq_method3_bench PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(iq_method3_bench PRIVATE $<$<CONFIG:Release>:-O3>)
+    if(IQBENCH_NATIVE_OPT)
+        target_compile_options(iq_method3_bench PRIVATE -march=native -mtune=native)
+    endif()
+endif()
+
+if(IPO_SUPPORTED)
+    set_property(TARGET iq_method3_bench PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
+endif()
 
 if(WIN32)
     target_link_libraries(iq_method3_bench PRIVATE psapi)

@@ -9,6 +9,11 @@
 #include <stdlib.h>
 #include <string.h>
 
+/*
+ * extract_u64
+ * Extrae un valor numerico no negativo asociado a una clave JSON-like.
+ * Parser intencionalmente simple para campos fijos de SigMF.
+ */
 static int extract_u64(const char *text, const char *key, uint64_t *out_value)
 {
     /* Naive key search parser; sufficient for fixed SigMF metadata fields. */
@@ -47,6 +52,11 @@ static int extract_u64(const char *text, const char *key, uint64_t *out_value)
     return 1;
 }
 
+/*
+ * parse_sigmf_meta
+ * Lee metadata SigMF y extrae sample_rate y center_freq.
+ * Retorna 1 en exito, 0 en error de I/O o parseo.
+ */
 int parse_sigmf_meta(const char *meta_path, sigmf_meta_t *out_meta)
 {
     /* Reads entire metadata file and extracts sample_rate and center_freq. */
@@ -110,6 +120,11 @@ cleanup:
     return ok;
 }
 
+/*
+ * load_iq_int8_limited
+ * Carga archivo IQ completo o truncado a max_complex_samples.
+ * Reserva memoria via mem_tracker_t para auditar asignaciones.
+ */
 int load_iq_int8_limited(const char *data_path, int8_t **out_raw, size_t *out_bytes, size_t max_complex_samples, mem_tracker_t *mt)
 {
     /* Bounded file read to keep memory predictable for benchmarking. */
@@ -168,6 +183,11 @@ cleanup:
     return ok;
 }
 
+/*
+ * load_iq_int8_limited_chunked_into
+ * Carga IQ en un buffer preasignado mediante chunks para limitar picos de memoria.
+ * Garantiza salida en numero par de bytes para mantener pares I/Q completos.
+ */
 int load_iq_int8_limited_chunked_into(const char *data_path, int8_t *raw_buf, size_t raw_capacity, size_t *out_bytes, size_t chunk_bytes)
 {
     if (!data_path || !raw_buf || raw_capacity == 0 || !out_bytes)
@@ -215,6 +235,16 @@ int load_iq_int8_limited_chunked_into(const char *data_path, int8_t *raw_buf, si
         goto cleanup;
     }
 
+    /* Keep an even byte count so I/Q pairs are always complete. */
+    if (total & 1U)
+    {
+        total--;
+    }
+    if (total == 0)
+    {
+        goto cleanup;
+    }
+
     *out_bytes = total;
     ok = 1;
 
@@ -223,6 +253,11 @@ cleanup:
     return ok;
 }
 
+/*
+ * int8_to_complexf
+ * Convierte flujo intercalado I,Q (int8) a arreglo complejo float.
+ * El numero de muestras convertidas nunca excede out_n.
+ */
 void int8_to_complexf(const int8_t *raw, size_t raw_bytes, complexf_t *out_complex, size_t out_n)
 {
     /* Interleaved input format: I,Q,I,Q... -> complex float. */

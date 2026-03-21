@@ -13,6 +13,11 @@
 #include <windows.h>
 #endif
 
+/*
+ * has_suffix
+ * Valida si una cadena termina con un sufijo especifico.
+ * Uso: filtrar extensiones .sigmf-data.
+ */
 static int has_suffix(const char *s, const char *suffix)
 {
     /* Tiny helper to filter only expected file types. */
@@ -25,6 +30,11 @@ static int has_suffix(const char *s, const char *suffix)
     return strcmp(s + (ls - lx), suffix) == 0;
 }
 
+/*
+ * pair_cmp
+ * Comparador para qsort: orden lexicografico por ruta de data.
+ * Permite ejecuciones reproducibles en el mismo dataset.
+ */
 static int pair_cmp(const void *a, const void *b)
 {
     /* Stable lexical sort for deterministic benchmark order. */
@@ -33,6 +43,11 @@ static int pair_cmp(const void *a, const void *b)
     return strcmp(pa->data_path, pb->data_path);
 }
 
+/*
+ * discover_sigmf_pairs
+ * Recorre db_dir y construye pares validos data/meta.
+ * Retorna cantidad de pares encontrados (0 si no hay pares o falla).
+ */
 int discover_sigmf_pairs(const char *db_dir, sigmf_pair_t *out_pairs, int max_pairs)
 {
     /* Windows implementation only in this project variant. */

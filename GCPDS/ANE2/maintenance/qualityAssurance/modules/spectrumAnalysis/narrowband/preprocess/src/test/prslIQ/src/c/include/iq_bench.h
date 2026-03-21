@@ -65,12 +65,15 @@ typedef struct
     size_t step;
     float overlap;
     float window_power;
+    float inv_norm;
     float *window;
     complexf_t *fft_buf;
     size_t *bitrev;
     float *psd_acc;
     float *freq_hz;
     float *psd_shifted;
+    uint32_t cached_fs;
+    int freq_ready;
 } welch_workspace_t;
 
 /* profiler.c */

@@ -12,11 +12,20 @@
 #define M_PI 3.14159265358979323846
 #endif
 
+/*
+ * is_power_of_two
+ * Verifica si n es potencia de 2. Requisito para FFT radix-2.
+ */
 static int is_power_of_two(size_t n)
 {
     return (n != 0) && ((n & (n - 1U)) == 0U);
 }
 
+/*
+ * fft_inplace
+ * FFT iterativa Cooley-Tukey radix-2 en sitio.
+ * bitrev contiene el reordenamiento precomputado para evitar recalculo.
+ */
 static void fft_inplace(complexf_t *buf, size_t n, const size_t *bitrev)
 {
     for (size_t i = 0; i < n; i++)
@@ -64,6 +73,12 @@ static void fft_inplace(complexf_t *buf, size_t n, const size_t *bitrev)
     }
 }
 
+/*
+ * welch_workspace_init
+ * Reserva y precomputa recursos reutilizables de Welch:
+ * ventana Hann, indices bit-reversal y buffers de acumulacion/salida.
+ * Retorna 1 en exito y 0 en error.
+ */
 int welch_workspace_init(welch_workspace_t *ws, int nperseg, float overlap, mem_tracker_t *mt)
 {
     if (!ws || !mt || nperseg < 8 || overlap < 0.0f || overlap >= 1.0f)
@@ -104,6 +119,9 @@ int welch_workspace_init(welch_workspace_t *ws, int nperseg, float overlap, mem_
         ws->window[i] = 0.5f - 0.5f * cosf((float)(2.0 * M_PI * (double)i / (double)(ws->nperseg - 1U)));
         ws->window_power += ws->window[i] * ws->window[i];
     }
+    ws->inv_norm = 1.0f / (ws->window_power + 1e-20f);
+    ws->cached_fs = 0;
+    ws->freq_ready = 0;
 
     size_t bits = 0;
     for (size_t t = ws->nperseg; t > 1U; t >>= 1U)
@@ -126,6 +144,10 @@ int welch_workspace_init(welch_workspace_t *ws, int nperseg, float overlap, mem_
     return 1;
 }
 
+/*
+ * welch_workspace_free
+ * Libera todos los buffers asociados al workspace Welch.
+ */
 void welch_workspace_free(welch_workspace_t *ws, mem_tracker_t *mt)
 {
     if (!ws || !mt)
@@ -161,6 +183,11 @@ void welch_workspace_free(welch_workspace_t *ws, mem_tracker_t *mt)
     memset(ws, 0, sizeof(*ws));
 }
 
+/*
+ * welch_fft_shifted
+ * Calcula PSD promedio via Welch y retorna espectro centrado en 0 Hz.
+ * Usa buffers del workspace para minimizar asignaciones y overhead.
+ */
 int welch_fft_shifted(
     const complexf_t *x,
     size_t n,
@@ -181,6 +208,7 @@ int welch_fft_shifted(
     }
 
     size_t segments = 1U + (n - ws->nperseg) / ws->step;
+    float inv_norm_fs = ws->inv_norm / ((float)fs + 1e-20f);
     memset(ws->psd_acc, 0, ws->nperseg * sizeof(float));
 
     for (size_t s = 0; s < segments; s++)
@@ -200,7 +228,7 @@ int welch_fft_shifted(
         {
             float re = ws->fft_buf[k].re;
             float im = ws->fft_buf[k].im;
-            float p = (re * re + im * im) / (ws->window_power * (float)fs + 1e-20f);
+            float p = (re * re + im * im) * inv_norm_fs;
             ws->psd_acc[k] += p;
         }
     }
@@ -211,11 +239,20 @@ int welch_fft_shifted(
     }
 
     size_t half = ws->nperseg / 2U;
+    if (!ws->freq_ready || ws->cached_fs != fs)
+    {
+        for (size_t k = 0; k < ws->nperseg; k++)
+        {
+            ws->freq_hz[k] = ((float)((int)k - (int)half) * (float)fs) / (float)ws->nperseg;
+        }
+        ws->cached_fs = fs;
+        ws->freq_ready = 1;
+    }
+
     for (size_t k = 0; k < ws->nperseg; k++)
     {
         size_t src = (k + half) % ws->nperseg;
         ws->psd_shifted[k] = ws->psd_acc[src];
-        ws->freq_hz[k] = ((float)((int)k - (int)half) * (float)fs) / (float)ws->nperseg;
     }
 
     *out_freq_hz = ws->freq_hz;
@@ -224,6 +261,13 @@ int welch_fft_shifted(
     return 1;
 }
 
+/*
+ * compute_metrics_from_psd
+ * Deriva metricas de calidad desde PSD lineal:
+ * - noise_floor_dbm: promedio espectral en dB
+ * - center_power_dbm: potencia del bin central
+ * - snr_center_db: diferencia centro - ruido
+ */
 void compute_metrics_from_psd(
     const float *freq_hz,
     const float *psd_linear,
@@ -231,23 +275,18 @@ void compute_metrics_from_psd(
     iq_metrics_t *out_metrics)
 {
     /* Metrics computed in dB domain to match Python pipeline outputs. */
-    float sum_db = 0.0f;
-    float center_freq = 0.5f * (freq_hz[0] + freq_hz[bins - 1]);
+    if (!freq_hz || !psd_linear || !out_metrics || bins == 0)
+    {
+        return;
+    }
 
-    size_t idx_center = 0;
-    float best_diff = fabsf(freq_hz[0] - center_freq);
+    float sum_db = 0.0f;
+    size_t idx_center = bins / 2U;
 
     for (size_t i = 0; i < bins; i++)
     {
         float p_db = 10.0f * log10f(psd_linear[i] + 1e-12f);
         sum_db += p_db;
-
-        float d = fabsf(freq_hz[i] - center_freq);
-        if (d < best_diff)
-        {
-            best_diff = d;
-            idx_center = i;
-        }
     }
 
     float noise_floor_dbm = sum_db / (float)bins;

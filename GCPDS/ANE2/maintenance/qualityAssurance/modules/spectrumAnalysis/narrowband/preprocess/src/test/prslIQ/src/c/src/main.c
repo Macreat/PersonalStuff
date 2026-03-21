@@ -11,6 +11,10 @@
 #include <string.h>
 #include <time.h>
 
+/*
+ * print_usage
+ * Muestra opciones CLI soportadas y valores por defecto del benchmark.
+ */
 static void print_usage(const char *exe)
 {
     /* Keep options minimal and reproducible for benchmark comparisons. */
@@ -25,6 +29,11 @@ static void print_usage(const char *exe)
     printf("  --chunk-bytes 65536\n");
 }
 
+/*
+ * write_json_summary
+ * Serializa el resumen global de la corrida en formato JSON.
+ * Retorna 1 si el archivo se escribio correctamente, 0 en error.
+ */
 static int write_json_summary(const char *path,
                               const perf_timing_t *t,
                               double total_samples,
@@ -89,6 +98,11 @@ static int write_json_summary(const char *path,
     return 1;
 }
 
+/*
+ * write_csv_summary
+ * Serializa el resumen global de la corrida en formato CSV (una fila).
+ * Retorna 1 si el archivo se escribio correctamente, 0 en error.
+ */
 static int write_csv_summary(const char *path,
                              const perf_timing_t *t,
                              double total_samples,
@@ -130,6 +144,16 @@ static int write_csv_summary(const char *path,
     return 1;
 }
 
+/*
+ * main
+ * Flujo principal del benchmark:
+ * 1) Parseo CLI
+ * 2) Descubrimiento de pares SigMF
+ * 3) Inicializacion de buffers/workspace reutilizables
+ * 4) Pipeline por archivo (load -> convert -> method3 -> welch -> metric)
+ * 5) Agregacion de metricas globales y salida terminal/JSON/CSV
+ * 6) Liberacion de memoria y validacion de tracker de asignaciones
+ */
 int main(int argc, char **argv)
 {
     /* Defaults tuned for quick local runs; override via CLI. */
