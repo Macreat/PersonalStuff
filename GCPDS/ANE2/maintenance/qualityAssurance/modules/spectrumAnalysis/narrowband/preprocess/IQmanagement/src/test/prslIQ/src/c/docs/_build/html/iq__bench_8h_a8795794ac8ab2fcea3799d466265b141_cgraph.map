@@ -1,0 +1,11 @@
+<map id="welch_workspace_init" name="welch_workspace_init">
+<area shape="rect" id="Node000001" title="Inicializa workspace Welch y sus buffers reutilizables." alt="" coords="5,56,155,83"/>
+<area shape="rect" id="Node000002" href="$welch_8c.html#aa421fdfbe907c9724b7b6501a9497da6" title="Verifica si un valor es potencia de dos." alt="" coords="220,5,340,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="135,53,212,35,207,38,137,58"/>
+<area shape="rect" id="Node000003" href="$profiler_8c.html#a6c18b7213389f79f1d8e0fe3ff5d987d" title="Reserva memoria y actualiza contadores del tracker." alt="" coords="245,56,315,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="155,67,232,68,227,70,156,72"/>
+<area shape="rect" id="Node000004" href="$welch_8c.html#a1d1e5ec6e1712608f240e48f35a5f3f0" title="Libera todos los buffers del workspace Welch." alt="" coords="203,107,357,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="136,81,212,101,207,103,135,86"/>
+<area shape="rect" id="Node000005" href="$profiler_8c.html#afe41c4cf13f6d18756be82f64e7c23cb" title="Libera memoria y actualiza contadores del tracker." alt="" coords="405,107,470,133"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="357,117,392,120,387,120,357,123"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="welch_workspace_free" name="welch_workspace_free">
+<area shape="rect" id="Node000001" title="Libera recursos asociados a un workspace Welch." alt="" coords="300,5,454,32"/>
+<area shape="rect" id="Node000002" href="$main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Ejecuta el benchmark completo sobre el dataset IQ configurado." alt="" coords="5,5,55,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="284,21,55,21,55,16,285,16"/>
+<area shape="rect" id="Node000003" href="$welch_8c.html#a8795794ac8ab2fcea3799d466265b141" title="Inicializa workspace Welch y sus buffers reutilizables." alt="" coords="103,31,252,57"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="287,30,252,37,252,32,282,31"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="85,30,55,25,55,20,90,27"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="extract_u64" name="extract_u64">
+<area shape="rect" id="Node000001" title="Extrae un valor numerico no negativo asociado a una clave textual." alt="" coords="279,5,368,32"/>
+<area shape="rect" id="Node000002" href="$sigmf__io_8c.html#ad889d98fa7687e910ca61bb5e81438fd" title="Parsea metadata SigMF y extrae frecuencia y sample rate." alt="" coords="103,5,231,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="261,19,232,21,232,16,266,19"/>
+<area shape="rect" id="Node000003" href="$main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Ejecuta el benchmark completo sobre el dataset IQ configurado." alt="" coords="5,5,55,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="85,20,55,21,55,16,90,18"/>
+</map>

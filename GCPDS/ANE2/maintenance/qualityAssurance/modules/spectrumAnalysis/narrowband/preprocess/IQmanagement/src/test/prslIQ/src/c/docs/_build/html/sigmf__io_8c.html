@@ -1,0 +1,427 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>IQ Method3 Bench C: Referencia del archivo sigmf_io.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">IQ Method3 Bench C<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Documentacion tecnica profesional del pipeline IQ en C</div>
+  </td>
+ </tr>
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+</div><!-- top -->
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('sigmf__io_8c.html','',''); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',false,false,'search.php','Buscar',true);
+});
+</script>
+<div id="main-nav"></div>
+<div id="container"><div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia del archivo sigmf_io.c</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Utilidades de parseo SigMF y carga de IQ int8.  
+</p>
+<div class="textblock"><code>#include &quot;<a class="el" href="iq__bench_8h_source.html">iq_bench.h</a>&quot;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+<code>#include &lt;string.h&gt;</code><br />
+</div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de dependencias incluidas en sigmf_io.c:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="sigmf__io_8c__incl.svg" width="392" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+<p><a href="sigmf__io_8c_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:adce5b9bbc079982998a0fdb648cc35a6" id="r_adce5b9bbc079982998a0fdb648cc35a6"><td class="memItemLeft">static int&#160;</td><td class="memItemRight"><a class="el" href="#adce5b9bbc079982998a0fdb648cc35a6">extract_u64</a> (const char *text, const char *key, uint64_t *out_value)</td></tr>
+<tr class="memdesc:adce5b9bbc079982998a0fdb648cc35a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extrae un valor numerico no negativo asociado a una clave textual.  <br /></td></tr>
+<tr class="memitem:a483f8f8748670b0f93e15c4eefd28efc" id="r_a483f8f8748670b0f93e15c4eefd28efc"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a483f8f8748670b0f93e15c4eefd28efc">int8_to_complexf</a> (const int8_t *raw, size_t raw_bytes, <a class="el" href="structcomplexf__t.html">complexf_t</a> *out_complex, size_t out_n)</td></tr>
+<tr class="memdesc:a483f8f8748670b0f93e15c4eefd28efc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convierte IQ int8 intercalado a complejo float.  <br /></td></tr>
+<tr class="memitem:ab9d13705767d28d9bb301318d2217e8c" id="r_ab9d13705767d28d9bb301318d2217e8c"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#ab9d13705767d28d9bb301318d2217e8c">load_iq_int8_limited</a> (const char *data_path, int8_t **out_raw, size_t *out_bytes, size_t max_complex_samples, <a class="el" href="structmem__tracker__t.html">mem_tracker_t</a> *mt)</td></tr>
+<tr class="memdesc:ab9d13705767d28d9bb301318d2217e8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carga IQ int8 con limite de muestras complejas.  <br /></td></tr>
+<tr class="memitem:a4bfeec851af17c7ec93a1eea640d3434" id="r_a4bfeec851af17c7ec93a1eea640d3434"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a4bfeec851af17c7ec93a1eea640d3434">load_iq_int8_limited_chunked_into</a> (const char *data_path, int8_t *raw_buf, size_t raw_capacity, size_t *out_bytes, size_t chunk_bytes)</td></tr>
+<tr class="memdesc:a4bfeec851af17c7ec93a1eea640d3434"><td class="mdescLeft">&#160;</td><td class="mdescRight">Carga IQ en buffer preasignado por bloques (chunked I/O).  <br /></td></tr>
+<tr class="memitem:ad889d98fa7687e910ca61bb5e81438fd" id="r_ad889d98fa7687e910ca61bb5e81438fd"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#ad889d98fa7687e910ca61bb5e81438fd">parse_sigmf_meta</a> (const char *meta_path, <a class="el" href="structsigmf__meta__t.html">sigmf_meta_t</a> *out_meta)</td></tr>
+<tr class="memdesc:ad889d98fa7687e910ca61bb5e81438fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lee metadata SigMF y extrae sample_rate y center_freq.  <br /></td></tr>
+</table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
+<a id="adce5b9bbc079982998a0fdb648cc35a6" name="adce5b9bbc079982998a0fdb648cc35a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adce5b9bbc079982998a0fdb648cc35a6">&#9670;&#160;</a></span>extract_u64()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int extract_u64 </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>text</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t *</td>          <td class="paramname"><span class="paramname"><em>out_value</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>Texto fuente. </td></tr>
+    <tr><td class="paramname">key</td><td>Clave a buscar. </td></tr>
+    <tr><td class="paramname">out_value</td><td>Valor extraido. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>1 en exito; 0 si no se encuentra o no parsea. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="sigmf__io_8c_source.html#l00019">19</a> del archivo <a class="el" href="sigmf__io_8c_source.html">sigmf_io.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="sigmf__io_8c_source.html#l00063">parse_sigmf_meta()</a>.</p>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="sigmf__io_8c_adce5b9bbc079982998a0fdb648cc35a6_icgraph.svg" width="374" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a483f8f8748670b0f93e15c4eefd28efc" name="a483f8f8748670b0f93e15c4eefd28efc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a483f8f8748670b0f93e15c4eefd28efc">&#9670;&#160;</a></span>int8_to_complexf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void int8_to_complexf </td>
+          <td>(</td>
+          <td class="paramtype">const int8_t *</td>          <td class="paramname"><span class="paramname"><em>raw</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>raw_bytes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structcomplexf__t.html">complexf_t</a> *</td>          <td class="paramname"><span class="paramname"><em>out_complex</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>out_n</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Convierte IQ int8 intercalado a complejos float.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">raw</td><td>Buffer de entrada intercalado I,Q. </td></tr>
+    <tr><td class="paramname">raw_bytes</td><td>Tamano del buffer de entrada en bytes. </td></tr>
+    <tr><td class="paramname">out_complex</td><td>Buffer de salida complejo. </td></tr>
+    <tr><td class="paramname">out_n</td><td>Capacidad de salida en muestras complejas. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="sigmf__io_8c_source.html#l00274">274</a> del archivo <a class="el" href="sigmf__io_8c_source.html">sigmf_io.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="iq__bench_8h_source.html#l00021">complexf_t::im</a> y <a class="el" href="iq__bench_8h_source.html#l00020">complexf_t::re</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="main_8c_source.html#l00197">main()</a>.</p>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="sigmf__io_8c_a483f8f8748670b0f93e15c4eefd28efc_icgraph.svg" width="228" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ab9d13705767d28d9bb301318d2217e8c" name="ab9d13705767d28d9bb301318d2217e8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab9d13705767d28d9bb301318d2217e8c">&#9670;&#160;</a></span>load_iq_int8_limited()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int load_iq_int8_limited </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>data_path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t **</td>          <td class="paramname"><span class="paramname"><em>out_raw</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *</td>          <td class="paramname"><span class="paramname"><em>out_bytes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>max_complex_samples</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structmem__tracker__t.html">mem_tracker_t</a> *</td>          <td class="paramname"><span class="paramname"><em>mt</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Carga IQ int8 acotado por limite de muestras complejas.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data_path</td><td>Ruta del archivo data. </td></tr>
+    <tr><td class="paramname">out_raw</td><td>Buffer de salida reservado dinamicamente. </td></tr>
+    <tr><td class="paramname">out_bytes</td><td>Bytes cargados. </td></tr>
+    <tr><td class="paramname">max_complex_samples</td><td>Limite de muestras complejas. </td></tr>
+    <tr><td class="paramname">mt</td><td>Tracker de memoria para auditar reserva/liberacion. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>1 en exito; 0 en error. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="sigmf__io_8c_source.html#l00135">135</a> del archivo <a class="el" href="sigmf__io_8c_source.html">sigmf_io.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="profiler_8c_source.html#l00105">mt_alloc()</a> y <a class="el" href="profiler_8c_source.html#l00128">mt_free()</a>.</p>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas de esta función:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="sigmf__io_8c_ab9d13705767d28d9bb301318d2217e8c_cgraph.svg" width="264" height="88"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a4bfeec851af17c7ec93a1eea640d3434" name="a4bfeec851af17c7ec93a1eea640d3434"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bfeec851af17c7ec93a1eea640d3434">&#9670;&#160;</a></span>load_iq_int8_limited_chunked_into()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int load_iq_int8_limited_chunked_into </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>data_path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int8_t *</td>          <td class="paramname"><span class="paramname"><em>raw_buf</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>raw_capacity</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t *</td>          <td class="paramname"><span class="paramname"><em>out_bytes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>chunk_bytes</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Carga IQ int8 por chunks dentro de un buffer preasignado.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">data_path</td><td>Ruta del archivo data. </td></tr>
+    <tr><td class="paramname">raw_buf</td><td>Buffer destino preasignado. </td></tr>
+    <tr><td class="paramname">raw_capacity</td><td>Capacidad total del buffer destino. </td></tr>
+    <tr><td class="paramname">out_bytes</td><td>Bytes efectivamente leidos. </td></tr>
+    <tr><td class="paramname">chunk_bytes</td><td>Tamano de bloque de lectura. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>1 en exito; 0 en error. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="sigmf__io_8c_source.html#l00202">202</a> del archivo <a class="el" href="sigmf__io_8c_source.html">sigmf_io.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="main_8c_source.html#l00197">main()</a>.</p>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="sigmf__io_8c_a4bfeec851af17c7ec93a1eea640d3434_icgraph.svg" width="244" height="54"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ad889d98fa7687e910ca61bb5e81438fd" name="ad889d98fa7687e910ca61bb5e81438fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad889d98fa7687e910ca61bb5e81438fd">&#9670;&#160;</a></span>parse_sigmf_meta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int parse_sigmf_meta </td>
+          <td>(</td>
+          <td class="paramtype">const char *</td>          <td class="paramname"><span class="paramname"><em>meta_path</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structsigmf__meta__t.html">sigmf_meta_t</a> *</td>          <td class="paramname"><span class="paramname"><em>out_meta</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Parsea metadata SigMF y extrae frecuencia y sample rate.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">meta_path</td><td>Ruta del archivo metadata. </td></tr>
+    <tr><td class="paramname">out_meta</td><td>Estructura de salida. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>1 en exito; 0 en error. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="sigmf__io_8c_source.html#l00063">63</a> del archivo <a class="el" href="sigmf__io_8c_source.html">sigmf_io.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="iq__bench_8h_source.html#l00033">sigmf_meta_t::center_freq</a>, <a class="el" href="sigmf__io_8c_source.html#l00019">extract_u64()</a> y <a class="el" href="iq__bench_8h_source.html#l00032">sigmf_meta_t::sample_rate</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="main_8c_source.html#l00197">main()</a>.</p>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas de esta función:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="sigmf__io_8c_ad889d98fa7687e910ca61bb5e81438fd_cgraph.svg" width="276" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="sigmf__io_8c_ad889d98fa7687e910ca61bb5e81438fd_icgraph.svg" width="236" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="sigmf__io_8c.html">sigmf_io.c</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
+  </ul>
+</div>
+</body>
+</html>
