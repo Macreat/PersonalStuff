@@ -1,0 +1,396 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>IQ Method3 Bench C: Referencia del archivo profiler.c</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">IQ Method3 Bench C<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Documentacion tecnica profesional del pipeline IQ en C</div>
+  </td>
+ </tr>
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+</div><!-- top -->
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('profiler_8c.html','',''); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',false,false,'search.php','Buscar',true);
+});
+</script>
+<div id="main-nav"></div>
+<div id="container"><div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia del archivo profiler.c</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Utilidades de tiempo, memoria de proceso y tracking de asignaciones.  
+</p>
+<div class="textblock"><code>#include &quot;<a class="el" href="iq__bench_8h_source.html">iq_bench.h</a>&quot;</code><br />
+<code>#include &lt;stdlib.h&gt;</code><br />
+</div><div class="textblock"><div id="dynsection-0" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de dependencias incluidas en profiler.c:</div>
+<div id="dynsection-0-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-0-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="profiler_8c__incl.svg" width="219" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+<p><a href="profiler_8c_source.html">Ir al código fuente de este archivo.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
+Funciones</h2></td></tr>
+<tr class="memitem:ac9edef2846250df637bf929d60d1b5fe" id="r_ac9edef2846250df637bf929d60d1b5fe"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ac9edef2846250df637bf929d60d1b5fe">mem_tracker_init</a> (<a class="el" href="structmem__tracker__t.html">mem_tracker_t</a> *mt)</td></tr>
+<tr class="memdesc:ac9edef2846250df637bf929d60d1b5fe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inicializa contadores del tracker interno.  <br /></td></tr>
+<tr class="memitem:a6c18b7213389f79f1d8e0fe3ff5d987d" id="r_a6c18b7213389f79f1d8e0fe3ff5d987d"><td class="memItemLeft">void *&#160;</td><td class="memItemRight"><a class="el" href="#a6c18b7213389f79f1d8e0fe3ff5d987d">mt_alloc</a> (<a class="el" href="structmem__tracker__t.html">mem_tracker_t</a> *mt, size_t bytes)</td></tr>
+<tr class="memdesc:a6c18b7213389f79f1d8e0fe3ff5d987d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserva memoria y actualiza contadores del tracker.  <br /></td></tr>
+<tr class="memitem:afe41c4cf13f6d18756be82f64e7c23cb" id="r_afe41c4cf13f6d18756be82f64e7c23cb"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#afe41c4cf13f6d18756be82f64e7c23cb">mt_free</a> (<a class="el" href="structmem__tracker__t.html">mem_tracker_t</a> *mt, void *ptr, size_t bytes)</td></tr>
+<tr class="memdesc:afe41c4cf13f6d18756be82f64e7c23cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Libera memoria y actualiza contadores del tracker.  <br /></td></tr>
+<tr class="memitem:a2a7a51110c7f6cb8331a444312a37c71" id="r_a2a7a51110c7f6cb8331a444312a37c71"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#a2a7a51110c7f6cb8331a444312a37c71">now_ms</a> (void)</td></tr>
+<tr class="memdesc:a2a7a51110c7f6cb8331a444312a37c71"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna tiempo monotono en milisegundos.  <br /></td></tr>
+<tr class="memitem:ae420f3a8623cf6ccd35e06da44874ceb" id="r_ae420f3a8623cf6ccd35e06da44874ceb"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#ae420f3a8623cf6ccd35e06da44874ceb">process_peak_rss_mb</a> (void)</td></tr>
+<tr class="memdesc:ae420f3a8623cf6ccd35e06da44874ceb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene RSS pico reportado por el sistema operativo.  <br /></td></tr>
+<tr class="memitem:aa352eeb4a56c3953912134ff5d7cb6c1" id="r_aa352eeb4a56c3953912134ff5d7cb6c1"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#aa352eeb4a56c3953912134ff5d7cb6c1">process_rss_mb</a> (void)</td></tr>
+<tr class="memdesc:aa352eeb4a56c3953912134ff5d7cb6c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Obtiene RSS actual del proceso.  <br /></td></tr>
+<tr class="memitem:ab75d1429a23af07fccabc07a264b48fd" id="r_ab75d1429a23af07fccabc07a264b48fd"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#ab75d1429a23af07fccabc07a264b48fd">system_ram_percent</a> (void)</td></tr>
+<tr class="memdesc:ab75d1429a23af07fccabc07a264b48fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retorna porcentaje de carga de RAM del sistema.  <br /></td></tr>
+</table>
+<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Documentación de funciones</h2>
+<a id="ac9edef2846250df637bf929d60d1b5fe" name="ac9edef2846250df637bf929d60d1b5fe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9edef2846250df637bf929d60d1b5fe">&#9670;&#160;</a></span>mem_tracker_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mem_tracker_init </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmem__tracker__t.html">mem_tracker_t</a> *</td>          <td class="paramname"><span class="paramname"><em>mt</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Inicializa el tracker de memoria interno.</p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mt</td><td>Tracker de memoria. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="profiler_8c_source.html#l00090">90</a> del archivo <a class="el" href="profiler_8c_source.html">profiler.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="iq__bench_8h_source.html#l00056">mem_tracker_t::alloc_count</a>, <a class="el" href="iq__bench_8h_source.html#l00058">mem_tracker_t::bytes_current</a>, <a class="el" href="iq__bench_8h_source.html#l00059">mem_tracker_t::bytes_peak</a> y <a class="el" href="iq__bench_8h_source.html#l00057">mem_tracker_t::free_count</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="main_8c_source.html#l00197">main()</a>.</p>
+<div id="dynsection-1" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-1-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-1-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="profiler_8c_ac9edef2846250df637bf929d60d1b5fe_icgraph.svg" width="230" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a6c18b7213389f79f1d8e0fe3ff5d987d" name="a6c18b7213389f79f1d8e0fe3ff5d987d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c18b7213389f79f1d8e0fe3ff5d987d">&#9670;&#160;</a></span>mt_alloc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void * mt_alloc </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmem__tracker__t.html">mem_tracker_t</a> *</td>          <td class="paramname"><span class="paramname"><em>mt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>bytes</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mt</td><td>Tracker de memoria. </td></tr>
+    <tr><td class="paramname">bytes</td><td>Cantidad de bytes a reservar. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Devuelve</dt><dd>Puntero reservado o NULL. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="profiler_8c_source.html#l00105">105</a> del archivo <a class="el" href="profiler_8c_source.html">profiler.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="iq__bench_8h_source.html#l00056">mem_tracker_t::alloc_count</a>, <a class="el" href="iq__bench_8h_source.html#l00058">mem_tracker_t::bytes_current</a> y <a class="el" href="iq__bench_8h_source.html#l00059">mem_tracker_t::bytes_peak</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="sigmf__io_8c_source.html#l00135">load_iq_int8_limited()</a>, <a class="el" href="main_8c_source.html#l00197">main()</a> y <a class="el" href="welch_8c_source.html#l00086">welch_workspace_init()</a>.</p>
+<div id="dynsection-2" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-2-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-2-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="profiler_8c_a6c18b7213389f79f1d8e0fe3ff5d987d_icgraph.svg" width="376" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="afe41c4cf13f6d18756be82f64e7c23cb" name="afe41c4cf13f6d18756be82f64e7c23cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe41c4cf13f6d18756be82f64e7c23cb">&#9670;&#160;</a></span>mt_free()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void mt_free </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structmem__tracker__t.html">mem_tracker_t</a> *</td>          <td class="paramname"><span class="paramname"><em>mt</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">void *</td>          <td class="paramname"><span class="paramname"><em>ptr</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t</td>          <td class="paramname"><span class="paramname"><em>bytes</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">mt</td><td>Tracker de memoria. </td></tr>
+    <tr><td class="paramname">ptr</td><td>Puntero a liberar. </td></tr>
+    <tr><td class="paramname">bytes</td><td>Bytes asociados a la reserva original. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definición en la línea <a class="el" href="profiler_8c_source.html#l00128">128</a> del archivo <a class="el" href="profiler_8c_source.html">profiler.c</a>.</p>
+
+<p class="reference">Hace referencia a <a class="el" href="iq__bench_8h_source.html#l00058">mem_tracker_t::bytes_current</a> y <a class="el" href="iq__bench_8h_source.html#l00057">mem_tracker_t::free_count</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="sigmf__io_8c_source.html#l00135">load_iq_int8_limited()</a>, <a class="el" href="main_8c_source.html#l00197">main()</a> y <a class="el" href="welch_8c_source.html#l00156">welch_workspace_free()</a>.</p>
+<div id="dynsection-3" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-3-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-3-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="profiler_8c_afe41c4cf13f6d18756be82f64e7c23cb_icgraph.svg" width="574" height="190"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="a2a7a51110c7f6cb8331a444312a37c71" name="a2a7a51110c7f6cb8331a444312a37c71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a7a51110c7f6cb8331a444312a37c71">&#9670;&#160;</a></span>now_ms()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double now_ms </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Devuelve</dt><dd>Tiempo en ms. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="profiler_8c_source.html#l00019">19</a> del archivo <a class="el" href="profiler_8c_source.html">profiler.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="main_8c_source.html#l00197">main()</a>.</p>
+<div id="dynsection-4" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-4-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-4-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="profiler_8c_a2a7a51110c7f6cb8331a444312a37c71_icgraph.svg" width="179" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ae420f3a8623cf6ccd35e06da44874ceb" name="ae420f3a8623cf6ccd35e06da44874ceb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae420f3a8623cf6ccd35e06da44874ceb">&#9670;&#160;</a></span>process_peak_rss_mb()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double process_peak_rss_mb </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retorna RSS pico del proceso en MB.</p>
+<dl class="section return"><dt>Devuelve</dt><dd>Memoria RSS pico en MB. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="profiler_8c_source.html#l00057">57</a> del archivo <a class="el" href="profiler_8c_source.html">profiler.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="main_8c_source.html#l00197">main()</a>.</p>
+<div id="dynsection-5" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-5-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-5-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="profiler_8c_ae420f3a8623cf6ccd35e06da44874ceb_icgraph.svg" width="260" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="aa352eeb4a56c3953912134ff5d7cb6c1" name="aa352eeb4a56c3953912134ff5d7cb6c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa352eeb4a56c3953912134ff5d7cb6c1">&#9670;&#160;</a></span>process_rss_mb()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double process_rss_mb </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Retorna RSS actual del proceso en MB.</p>
+<dl class="section return"><dt>Devuelve</dt><dd>Memoria RSS en MB. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="profiler_8c_source.html#l00040">40</a> del archivo <a class="el" href="profiler_8c_source.html">profiler.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="main_8c_source.html#l00197">main()</a>.</p>
+<div id="dynsection-6" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-6-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-6-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="profiler_8c_aa352eeb4a56c3953912134ff5d7cb6c1_icgraph.svg" width="226" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+<a id="ab75d1429a23af07fccabc07a264b48fd" name="ab75d1429a23af07fccabc07a264b48fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab75d1429a23af07fccabc07a264b48fd">&#9670;&#160;</a></span>system_ram_percent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double system_ram_percent </td>
+          <td>(</td>
+          <td class="paramtype">void</td>          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Devuelve</dt><dd>Porcentaje de RAM en uso. </dd></dl>
+
+<p class="definition">Definición en la línea <a class="el" href="profiler_8c_source.html#l00073">73</a> del archivo <a class="el" href="profiler_8c_source.html">profiler.c</a>.</p>
+
+<p class="reference">Referenciado por <a class="el" href="main_8c_source.html#l00197">main()</a>.</p>
+<div id="dynsection-7" onclick="return dynsection.toggleVisibility(this)" class="dynheader closed" style="cursor:pointer;"><span class="dynarrow"><span class="arrowhead closed"></span></span>Gráfico de llamadas a esta función:</div>
+<div id="dynsection-7-summary" class="dynsummary" style="display:block;">
+</div>
+<div id="dynsection-7-content" class="dyncontent" style="display:none;">
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="profiler_8c_ab75d1429a23af07fccabc07a264b48fd_icgraph.svg" width="252" height="38"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a href="profiler_8c.html">profiler.c</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
+  </ul>
+</div>
+</body>
+</html>

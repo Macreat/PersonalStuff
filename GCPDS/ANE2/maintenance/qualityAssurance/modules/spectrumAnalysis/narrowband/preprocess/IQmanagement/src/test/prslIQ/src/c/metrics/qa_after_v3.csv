@@ -1,2 +1,0 @@
-files_requested,files_processed,samples_total,samples_expected,throughput_sps,throughput_efficiency,drop_rate_pct,cpu_ms,cpu_percent,ram_percent,rss_peak_mb,avg_file_ms,file_jitter_ms,latency_ratio,total_ms,load_ms,convert_ms,preprocess_ms,welch_ms,metric_ms,snr_mean_db,snr_std_db,noise_mean_dbm,center_mean_dbm,score,rss_start_mb,rss_end_mb
-2,2,65536,65536,13882098.754880,1.000000,0.000000,5.000000,105.912008,87.000000,4.144531,1.856750,0.089590,1.133270,4.720900,0.264900,0.089600,0.305500,2.678600,0.007500,12.080563,0.485607,-74.210926,-62.130363,-4.679725,3.691406,4.132812

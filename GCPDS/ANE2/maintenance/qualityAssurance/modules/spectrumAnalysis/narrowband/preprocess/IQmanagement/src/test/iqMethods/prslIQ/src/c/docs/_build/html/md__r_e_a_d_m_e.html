@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.16.1"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>IQ Method3 Bench C: Benchmark C de Metodo 3 IQ</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">var page_layout=1;</script>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(function() { init_search(); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="side-nav" class="ui-resizable side-nav-resizable"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">IQ Method3 Bench C<span id="projectnumber">&#160;1.0.0</span>
+   </div>
+   <div id="projectbrief">Documentacion tecnica profesional del pipeline IQ en C</div>
+  </td>
+ </tr>
+   <tr><td colspan="2">        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <span id="MSearchSelect" class="search-icon" onmouseover="return searchBox.OnSearchSelectShow()" onmouseout="return searchBox.OnSearchSelectHide()"><span class="search-icon-dropdown"></span></span>
+          <input type="text" id="MSearchField" value="" placeholder="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><div id="MSearchCloseImg" class="close-icon"></div></a>
+          </span>
+        </div>
+</td></tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.16.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+</div><!-- top -->
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('md__r_e_a_d_m_e.html','',''); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',false,false,'search.php','Buscar',true);
+});
+</script>
+<div id="main-nav"></div>
+<div id="container"><div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Benchmark C de Metodo 3 IQ </div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="autotoc_md16"></a></p>
+<p>Implementacion C minimalista para evaluar procesamiento IQ (Metodo 3) con foco en rendimiento, estabilidad y calidad de metricas.</p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+Alcance</h1>
+<ul>
+<li>IQ int8 intercalado -&gt; complejo float32</li>
+<li>Preproceso Metodo 3: remocion de DC + normalizacion RMS</li>
+<li>Welch PSD con workspace reutilizable</li>
+<li>Metricas de senal: piso de ruido, potencia central, SNR</li>
+<li>Metricas computacionales: tiempos por etapa, throughput, CPU, RAM, RSS</li>
+<li>Exportacion opcional a JSON y CSV</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+Estructura</h1>
+<ul>
+<li><a class="el" href="iq__bench_8h.html" title="Interfaz publica del benchmark C para procesamiento IQ Metodo 3.">include/iq_bench.h</a>: tipos y API publica</li>
+<li><a class="el" href="main_8c.html" title="Punto de entrada CLI del benchmark Metodo 3 IQ.">src/main.c</a>: flujo principal y reporte</li>
+<li><a class="el" href="fs__utils_8c.html" title="Descubrimiento de pares SigMF en directorio local.">src/fs_utils.c</a>: descubrimiento de pares SigMF</li>
+<li><a class="el" href="sigmf__io_8c.html" title="Utilidades de parseo SigMF y carga de IQ int8.">src/sigmf_io.c</a>: parseo de metadata y carga IQ</li>
+<li><a class="el" href="method3_8c.html" title="Implementacion del preproceso Metodo 3 (DC + RMS).">src/method3.c</a>: preproceso Metodo 3</li>
+<li><a class="el" href="welch_8c.html" title="Welch PSD con FFT radix-2 y workspace reutilizable.">src/welch.c</a>: Welch/FFT y metricas PSD</li>
+<li><a class="el" href="profiler_8c.html" title="Utilidades de tiempo, memoria de proceso y tracking de asignaciones.">src/profiler.c</a>: tiempo y memoria</li>
+<li><a class="el" href="_s_o_u_r_c_e___r_e_f_e_r_e_n_c_e_8md.html">docs/SOURCE_REFERENCE.md</a>: documentacion tecnica por archivo</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+Build</h1>
+<p>Desde el directorio del proyecto:</p>
+<div class="fragment"><div class="line">cmake -S . -B build -DCMAKE_BUILD_TYPE=Release</div>
+<div class="line">cmake --build build --config Release</div>
+</div><!-- fragment --><p>Optimizacion nativa local (solo benchmarking en la misma maquina):</p>
+<div class="fragment"><div class="line">cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DIQBENCH_NATIVE_OPT=ON</div>
+<div class="line">cmake --build build --config Release</div>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+Ejecucion</h1>
+<div class="fragment"><div class="line">.\build\Release\iq_method3_bench.exe --db &quot;D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/modules/db/DataBase-IQ-FM-88MHz-108MHz&quot; --files 6 --max-complex 262144 --nperseg 512 --overlap 0.5 --chunk-bytes 65536 --json-out qa_after.json --csv-out qa_after.csv</div>
+</div><!-- fragment --><p>Smoke test:</p>
+<div class="fragment"><div class="line">.\build\Release\iq_method3_bench.exe --files 2 --max-complex 32768 --nperseg 256 --overlap 0.5</div>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+Lectura rapida de resultados</h1>
+<ul>
+<li>Si <span class="tt">welch_ms</span> domina, el cuello de botella esta en la etapa espectral.</li>
+<li>Si <span class="tt">alloc_count == free_count</span> y <span class="tt">bytes_current == 0</span>, no hay fuga en tracker interno.</li>
+<li><span class="tt">throughput_sps</span>, <span class="tt">latency_ratio</span> y <span class="tt">file_jitter_ms</span> resumen salud operacional del pipeline.</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+Recomendaciones para produccion</h1>
+<ol type="1">
+<li>Comparar versiones con mismos parametros y mismo dataset.</li>
+<li>Mantener build Release para benchmark oficial.</li>
+<li>Versionar salidas JSON/CSV por corrida para detectar regresiones.</li>
+<li>Priorizar optimizacion de Welch/FFT antes de microoptimizar I/O.</li>
+</ol>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
+Documentacion HTML (Doxygen)</h1>
+<p>Generacion local:</p>
+<div class="fragment"><div class="line">.\generate_docs.ps1</div>
+</div><!-- fragment --><p>Instalacion automatica de herramientas + generacion:</p>
+<div class="fragment"><div class="line">.\generate_docs.ps1 -InstallTools</div>
+</div><!-- fragment --><p>Generar y abrir en navegador:</p>
+<div class="fragment"><div class="line">.\generate_docs.ps1 -Open</div>
+</div><!-- fragment --><p>Referencia de despliegue:</p><ul>
+<li><span class="tt">docs/DOCS_DEPLOYMENT.md</span> </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.16.1 </li>
+  </ul>
+</div>
+</body>
+</html>

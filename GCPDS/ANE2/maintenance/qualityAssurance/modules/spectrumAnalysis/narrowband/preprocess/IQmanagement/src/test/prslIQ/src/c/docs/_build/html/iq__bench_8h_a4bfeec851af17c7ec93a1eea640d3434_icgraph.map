@@ -1,5 +1,0 @@
-<map id="load_iq_int8_limited_chunked_into" name="load_iq_int8_limited_chunked_into">
-<area shape="rect" id="Node000001" title="Carga IQ int8 por chunks dentro de un buffer preasignado." alt="" coords="103,5,238,48"/>
-<area shape="rect" id="Node000002" href="$main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Ejecuta el benchmark completo sobre el dataset IQ configurado." alt="" coords="5,13,55,40"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="85,28,55,29,55,24,90,26"/>
-</map>

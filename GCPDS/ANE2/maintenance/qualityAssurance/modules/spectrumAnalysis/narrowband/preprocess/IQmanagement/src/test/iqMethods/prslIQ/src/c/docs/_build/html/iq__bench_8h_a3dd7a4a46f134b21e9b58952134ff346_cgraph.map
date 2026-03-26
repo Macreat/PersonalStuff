@@ -1,0 +1,5 @@
+<map id="welch_fft_shifted" name="welch_fft_shifted">
+<area shape="rect" id="Node000001" title="Calcula Welch PSD y devuelve espectro/frecuencias desplazados." alt="" coords="5,5,125,32"/>
+<area shape="rect" id="Node000002" href="$welch_8c.html#afc7ec47636d6ba5048d03258befc7a85" title="Ejecuta FFT radix&#45;2 in&#45;place usando indices bit&#45;reversal precomputados." alt="" coords="173,5,253,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="125,16,160,18,154,19,125,21"/>
+</map>

@@ -23,7 +23,7 @@ class CorrectedSignalResult:
     """Resultado de aplicación de correcciones"""
     original_pxx: np.ndarray
     corrected_pxx: np.ndarray
-    corrections_applied: dict
+    corrections_applied: dicts
     snr_improvement_db: float  # SNR after vs before
     thd_improvement_pct: float  # THD reduction %
     quality_score: float  # 0-1, higher is better

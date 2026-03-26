@@ -1,0 +1,54 @@
+<map id="main" name="main">
+<area shape="rect" id="Node000001" title="Ejecuta el benchmark completo sobre el dataset IQ configurado." alt="" coords="5,477,55,504"/>
+<area shape="rect" id="Node000002" href="$welch_8c.html#a172610cd406e07485a5c8adeba5ba9c3" title="Calcula metricas de senal desde una PSD lineal." alt="" coords="103,5,285,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="29,477,32,390,43,260,52,192,64,129,80,78,101,42,106,39,104,44,105,46,85,80,69,131,57,193,48,260,38,390,34,477"/>
+<area shape="rect" id="Node000003" href="$fs__utils_8c.html#a613a5ac98863c1ec1037529ea5448dbc" title="Descubre pares SigMF data/meta dentro de un directorio." alt="" coords="122,56,266,83"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="29,477,34,398,46,283,67,169,82,124,101,93,110,87,107,92,105,96,87,126,72,171,51,284,39,399,35,477"/>
+<area shape="rect" id="Node000006" href="$sigmf__io_8c.html#a483f8f8748670b0f93e15c4eefd28efc" title="Convierte IQ int8 intercalado a complejos float." alt="" coords="134,107,254,133"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="30,477,36,408,49,308,70,209,84,170,101,144,120,131,118,135,105,147,89,173,75,211,54,309,41,408,35,477"/>
+<area shape="rect" id="Node000007" href="$sigmf__io_8c.html#a4bfeec851af17c7ec93a1eea640d3434" title="Carga IQ int8 por chunks dentro de un buffer preasignado." alt="" coords="126,157,262,200"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="28,477,29,428,37,357,46,318,59,280,77,243,101,210,114,201,111,205,105,214,81,246,64,282,51,320,42,358,34,428,33,477"/>
+<area shape="rect" id="Node000008" href="$profiler_8c.html#ac9edef2846250df637bf929d60d1b5fe" title="Inicializa el tracker de memoria interno." alt="" coords="133,224,254,251"/>
+<area shape="poly" id="edge7_Node000001_Node000008" title=" " alt="" coords="29,477,31,435,41,377,63,315,80,286,101,261,121,249,118,253,104,265,84,289,68,317,46,379,37,436,34,477"/>
+<area shape="rect" id="Node000009" href="$method3_8c.html#a3f672af0d1ed85335290675eff7d41b9" title="Aplica Metodo 3 (remocion DC + normalizacion RMS) en sitio." alt="" coords="115,275,272,301"/>
+<area shape="poly" id="edge8_Node000001_Node000009" title=" " alt="" coords="31,477,37,445,50,402,70,357,101,318,119,306,117,311,105,322,75,360,55,404,42,446,36,477"/>
+<area shape="rect" id="Node000010" href="$profiler_8c.html#a6c18b7213389f79f1d8e0fe3ff5d987d" title="Reserva memoria y actualiza contadores del tracker." alt="" coords="375,731,445,757"/>
+<area shape="poly" id="edge9_Node000001_Node000010" title=" " alt="" coords="31,502,35,547,43,606,52,637,65,667,82,694,104,717,133,735,165,748,199,757,234,761,302,760,362,754,357,756,302,766,234,766,198,762,164,753,131,740,101,721,78,697,60,669,47,638,38,607,30,547,31,507"/>
+<area shape="rect" id="Node000011" href="$profiler_8c.html#afe41c4cf13f6d18756be82f64e7c23cb" title="Libera memoria y actualiza contadores del tracker." alt="" coords="535,579,601,605"/>
+<area shape="poly" id="edge10_Node000001_Node000011" title=" " alt="" coords="32,476,39,450,53,418,73,387,101,362,137,347,184,336,238,329,297,327,355,328,409,334,455,345,489,362,511,382,529,406,543,433,553,461,565,517,569,564,564,562,560,518,548,463,538,435,524,409,507,386,486,366,453,351,408,340,354,334,297,332,239,335,185,341,138,352,104,366,77,390,57,421,44,452,37,477"/>
+<area shape="rect" id="Node000012" href="$profiler_8c.html#a2a7a51110c7f6cb8331a444312a37c71" title="Retorna tiempo monotono en milisegundos." alt="" coords="159,427,229,453"/>
+<area shape="poly" id="edge11_Node000001_Node000012" title=" " alt="" coords="53,480,102,463,145,451,142,455,103,468,57,484"/>
+<area shape="rect" id="Node000013" href="$sigmf__io_8c.html#ad889d98fa7687e910ca61bb5e81438fd" title="Parsea metadata SigMF y extrae frecuencia y sample rate." alt="" coords="130,376,258,403"/>
+<area shape="poly" id="edge12_Node000001_Node000013" title=" " alt="" coords="38,476,64,443,101,412,117,406,114,410,104,417,68,447,43,478"/>
+<area shape="rect" id="Node000015" href="$main_8c.html#aad22422fc18ec01dec039cf9b908f591" title="Muestra opciones CLI y valores por defecto del benchmark." alt="" coords="150,528,238,555"/>
+<area shape="poly" id="edge14_Node000001_Node000015" title=" " alt="" coords="54,497,103,513,137,524,132,527,102,519,56,502"/>
+<area shape="rect" id="Node000016" href="$profiler_8c.html#ae420f3a8623cf6ccd35e06da44874ceb" title="Retorna RSS pico del proceso en MB." alt="" coords="118,579,270,605"/>
+<area shape="poly" id="edge15_Node000001_Node000016" title=" " alt="" coords="40,502,68,534,104,564,115,571,110,573,101,569,64,538,41,507"/>
+<area shape="rect" id="Node000017" href="$profiler_8c.html#aa352eeb4a56c3953912134ff5d7cb6c1" title="Retorna RSS actual del proceso en MB." alt="" coords="135,629,252,656"/>
+<area shape="poly" id="edge16_Node000001_Node000017" title=" " alt="" coords="35,502,60,558,79,589,104,615,123,627,118,629,101,619,75,592,55,561,35,507"/>
+<area shape="rect" id="Node000018" href="$profiler_8c.html#ab75d1429a23af07fccabc07a264b48fd" title="Retorna porcentaje de carga de RAM del sistema." alt="" coords="122,680,266,707"/>
+<area shape="poly" id="edge17_Node000001_Node000018" title=" " alt="" coords="33,502,41,537,53,581,74,627,88,648,104,666,111,672,106,674,101,670,83,651,69,629,48,583,36,538,33,507"/>
+<area shape="rect" id="Node000019" href="$welch_8c.html#a3dd7a4a46f134b21e9b58952134ff346" title="Calcula Welch PSD y devuelve espectro/frecuencias desplazados." alt="" coords="134,477,254,504"/>
+<area shape="poly" id="edge18_Node000001_Node000019" title=" " alt="" coords="54,488,121,489,117,493,57,493"/>
+<area shape="rect" id="Node000021" href="$welch_8c.html#a1d1e5ec6e1712608f240e48f35a5f3f0" title="Libera recursos asociados a un workspace Welch." alt="" coords="333,832,487,859"/>
+<area shape="poly" id="edge20_Node000001_Node000021" title=" " alt="" coords="32,502,41,571,53,667,74,760,88,795,105,818,129,836,157,849,186,858,217,863,278,865,337,861,332,862,278,870,216,868,185,863,155,854,127,840,101,822,83,798,69,761,48,668,35,572,32,507"/>
+<area shape="rect" id="Node000022" href="$welch_8c.html#a8795794ac8ab2fcea3799d466265b141" title="Inicializa workspace Welch y sus buffers reutilizables." alt="" coords="119,781,268,808"/>
+<area shape="poly" id="edge22_Node000001_Node000022" title=" " alt="" coords="31,502,34,553,43,621,51,658,64,695,82,730,105,761,118,773,113,774,101,764,77,733,59,697,46,660,37,622,29,553,31,507"/>
+<area shape="rect" id="Node000024" href="$main_8c.html#a1594a82c32c1e536472f246cc33adb42" title="Escribe resumen consolidado en formato CSV de una fila." alt="" coords="125,883,263,909"/>
+<area shape="poly" id="edge26_Node000001_Node000024" title=" " alt="" coords="32,502,41,578,54,686,75,792,88,834,105,862,117,874,112,875,101,866,84,836,69,793,48,686,35,579,32,507"/>
+<area shape="rect" id="Node000025" href="$main_8c.html#a6454b4fd7d1e80a08a48ebd2943472b7" title="Escribe resumen consolidado en formato JSON." alt="" coords="123,933,264,960"/>
+<area shape="poly" id="edge27_Node000001_Node000025" title=" " alt="" coords="32,502,38,588,49,714,58,778,70,838,86,887,105,920,113,929,107,928,101,923,81,889,65,839,53,779,44,714,33,589,32,507"/>
+<area shape="rect" id="Node000004" href="$fs__utils_8c.html#a2f3c9b43c5441cd4a30a99f36cc76642" title="Verifica si una cadena termina con un sufijo dado." alt="" coords="370,31,450,57"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="265,59,357,49,353,52,268,63"/>
+<area shape="rect" id="Node000005" href="$fs__utils_8c.html#a42b7894d846a073c9ff5c2b0d1118143" title="Comparador para ordenar pares SigMF por ruta de data." alt="" coords="373,81,447,108"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="265,75,360,87,355,90,268,80"/>
+<area shape="rect" id="Node000014" href="$sigmf__io_8c.html#adce5b9bbc079982998a0fdb648cc35a6" title="Extrae un valor numerico no negativo asociado a una clave textual." alt="" coords="366,376,455,403"/>
+<area shape="poly" id="edge13_Node000013_Node000014" title=" " alt="" coords="257,387,352,388,348,391,259,392"/>
+<area shape="rect" id="Node000020" href="$welch_8c.html#afc7ec47636d6ba5048d03258befc7a85" title="Ejecuta FFT radix&#45;2 in&#45;place usando indices bit&#45;reversal precomputados." alt="" coords="370,477,450,504"/>
+<area shape="poly" id="edge19_Node000019_Node000020" title=" " alt="" coords="253,488,357,489,352,492,255,493"/>
+<area shape="poly" id="edge21_Node000021_Node000011" title=" " alt="" coords="470,829,486,818,504,796,520,771,543,717,556,664,563,623,566,619,561,665,548,719,525,774,509,799,489,822,472,834"/>
+<area shape="poly" id="edge24_Node000022_Node000010" title=" " alt="" coords="253,778,362,754,358,757,255,783"/>
+<area shape="poly" id="edge25_Node000022_Node000021" title=" " alt="" coords="254,806,338,827,333,829,254,811"/>
+<area shape="rect" id="Node000023" href="$welch_8c.html#aa421fdfbe907c9724b7b6501a9497da6" title="Verifica si un valor es potencia de dos." alt="" coords="350,781,470,808"/>
+<area shape="poly" id="edge23_Node000022_Node000023" title=" " alt="" coords="268,792,337,794,332,796,269,797"/>
+</map>

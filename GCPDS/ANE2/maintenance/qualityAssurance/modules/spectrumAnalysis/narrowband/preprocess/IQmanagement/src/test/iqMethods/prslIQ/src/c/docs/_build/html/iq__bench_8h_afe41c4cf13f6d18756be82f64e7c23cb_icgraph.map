@@ -1,0 +1,13 @@
+<map id="mt_free" name="mt_free">
+<area shape="rect" id="Node000001" title="Libera memoria y actualiza contadores del tracker." alt="" coords="502,56,568,83"/>
+<area shape="rect" id="Node000002" href="$sigmf__io_8c.html#ab9d13705767d28d9bb301318d2217e8c" title="Carga IQ int8 acotado por limite de muestras complejas." alt="" coords="310,5,445,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="485,55,421,35,421,30,491,54"/>
+<area shape="rect" id="Node000003" href="$main_8c.html#a3c04138a5bfe5d72780bb7e82a18e627" title="Ejecuta el benchmark completo sobre el dataset IQ configurado." alt="" coords="5,107,55,133"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="484,71,317,80,210,90,103,104,56,115,54,110,102,99,210,84,317,75,489,69"/>
+<area shape="rect" id="Node000004" href="$welch_8c.html#a1d1e5ec6e1712608f240e48f35a5f3f0" title="Libera recursos asociados a un workspace Welch." alt="" coords="300,107,454,133"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="491,84,422,109,420,104,485,85"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="284,123,55,123,55,117,285,117"/>
+<area shape="rect" id="Node000005" href="$welch_8c.html#a8795794ac8ab2fcea3799d466265b141" title="Inicializa workspace Welch y sus buffers reutilizables." alt="" coords="103,157,252,184"/>
+<area shape="poly" id="edge5_Node000004_Node000005" title=" " alt="" coords="309,137,233,159,232,154,304,138"/>
+<area shape="poly" id="edge6_Node000005_Node000003" title=" " alt="" coords="120,154,55,131,56,126,124,150"/>
+</map>

@@ -1,0 +1,19 @@
+{
+  "files_requested": 2,
+  "files_processed": 2,
+  "samples_total": 65536,
+  "throughput_sps": 1842674.262281,
+  "total_ms": 35.565700,
+  "load_ms": 2.208400,
+  "convert_ms": 0.510500,
+  "preprocess_ms": 1.170700,
+  "welch_ms": 16.897700,
+  "metric_ms": 0.048200,
+  "snr_mean_db": 12.080563,
+  "snr_std_db": 0.485607,
+  "noise_mean_dbm": -74.210926,
+  "center_mean_dbm": -62.130363,
+  "score": -4.679725,
+  "rss_start_mb": 3.828125,
+  "rss_end_mb": 4.285156
+}

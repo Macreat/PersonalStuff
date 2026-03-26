@@ -1,0 +1,18 @@
+{
+  "best_method": "Metodo 3 IQ",
+  "files": 6,
+  "samples_total": 157286400,
+  "load_ms_total": 875.2327999100089,
+  "convert_ms_total": 2481.1758000287227,
+  "welch_ms_total": 36182.09349992685,
+  "metric_ms_total": 0.01409999094903469,
+  "kde_ms_total": 4.997199983336031,
+  "total_ms": 39544.82300003292,
+  "rss_start_mb": 384.296875,
+  "rss_end_mb": 384.26171875,
+  "rss_delta_mb": -0.03515625,
+  "snr_mean_db": 3.004906972249349,
+  "snr_std_db": 0.05224979900355979,
+  "noise_mean_dbm": -74.48205693562825,
+  "center_mean_dbm": -71.4771499633789
+}
