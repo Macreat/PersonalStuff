@@ -54,45 +54,73 @@ Notes:
 - Use the appropriate package manager depending on the repo: pip for Python, npm for Node.
 - For reproducible environments prefer Docker (see below).
 
-## Running the Agents CLI (examples)
+## Copilot CLI — installation, get started, and concepts
 
-This section follows GitHub Copilot CLI patterns for terminal-driven agent workflows. See the official docs for installation details: https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli
+This section pulls together official Copilot documentation so contributors can install and run Copilot CLI from the terminal, understand core concepts, and find tutorials.
 
-Supported OS: Windows (PowerShell, WSL), Linux, macOS.
+Installation (choose one):
 
-Interactive mode (recommended for exploration):
-- Start an interactive session: `copilot`
-- Two interactive modes: ask/execute (default) and plan mode. Press Shift+Tab to switch to plan mode for structured, multi-step plans.
-- While running, you can steer the conversation, enqueue follow-ups, and give inline feedback when Copilot requests tool access.
+- npm (cross-platform, Node.js 22+ required):
+  - npm install -g @github/copilot
+  - (If npm ignores scripts) npm_config_ignore_scripts=false npm install -g @github/copilot
 
-Programmatic mode (one-shot prompts):
-- Run a single prompt and exit: `copilot -p "Show me this week's commits and summarize them"`
-- Allow specific tools for programmatic runs: `copilot -p "..." --allow-tool='shell(git)'`
-- To permit all tools for the session (risky), use: `--allow-all-tools` (use with extreme caution).
+- WinGet (Windows):
+  - winget install GitHub.Copilot
 
-Examples (PowerShell / WSL):
-- Interactive: `copilot`
-- Programmatic with git access: `copilot -p "List modified Python files" --allow-tool='shell(git)'`
-- Programmatic full automation (dangerous): `copilot -p "Run tests and create a PR if they pass" --allow-all-tools`
+- Homebrew (macOS / Linux):
+  - brew install copilot-cli
 
-Security & trusted directories:
-- Launch Copilot CLI from a directory you trust. Copilot will ask to confirm trust for the current directory and its subdirectories.
-- When Copilot requests permission to use a tool, you typically choose: 1) Yes, 2) Yes (for session), 3) No (and provide feedback). Review each request carefully.
+- Install script (macOS / Linux):
+  - curl -fsSL https://gh.io/copilot-install | bash
 
-Context management & helpful commands:
-- `/compact` — compress conversation history when approaching token limits.
-- `/context` — show token usage breakdown and what is in context.
+- Or download a release binary from: https://github.com/github/copilot-cli/releases
 
-Customization & integrations:
-- Use custom instructions, MCP servers, hooks, and skills to connect Copilot CLI to your project-specific data sources and workflows.
-- Configure secrets and API keys in environment variables or a secrets manager; do not commit them to the repo.
+Authentication:
 
-How this maps to Agents CLI in this repo:
-- Use `copilot` for exploratory, interactive role-based sessions (e.g., "Coordinator", "Interpreter").
-- Use programmatic `copilot -p` calls in CI or automation scripts when you want deterministic one-shot tasks (remember to scope tool approvals).
+- On first run, launch `copilot` and use the `/login` command to authenticate via the browser.
+- Or export a fine-grained personal access token with "Copilot Requests" permission:
+  - export COPILOT_GITHUB_TOKEN="ghp_..."
 
-See the Copilot CLI docs for full install instructions and advanced configuration: https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli
+Starting Copilot and basic usage:
 
+- Interactive (conversational):
+  - Run `copilot` in the terminal (it uses the current working directory as the context). Copilot will ask you to confirm that the directory is trusted before reading/modifying files.
+  - Interactive modes: ask/execute (default) and plan mode — press Shift+Tab to enter plan mode for structured multi-step plans.
+
+- Programmatic (one-shot):
+  - `copilot -p "List TODOs in src/ and create issues"`
+  - Allow tools for automation: add `--allow-tool='shell(git)'` or `--allow-all-tools` (dangerous; prefer scoping to specific tools).
+
+Security notes:
+
+- Copilot runs with the privileges of the user. Only run it from trusted directories and review any requested tool permissions.
+- Copilot prompts to allow tools (Yes / Yes for session / No). Choose conservatively.
+
+Core concepts & where to learn more:
+
+- What is Copilot: high-level AI assistant integrated into editors, GitHub, and CLI. Useful for code completion, code review, repo tasks, and automation.
+- Modes: inline suggestions (editor), chat (IDE & GitHub), and CLI (interactive/programmatic).
+- Customization: custom instructions, MCP servers (data connectors), hooks, and skills to adapt Copilot to project workflows.
+
+Useful commands & tips:
+
+- `/compact` — compress conversation history when token budgets are high.
+- `/context` — show what is currently in Copilot's context window.
+- Use `.copilot/custom-instructions` or repo-level custom instruction files to give Copilot project-specific guidance.
+
+References, how-tos and tutorials
+
+- Official Copilot docs home: https://docs.github.com/en/copilot
+- Copilot CLI: https://docs.github.com/en/copilot/how-tos/set-up/install-copilot-cli
+- Using Copilot CLI: https://docs.github.com/en/copilot/concepts/agents/copilot-cli/about-copilot-cli
+- Get started / tutorials: https://docs.github.com/en/copilot/getting-started-with-github-copilot
+
+How this ties into this Agents CLI repo
+
+- Use Copilot CLI for exploratory, role-based sessions in this repository. Run `copilot` from a module directory (e.g., `GCPDS/agentCLI/`) so Copilot can read nearby files and provide targeted suggestions.
+- For CI automation, use `copilot -p` in scripts, but carefully scope `--allow-tool` flags.
+
+If you want, add a small shell snippet or GitHub Actions job that installs Copilot and runs a one-shot prompt in CI — say if you want to automate lightweight repo checks.
 ## Prompting best practices (use this as a template)
 
 Start prompts with:
