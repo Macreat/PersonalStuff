@@ -16,7 +16,7 @@ Supported example agent backends (examples):
 - GitHub Copilot (developer assistant)
 - Anthropic Claude (instruction-following)
 - OpenAI GPT-4 / GPT-5-mini (creative & reasoning)
-- Google Gemini (multimodal tasks)
+- gemini CLI  (multimodal tasks)
 
 
 ## Copilot CLI — installation, get started, and concepts
@@ -154,7 +154,8 @@ _go to_  [`collaboratory environment guide`](/C-Collab-Env-Guide.md) _for more d
 
 ## How to contribute (brief)
 
-1. Pick a role/task from ROLE-BASED_GUIDE.md
+1. Pick a role/task from ROLE-BASED_GUIDE.md : [`collaboratory environment guide`](../ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md) 
+
 2. Create a branch (after confirm the repo cloned): <feature>-<role>-<short-desc>
 3. Add tests, type hints, and docs (follow Google docstring style)
 4. Run tests and linters before PR and commit.

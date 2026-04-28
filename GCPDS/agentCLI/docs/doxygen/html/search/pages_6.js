@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['c_0',['Guía: Entornos colaborativos para desarrollo en C',['../dd/df8/md__g_c_p_d_s_2agent_c_l_i_2_c-_collab-_env-_guide.html',1,'']]],
+  ['calibration_20gain_20tuning_1',['WEEK 2: IQ Calibration &amp;amp; Gain Tuning',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md33',1,'']]],
+  ['campaign_20data_20across_20bands_2',['1. Load Campaign Data Across Bands',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md19',1,'']]],
+  ['challenges_3',['CRITICAL: The 5 Signal Quality Challenges',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md30',1,'']]],
+  ['checklist_4',['Daily Validation Checklist',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md35',1,'']]],
+  ['checklist_203_20weeks_5',['Implementation Checklist (3 Weeks)',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md31',1,'']]],
+  ['checklist_20for_20prs_6',['Code Review Checklist (For PRs)',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md39',1,'']]],
+  ['cli_20—_20guide_20for_20co_20workers_7',['Agents CLI — Guide for co-workers',['../index.html',1,'']]],
+  ['cli_20—_20installation_20get_20started_20and_20concepts_8',['Copilot CLI — installation, get started, and concepts',['../index.html#autotoc_md2',1,'']]],
+  ['co_20workers_9',['Agents CLI — Guide for co-workers',['../index.html',1,'']]],
+  ['code_10',['I found a bug in someone else&apos;s code',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md64',1,'']]],
+  ['code_20modules_11',['Code Modules',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md17',1,'Code Modules'],['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md29',1,'Code Modules'],['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md44',1,'Your Code Modules']]],
+  ['code_20quality_20standards_12',['Code Quality Standards',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md23',1,'']]],
+  ['code_20review_20checklist_20for_20prs_13',['Code Review Checklist (For PRs)',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md39',1,'']]],
+  ['colaborativos_20para_20desarrollo_20en_20c_14',['Guía: Entornos colaborativos para desarrollo en C',['../dd/df8/md__g_c_p_d_s_2agent_c_l_i_2_c-_collab-_env-_guide.html',1,'']]],
+  ['collaboration_20guide_15',['ROLE-BASED DOCUMENTATION &amp;amp; COLLABORATION GUIDE',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html',1,'']]],
+  ['collaboration_20matrix_16',['CROSS-TEAM COLLABORATION MATRIX',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md53',1,'']]],
+  ['collaborative_20reproducible_20environments_17',['Collaborative &amp;amp; Reproducible environments',['../index.html#autotoc_md5',1,'']]],
+  ['concepts_18',['Copilot CLI — installation, get started, and concepts',['../index.html#autotoc_md2',1,'']]],
+  ['concepts_20why_20this_20tool_20is_20useful_19',['Concepts &amp;amp; Why this tool is useful',['../index.html#autotoc_md1',1,'']]],
+  ['contribute_20brief_20',['How to contribute (brief)',['../index.html#autotoc_md8',1,'']]],
+  ['copilot_20cli_20—_20installation_20get_20started_20and_20concepts_21',['Copilot CLI — installation, get started, and concepts',['../index.html#autotoc_md2',1,'']]],
+  ['correlation_22',['3. Analyze Band Correlation',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md21',1,'']]],
+  ['critical_3a_20the_205_20signal_20quality_20challenges_23',['CRITICAL: The 5 Signal Quality Challenges',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md30',1,'']]],
+  ['cross_20team_20collaboration_20matrix_24',['CROSS-TEAM COLLABORATION MATRIX',['../df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html#autotoc_md53',1,'']]]
+];
