@@ -1,0 +1,54 @@
+# Doxyfile 1.9 - Agents CLI consolidated documentation
+# Generated to include only the necessary "endpoints" (sections) from project markdowns
+
+PROJECT_NAME           = "Agents CLI — Consolidated Docs"
+PROJECT_BRIEF          = "Consolidated documentation pages: README, basisReadme, ROLE-BASED_GUIDE, C-Collab-Env-Guide"
+
+OUTPUT_DIRECTORY       = docs\doxygen
+CREATE_SUBDIRS         = YES
+
+# Generate only HTML (no LaTeX/PDF) for a polished web view
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_MAN           = NO
+GENERATE_RTF           = NO
+GENERATE_XML           = NO
+HTML_OUTPUT            = html
+GENERATE_TREEVIEW      = YES
+
+# Reduce noise during generation
+QUIET                 = YES
+WARNINGS              = NO
+WARN_IF_UNDOCUMENTED  = NO
+
+# Input files: only the markdown files that act as endpoints/pages
+INPUT                  = \
+  README.md \
+  basisReadme.md \
+  C-Collab-Env-Guide.md \
+  D:\\wnOs\\wsp\\CODE\\work\\PersonalStuff\\GCPDS\\ANE2\\maintenance\\qualityAssurance\\ROLE-BASED_GUIDE.md
+
+# Patterns and formats
+FILE_PATTERNS          = *.md
+RECURSIVE              = NO
+USE_MDFILE_AS_MAINPAGE = README.md
+MARKDOWN_SUPPORT       = YES
+EXTENSION_MAPPING      = md=Markdown
+INPUT_ENCODING         = UTF-8
+STRIP_FROM_PATH        = D:\\wnOs\\wsp\\CODE\\work\\PersonalStuff
+FULL_PATH_NAMES        = NO
+
+# Presentation
+GENERATE_INDEX         = YES
+SOURCE_BROWSER         = NO
+INLINE_SOURCES         = NO
+TAB_SIZE               = 4
+
+# Keep output minimal and focused: do not document code symbols
+EXTRACT_ALL            = NO
+OPTIMIZE_OUTPUT_FOR_C  = NO
+
+# Optional: keep default theme, add custom CSS by placing it into html folder and setting HTML_EXTRA_STYLESHEET
+# HTML_EXTRA_STYLESHEET = custom.css
+
+# End of Doxyfile
