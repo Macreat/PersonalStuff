@@ -1,13 +1,14 @@
 # Doxyfile 1.9 - Agents CLI consolidated documentation
-# Generated to include only the necessary "endpoints" (sections) from project markdowns
+# Minimal Doxygen config to generate HTML pages from repository markdown files
 
 PROJECT_NAME           = "Agents CLI — Consolidated Docs"
 PROJECT_BRIEF          = "Consolidated documentation pages: README, basisReadme, ROLE-BASED_GUIDE, C-Collab-Env-Guide"
 
-OUTPUT_DIRECTORY       = docs\doxygen
+# Absolute output directory to avoid path resolution issues when invoking doxygen from any cwd
+OUTPUT_DIRECTORY       = D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/docs/doxygen
 CREATE_SUBDIRS         = YES
 
-# Generate only HTML (no LaTeX/PDF) for a polished web view
+# Generate only HTML (no LaTeX/PDF)
 GENERATE_HTML          = YES
 GENERATE_LATEX         = NO
 GENERATE_MAN           = NO
@@ -21,34 +22,29 @@ QUIET                 = YES
 WARNINGS              = NO
 WARN_IF_UNDOCUMENTED  = NO
 
-# Input files: only the markdown files that act as endpoints/pages
+# Input files (absolute paths to avoid resolution problems)
 INPUT                  = \
-  README.md \
-  basisReadme.md \
-  C-Collab-Env-Guide.md \
-  D:\\wnOs\\wsp\\CODE\\work\\PersonalStuff\\GCPDS\\ANE2\\maintenance\\qualityAssurance\\ROLE-BASED_GUIDE.md
+  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/README.md \
+  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/basisReadme.md \
+  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/C-Collab-Env-Guide.md \
+  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md
 
 # Patterns and formats
 FILE_PATTERNS          = *.md
 RECURSIVE              = NO
 USE_MDFILE_AS_MAINPAGE = README.md
 MARKDOWN_SUPPORT       = YES
-EXTENSION_MAPPING      = md=Markdown
+# Avoid EXTENSION_MAPPING to prevent compatibility errors with some Doxygen versions
 INPUT_ENCODING         = UTF-8
-STRIP_FROM_PATH        = D:\\wnOs\\wsp\\CODE\\work\\PersonalStuff
+STRIP_FROM_PATH        = D:/wnOs/wsp/CODE/work/PersonalStuff
 FULL_PATH_NAMES        = NO
 
 # Presentation
-GENERATE_INDEX         = YES
 SOURCE_BROWSER         = NO
 INLINE_SOURCES         = NO
 TAB_SIZE               = 4
 
 # Keep output minimal and focused: do not document code symbols
 EXTRACT_ALL            = NO
-OPTIMIZE_OUTPUT_FOR_C  = NO
-
-# Optional: keep default theme, add custom CSS by placing it into html folder and setting HTML_EXTRA_STYLESHEET
-# HTML_EXTRA_STYLESHEET = custom.css
 
 # End of Doxyfile
