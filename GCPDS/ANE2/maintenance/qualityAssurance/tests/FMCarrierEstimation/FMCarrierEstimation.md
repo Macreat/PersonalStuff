@@ -12,7 +12,9 @@ Notebook de estimacion de frecuencia portadora FM para monitoreo SDR (HackRF), c
 - Resolucion aproximada: 1220 Hz/bin.
 - Tolerancia dura: +-2 kHz.
 - Umbral warning: +-1 kHz.
-- Raster nominal: 100 kHz.
+- Raster nominal: 100 kHz. ¿?
+
+
 
 ## Flujo funcional minimo
 1. Carga de CSV por nodo.
@@ -45,18 +47,26 @@ Salidas principales:
 - Confidence [0,1] + flags de calidad.
 - Estado: COMPLIANT/WARNING/VIOLATION/UNVERIFIABLE.
 
+
+```
 ## Regla de compliance
 1. `|dev_hz| <= 1000`: COMPLIANT.
 2. `1000 < |dev_hz| <= 2000`: WARNING.
 3. `|dev_hz| > 2000`: VIOLATION.
 4. Sin match de canal nominal: UNVERIFIABLE.
 
+```
 ## Requisitos de implementacion para esta version
 1. Configuracion central (dataclass) y validacion inicial.
 2. Manejo de errores por tipo, no generico.
+    - esto con el fin de : 
+        - Definir un manejo de errores robusto para notebooks SDR/FM: evitar caidas, cuantificar perdida de datos y dejar evidencia auditable.
+
 3. Reporte de calidad por etapa y razon.
 4. Logging estructurado persistente.
 5. Export reproducible en carpeta timestamped.
+
+
 
 ## Contratos tecnicos clave
 - Sin NaN/Inf en arrays finales usados para deteccion.
@@ -70,6 +80,7 @@ Salidas principales:
 3. Guardar resultados tabulares y reporte de auditoria.
 4. Registrar resumen final de perdida de datos y compliance.
 
+
 ## Definition of Done (tecnico)
 - Pipeline ejecuta sin fallos no controlados.
 - Reporta perdida de datos por etapa y causa.
@@ -80,19 +91,84 @@ Salidas principales:
 # error handling implementation 
 
 
-## Error Handling Quickstart (Condensado)
+## Error Handling Quickstart (Condensado) HERE I strt the mtrix? 
 
+
+```
 ## Objetivo
 Definir un manejo de errores robusto para notebooks SDR/FM: evitar caidas, cuantificar perdida de datos y dejar evidencia auditable.
 
+```
+
+en nuestro contexto, debemos evitar 
+
+- Riesgo regulatorio: todo lo que pueda producir una clasificación COMPLIANT/WARNING/VIOLATION incorrecta va primero.
+- Riesgo de caída: si rompe ejecución o devuelve resultados vacíos sin control, va primero.
+- Pérdida silenciosa de datos: si descarta filas/archivos sin dejar evidencia, va muy arriba.
+Auditabilidad: si no queda rastro reproducible, no sirve para QA
+
+
 ## Prioridad de implementacion (de obligatorio a deseable)
+
 1. Estabilidad matematica.
-2. Guard clauses.
+    Qué es: asegurar operaciones numéricas seguras (log, divisiones, interpolación sub-bin, conversiones lineal↔dB).
+    
+    Riesgo si falla: NaN/Inf contaminan picos, SNR y desvíos; puedes clasificar mal compliance.
+
+2. Guard clauses.  (Clausulas de gurda)
+    - Qué es: validaciones tempranas para cortar flujo inválido sin romper todo el pipeline.
+    -  Riesgo si falta: excepciones en cascada o resultados engañosos por inputs vacíos/mal formados.
+ 
 3. Excepciones especificas.
+    BUSCAMOS capturar errores por tipo y manejar cada uno con acción clara. esto lo hacemos reemplazando excepciones genéricas con manejadores tipados.
+
+    - ganancia operativa: análisis más rápido de causa raíz.
+
 4. Degradacion elegante.
+    esto sucede cuando cuando falla un paso no crítico, se usa fallback (mas simple-menos precisa) y continuar con bandera de menor confianza, esto con el fin de no parar todo el pipeline.
+    
+    e.g : Cascada de fallback para corrección de reloj/PPM.
+     Flag de calidad/confianza por portadora.
 5. Reporte de calidad de datos.
+    se busca cuantificar pérdidas y rechazos por etapa y motivo.
+    esto con el fin de  defender resultados en auditoría.
+    - ganancia operativa: trazabilidad inmediata.
+    - ganancia operativa: diagnósticos de pérdidas cuantificados.
+
+    
 6. Logging estructurado.
+    tambien buscamos implementar logs consistentes, persistentes y trazables por corrida. esto para evitr un debugging lento, auditoría débil, difícil reproducibilidad.
+
 7. Validacion sintetica/regresion.
+     - Desviación de frecuencia: La mayoría de los canales transmiten muy cerca de su frecuencia nominal y cumplen con la tolerancia de ±2 kHz. Solo unos pocos casos aparecen como advertencias o violaciones.
+    - Confianza vs SNR: Existe una correlación clara; señales con SNR >20 dB muestran alta confianza (>0.8), mientras que las de bajo SNR tienden a ser no verificables o en advertencia.
+    - Cumplimiento general: El 82% de las estaciones cumplen, un 7% están en advertencia, 4.5% en violación y 5.7% no verificables, lo que refleja un sistema eficaz pero con algunos casos críticos que requieren seguimiento.
+
+```
+## WHAT CHANGES 
+
+# 6. Mejoras principales por ratio de impacto-esfuerzo
+
+1. Agregar registro estructurado de archivos.
+
+- ganancia operativa: trazabilidad inmediata.
+
+2. Agregar informe de calidad de datos basado en etapas.
+
+- ganancia operativa: diagnósticos de pérdidas cuantificados.
+
+3. Reemplazar excepciones genéricas con manejadores tipados.
+
+- ganancia operativa: análisis más rápido de causa raíz.
+
+4. Agregar instantánea de metadatos y exportaciones con marca de tiempo.
+
+- ganancia operativa: reproducibilidad.
+
+5. Agregar pruebas sintéticas de casos límite.
+
+- ganancia operativa: seguridad contra regresiones.
+
 
 ## Minimo viable obligatorio
 1. Log seguro:
@@ -128,7 +204,7 @@ except pd.errors.ParserError as e:
 except Exception as e:
     logger.critical(f"Unexpected error: {type(e).__name__}: {e}")
     raise
-```
+
 
 ## Degradacion elegante
 Aplicar cascada de fallback en pasos no criticos:
@@ -163,6 +239,7 @@ La corrida debe responder con evidencia:
 2. En que etapa.
 3. Por que causa.
 4. Bajo que configuracion.
+
 
 
 # nb audited 
@@ -235,3 +312,5 @@ El sistema debe poder explicar de forma objetiva:
 - Por que se descarto.
 - Que parametros gobernaron la corrida.
 - Que nivel de confianza tienen los resultados.
+
+```

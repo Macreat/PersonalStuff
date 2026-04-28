@@ -1,0 +1,130 @@
+# notes about chatbot prompts 
+
+multiagent task 
+
+1. well-crafted prompts
+2. concrete illustrations 
+3. step by step 
+4. roles assigned
+5. "reducing hallucinations"
+
+- topics to realize 
+
+
+timefrecuency representation for long audio data 
+spectrum representation to allow long audio data 
+
+chatbots... 
+
+gemini, gpt, copilot and deepseek 
+
+
+the topic depends on the context and the specific task at hand and chatbot role 
+
+
+# entender rol activo de diseño ¿qué hago? 
+
+
+about the tasks, step by step, first the matehmatic model,(conceptual model with the description of the tasks)
+ then model diagram, pseudocodig and finally the code (VERIFY EVERY STEP
+)
+
+
+Objective: multiagent task for multitasks 
+
+### apunte sobre duda entre definicion de rol estudiante para el chatbot y el rol que debería tomar realmenete
+###  pero luego explicar como si fuese DIRIGIDO A UN ESTUDIANTE
+
+
+--------------------------------------------------------------------------------------------------------------------------
+task resoultion :   TIME FRECUENCY representations for long audio data.  
+
+the structure should it be like this: 
+  * math model, concept design , logic design and PHYSICAL design (data base and storage)
+
+1. define the matemathical model 
+  here we can define what should it do the chatbot and how it should do it
+  #SIGNAL AND SEGMENTATION 
+  # STRUCTURE MODEL (SHORT TIME FOURIER TRANSFORM STFT)
+  # POTENCIA Y MEL?  -- log-Mel and normalization  (PROSÓDICAS? )
+  # MASK to avoid frames w/h voice 
+  # Metrics and features 
+
+2. define the model as pseudocode 
+
+2. define the E-R model (Entity-Relationship model) 
+made a UML MODEL with the entities, relationships and attributes
+  - entities: audio data, features, segments, masks, spectogram or mel-features
+  - relationships: audio data contains segments, segments have features, masks apply to segments, any binarie arteffact (audio, spectogram) 
+
+3. define the logic desing (relation between tables, keys and constraints) made the code to link at the project 
+
+--- CONTINUE with the code implementation for the API , as a backend developer i should do: 
+
+FIRST IS NECESSARY DEFINE THE ARCHITECTURE OF THE SYSTEM, 
+  - define the GATEWAY and the microservices (should it define the ARCHITECTURE of the microservices and the GATEWAY)
+      Some microservices could be:
+        - authentication service 
+        - report service 
+        - audio processing service (Time Frequency Representation)
+        - feature extraction service
+        - segmentation service
+        - mask application service
+        - storage service
+        - monitoring and logging service (user managment services) 
+
+  - define the API endpoints for each microservice
+  - define the data flow between the GATEWAY and the microservices
+  - define the communication protocols (REST, gRPC, etc.)
+  - define the data storage (database, file storage, etc.)  
+  - define the security measures (authentication, authorization, encryption, etc.)
+  - define the monitoring and logging (how to monitor the system, how to log the events, etc.)
+  - define the deployment strategy (how to deploy the system, how to scale the system, etc.)
+  - define the testing strategy (how to test the system, how to ensure the quality of the code, etc.)
+  - define the documentation strategy (how to document the system, how to ensure the documentation is up to date, etc.)
+  - define the maintenance strategy (how to maintain the system, how to ensure the system is up to date, etc.)
+  - define the versioning strategy (how to version the system, how to ensure the versioning is consistent, etc.)
+  - define the backup and recovery strategy (how to backup the system, how to recover the system in case of failure, etc.)
+  - define the performance strategy (how to ensure the system is performant, Bhow to optimize the system, etc.)-- THIS IS FRONT END TASK 
+
+
+  --------------------------------------------------------------------------------------------------------------------------
+
+about the workflow by roll contribution 
+
+1. Frame the task (Formalize the steps and objetive to achieve )
+2. Context provided 
+3. Optimize the prompt (reduce the ambiguity and increase the clarity) 
+  -especificar 
+...
+
+continue with the task... so, the idea is to define a multiagent that could take the task and resolve it step by step, with the roles assigned , context and info provided, being always being sepecific and concrete.
+  , it means that can avoid ambiguity and hallucination 
+
+
+----------------------------
+
+
+Diseño conceptual (idea en alto nivel)
+
+En software → el “plan paso a paso” del algoritmo.
+
+En bases de datos → el modelo conceptual (por ejemplo, un diagrama entidad-relación con entidades como Usuario, Audio, Espectrograma).
+
+Aquí defines qué existe y qué relaciones hay, sin pensar todavía en SQL ni en tablas concretas.
+
+👉 Es como un pseudocódigo, pero para datos: entiendes la lógica qué almacenarás, no el cómo.
+
+Diseño lógico (traducción a modelo formal)
+
+En software → tu pseudocódigo empieza a parecerse más a código real.
+
+En bases de datos → conviertes el modelo conceptual en un modelo lógico (ejemplo: tablas, claves primarias, relaciones 1–N, N–M).
+
+Aquí defines atributos, tipos de datos (string, integer, timestamp).
+
+Diseño físico (implementación concreta)
+
+En software → ya escribes el programa real en C++/Python.
+
+En bases de datos → ya creas la base en PostgreSQL, MySQL, MongoDB, etc., aplicando índices, particiones, optimización de consultas, y configuraciones de seguridad.

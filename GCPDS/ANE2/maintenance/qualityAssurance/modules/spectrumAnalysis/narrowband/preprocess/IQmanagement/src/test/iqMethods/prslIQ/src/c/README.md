@@ -1,6 +1,6 @@
 # Benchmark C de Metodo 3 IQ
 
-Implementacion C minimalista para evaluar procesamiento IQ (Metodo 3) con foco en rendimiento, estabilidad y calidad de metricas.
+Implementacion C minimalista para evaluar procesamiento IQ (Metodo 3- Welch-PSD) con foco en rendimiento, estabilidad y calidad de metricas.
 
 ## Alcance
 - IQ int8 intercalado -> complejo float32
@@ -53,7 +53,7 @@ Smoke test:
 
 ## Recomendaciones para produccion
 1. Comparar versiones con mismos parametros y mismo dataset.
-2. Mantener build Release para benchmark oficial.
+2. Mantener build Release (version de lanzamiento) para benchmark oficial.
 3. Versionar salidas JSON/CSV por corrida para detectar regresiones.
 4. Priorizar optimizacion de Welch/FFT antes de microoptimizar I/O.
 

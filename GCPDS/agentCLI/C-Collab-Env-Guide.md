@@ -1,7 +1,7 @@
 # Guía: Entornos colaborativos para desarrollo en C
 
 Resumen
-
+      
 Esta guía explica cómo montar entornos reproducibles y colaborativos para proyectos en C, tomando como referencia las prácticas de virtual environments (venv/conda) en Python. Se describen herramientas análogas (Conan, vcpkg, Docker), flujos de trabajo, integración con editores, y ejemplos prácticos para Windows/WSL/Linux.
 
 Principios clave

@@ -1,8 +1,12 @@
-# Agents CLI — Guide for collaborators
+# Agents CLI — Guide for co-workers
 
-This repository hosts an Agents CLI for coordinating multiple assistant agents (role-based agents, chatbots and tool connectors). This README provides concepts, rationale, installation steps (PowerShell + WSL), usage examples (Copilot, Claude, GPT-family, Gemini), best prompt practices, and guidance for collaborative environments (Docker, WSL, conda/venv, C toolchains).
+This repository hosts an Agents CLI for coordinating multiple assistant agents (role-based agents, chatbots and tool connectors), in order to explain the power of an AI agent directly into our terminal, enabling coding, automation, and workflow management.
+
+ _This README provides concepts, rationale, installation steps (PowerShell + WSL), usage examples (Copilot, Claude, GPT-family, Gemini), best prompt practices, and guidance for collaborative environments (Docker, WSL, conda/venv, C toolchains)._
 
 ## Concepts & Why this tool is useful
+
+Makes building, editing and deploying AI agents on a simple way. 
 
 - Multi-agent coordination: assign distinct roles (Coordinator, Interpreter, Audio/Processing, Backend) to get consistent, context-aware outputs.
 - Role, Objective, Context, Reasoning: prompts should declare these to reduce hallucinations and increase repeatability (see basisReadme.md).
@@ -14,45 +18,6 @@ Supported example agent backends (examples):
 - OpenAI GPT-4 / GPT-5-mini (creative & reasoning)
 - Google Gemini (multimodal tasks)
 
-## Quick start — Clone the repo
-
-Windows PowerShell (recommended):
-
-1. Open PowerShell (as user):
-   git clone https://github.com/Macreat/PersonalStuff.git
-   cd PersonalStuff\GCPDS\agentCLI
-
-2. Inspect docs:
-   - basisReadme.md  — conceptual & system design
-   - ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md — role-specific workflows
-
-## Install (two common flows)
-
-A. If the repo uses Python components (recommended for reproducibility):
-
-PowerShell:
-- python -m venv .venv
-- .\.venv\Scripts\Activate.ps1
-- if (Test-Path requirements.txt) { pip install -r requirements.txt }
-
-WSL / Linux:
-- sudo apt update && sudo apt install -y python3-venv python3-pip
-- git clone <repo>
-- python3 -m venv .venv
-- source .venv/bin/activate
-- pip install -r requirements.txt
-
-B. If the repo uses Node.js (check package.json):
-
-PowerShell:
-- npm install
-
-WSL:
-- npm install
-
-Notes:
-- Use the appropriate package manager depending on the repo: pip for Python, npm for Node.
-- For reproducible environments prefer Docker (see below).
 
 ## Copilot CLI — installation, get started, and concepts
 
@@ -121,7 +86,7 @@ How this ties into this Agents CLI repo
 - For CI automation, use `copilot -p` in scripts, but carefully scope `--allow-tool` flags.
 
 If you want, add a small shell snippet or GitHub Actions job that installs Copilot and runs a one-shot prompt in CI — say if you want to automate lightweight repo checks.
-## Prompting best practices (use this as a template)
+## Prompting best practices
 
 Start prompts with:
 1. Role: (who should respond — e.g., "Coordinator agent")
@@ -136,7 +101,10 @@ Example prompt:
 - Context: "Repo path: src/processing; test framework: pytest"
 - Output: JSON list of files & recommended tests
 
-This structured approach matches the ROLE → OBJECTIVE → CONTEXT → REASONING pattern in basisReadme.md.
+
+ROLE → OBJECTIVE → CONTEXT → REASONING pattern.
+
+
 
 ## Exploring / Examples to try
 
@@ -145,6 +113,9 @@ This structured approach matches the ROLE → OBJECTIVE → CONTEXT → REASONIN
 - Multimodal sample: audio → Audio agent computes spectrogram → Interpreter summarizes findings.
 
 Refer to ROLE-BASED_GUIDE.md for specific role entry points and code module maps for wideband/narrowband/voice services.
+
+_go to_  [`well prompt information`](wellPrompt/README.md) _for more detail_ 
+
 
 ## Collaborative & Reproducible environments
 
@@ -157,11 +128,15 @@ Refer to ROLE-BASED_GUIDE.md for specific role entry points and code module maps
 - Use Git + Remote development to keep builds identical to CI.
 
 3) Python envs: conda or venv
-- For heavier data or ML use conda envs; for lightweight reproducibility use venv + requirements.txt.
+- For heavier data or ML use conda envs; for lightweight reproducibility use venv/conda + requirements.txt.
 
 4) C development & toolchains
 - For C components, prefer building inside WSL or Docker (install build-essential / clang / msys2 on Windows).
 - Use consistent toolchains in CI to avoid "works on my machine" issues.
+
+_go to_  [`collaboratory environment guide`](/C-Collab-Env-Guide.md) _for more detail_ 
+
+
 
 ## Integrating other tools (text, image, video)
 
@@ -173,19 +148,16 @@ Refer to ROLE-BASED_GUIDE.md for specific role entry points and code module maps
 
 - This project favors open-source tooling; keep API keys and secrets out of the repo (.gitignore .env files).
 - Document data provenance and citation when using proprietary models.
+- We can create an organization and work on anthropic using CLAUDE. 
+
+
 
 ## How to contribute (brief)
 
 1. Pick a role/task from ROLE-BASED_GUIDE.md
-2. Create a branch: feature/<role>-<short-desc>
+2. Create a branch (after confirm the repo cloned): <feature>-<role>-<short-desc>
 3. Add tests, type hints, and docs (follow Google docstring style)
-4. Run tests and linters before PR
+4. Run tests and linters before PR and commit.
 5. Reference the role in the PR description
 
-## References
-- basisReadme.md — conceptual & structural guidance
-- ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md — role-specific workflows and module maps
 
----
-
-If you want, I can add runnable examples (Dockerfile, example runner) or tailor the install instructions to the repo's actual stack — tell me if this repo uses Python, Node, or a specific build system and I’ll update README with exact commands.
