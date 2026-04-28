@@ -86,6 +86,51 @@ How this ties into this Agents CLI repo
 - For CI automation, use `copilot -p` in scripts, but carefully scope `--allow-tool` flags.
 
 If you want, add a small shell snippet or GitHub Actions job that installs Copilot and runs a one-shot prompt in CI — say if you want to automate lightweight repo checks.
+
+## Gemini CLI — installation, concepts, and quickstart
+
+Gemini CLI brings Google Gemini models into the terminal with support for skills, sandboxing, headless automation, and project-aware context.
+
+Installation (recommended):
+
+- npm (cross-platform):
+  - npm install -g @google/gemini-cli
+
+- Or download binaries / releases at: https://github.com/google/gemini/gemini-cli/releases
+
+Authentication and first run:
+
+- After installing, run `gemini` to start an interactive session. Follow on-screen prompts to authenticate (browser flow) or consult the docs for enterprise configuration.
+- For CI/headless usage consult the Gemini docs for authentication and token approaches.
+
+Quick usage examples:
+
+- Interactive session: `gemini` (starts a conversational agent using current working directory as context).
+- Headless/one-shot (example): `gemini -p "List TODOs in src/ and summarize"`
+- Explore skills and tools: use the built-in help and `--help` to list commands and skill tutorials.
+
+Key concepts:
+
+- Skills: specialized agent modules that provide domain expertise (e.g., file management, shell execution, web fetch).
+- Sandbox & trusted folders: Gemini CLI isolates tool execution and asks for folder trust before using powerful tools.
+- Checkpointing & sessions: automatic snapshots and session history allow rewinding conversations.
+- Headless mode: run programmatic prompts for CI automation and scripts.
+
+Security notes:
+
+- Only run Gemini in trusted directories and review any requested permissions for executing shell tools.
+- Use sandboxing features and forbiddenPaths to constrain tool capabilities in sensitive environments.
+
+References & tutorials:
+
+- Official Gemini CLI docs: https://use-gemini.com/docs#installation
+- Tutorials: file management, skills, memory and context, sandboxing, and MCP server setup (see docs index).
+
+How this ties into this Agents CLI repo
+
+- Use `gemini` for multimodal and skill-driven local workflows. Run it from module directories (e.g., `GCPDS/agentCLI/`) so Gemini can access nearby files and provide context-aware help.
+- Prefer interactive mode for exploration and headless mode for scripted automation in CI (with careful auth and scoped permissions).
+
 ## Prompting best practices
 
 Start prompts with:
@@ -154,8 +199,24 @@ _go to_  [`collaboratory environment guide`](/C-Collab-Env-Guide.md) _for more d
 
 ## How to contribute (brief)
 
-1. Pick a role/task from ROLE-BASED_GUIDE.md : [`collaboratory environment guide`](../ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md) 
+A. If the repo uses Python components (recommended for reproducibility): 
 
+Clone as this: 
+
+PowerShell:
+- python -m venv .venv
+- .\.venv\Scripts\Activate.ps1
+- if (Test-Path requirements.txt) { pip install -r requirements.txt }
+
+WSL / Linux:
+- sudo apt update && sudo apt install -y python3-venv python3-pip
+- git clone <repo>
+- python3 -m venv .venv
+- source .venv/bin/activate
+- pip install -r requirements.txt
+    
+
+1. Pick a role/task from ROLE-BASED_GUIDE.md : [`collaboratory environment guide`](../ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md) 
 2. Create a branch (after confirm the repo cloned): <feature>-<role>-<short-desc>
 3. Add tests, type hints, and docs (follow Google docstring style)
 4. Run tests and linters before PR and commit.
