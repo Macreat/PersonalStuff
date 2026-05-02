@@ -183,8 +183,52 @@ Copilot CLI — installation, get started, and concepts</h1>
 <li>Use Copilot CLI for exploratory, role-based sessions in this repository. Run <span class="tt">copilot</span> from a module directory (e.g., <span class="tt">GCPDS/agentCLI/</span>) so Copilot can read nearby files and provide targeted suggestions.</li>
 <li>For CI automation, use <span class="tt">copilot -p</span> in scripts, but carefully scope <span class="tt">--allow-tool</span> flags.</li>
 </ul>
-<p>If you want, add a small shell snippet or GitHub Actions job that installs Copilot and runs a one-shot prompt in CI — say if you want to automate lightweight repo checks. </p>
+<p>If you want, add a small shell snippet or GitHub Actions job that installs Copilot and runs a one-shot prompt in CI — say if you want to automate lightweight repo checks.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+Gemini CLI — installation, concepts, and quickstart</h1>
+<p>Gemini CLI brings Google Gemini models into the terminal with support for skills, sandboxing, headless automation, and project-aware context.</p>
+<p>Installation (recommended):</p>
+<ul>
+<li>npm (cross-platform):<ul>
+<li>npm install -g @google/gemini-cli</li>
+</ul>
+</li>
+<li>Or download binaries / releases at: <a href="https://github.com/google/gemini/gemini-cli/releases">https://github.com/google/gemini/gemini-cli/releases</a></li>
+</ul>
+<p>Authentication and first run:</p>
+<ul>
+<li>After installing, run <span class="tt">gemini</span> to start an interactive session. Follow on-screen prompts to authenticate (browser flow) or consult the docs for enterprise configuration.</li>
+<li>For CI/headless usage consult the Gemini docs for authentication and token approaches.</li>
+</ul>
+<p>Quick usage examples:</p>
+<ul>
+<li>Interactive session: <span class="tt">gemini</span> (starts a conversational agent using current working directory as context).</li>
+<li>Headless/one-shot (example): <span class="tt">gemini -p "List TODOs in src/ and summarize"</span></li>
+<li>Explore skills and tools: use the built-in help and <span class="tt">--help</span> to list commands and skill tutorials.</li>
+</ul>
+<p>Key concepts:</p>
+<ul>
+<li>Skills: specialized agent modules that provide domain expertise (e.g., file management, shell execution, web fetch).</li>
+<li>Sandbox &amp; trusted folders: Gemini CLI isolates tool execution and asks for folder trust before using powerful tools.</li>
+<li>Checkpointing &amp; sessions: automatic snapshots and session history allow rewinding conversations.</li>
+<li>Headless mode: run programmatic prompts for CI automation and scripts.</li>
+</ul>
+<p>Security notes:</p>
+<ul>
+<li>Only run Gemini in trusted directories and review any requested permissions for executing shell tools.</li>
+<li>Use sandboxing features and forbiddenPaths to constrain tool capabilities in sensitive environments.</li>
+</ul>
+<p>References &amp; tutorials:</p>
+<ul>
+<li>Official Gemini CLI docs: <a href="https://use-gemini.com/docs#installation">https://use-gemini.com/docs#installation</a></li>
+<li>Tutorials: file management, skills, memory and context, sandboxing, and MCP server setup (see docs index).</li>
+</ul>
+<p>How this ties into this Agents CLI repo</p>
+<ul>
+<li>Use <span class="tt">gemini</span> for multimodal and skill-driven local workflows. Run it from module directories (e.g., <span class="tt">GCPDS/agentCLI/</span>) so Gemini can access nearby files and provide context-aware help.</li>
+<li>Prefer interactive mode for exploration and headless mode for scripted automation in CI (with careful auth and scoped permissions).</li>
+</ul>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
 Prompting best practices</h1>
 <p>Start prompts with:</p><ol type="1">
 <li>Role: (who should respond — e.g., "Coordinator agent")</li>
@@ -200,16 +244,15 @@ Prompting best practices</h1>
 <li>Output: JSON list of files &amp; recommended tests</li>
 </ul>
 <p>ROLE → OBJECTIVE → CONTEXT → REASONING pattern.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md4"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
 Exploring / Examples to try</h1>
 <ul>
 <li>Run a role-based review pass: assign "Reviewer" role and ask for TODOs per module.</li>
 <li>Use an "Interpreter" + "Backend agent" pair: Interpreter extracts entities, Backend persists to a local JSON DB.</li>
 <li>Multimodal sample: audio → Audio agent computes spectrogram → Interpreter summarizes findings.</li>
 </ul>
-<p>Refer to ROLE-BASED_GUIDE.md for specific role entry points and code module maps for wideband/narrowband/voice services.</p>
-<p><em>go to</em> <span class="tt">well prompt information</span> <em>for more detail</em></p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md5"></a>
+<p><em>go to</em> <a class="el" href="dir_164281c8e450c00718e3cb9289a06146.html" title="D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/wellPrompt/README.md"><span class="tt">well prompt information</span></a> <em>for more detail</em></p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
 Collaborative &amp; Reproducible environments</h1>
 <p>1) Docker (recommended for consistent CI/dev):</p><ul>
 <li>Create Dockerfile that includes required runtimes (Python, build tools for C, ffmpeg if multimodal).</li>
@@ -226,29 +269,47 @@ Collaborative &amp; Reproducible environments</h1>
 <li>For C components, prefer building inside WSL or Docker (install build-essential / clang / msys2 on Windows).</li>
 <li>Use consistent toolchains in CI to avoid "works on my machine" issues.</li>
 </ul>
-<p><em>go to</em> <span class="tt">collaboratory environment guide</span> <em>for more detail</em></p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
+<p><em>go to</em> <a class="el" href="dd/df8/md__g_c_p_d_s_2agent_c_l_i_2_c-_collab-_env-_guide.html" title="Guía: Entornos colaborativos para desarrollo en C"><span class="tt">collaboratory C environment guide</span></a> <em>for more detail</em></p>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
 Integrating other tools (text, image, video)</h1>
 <ul>
 <li>Text: editors (VSCode), linters, unit tests. Use Copilot extensions for developer productivity.</li>
 <li>Images: ImageMagick or Pillow for image ops; OpenAI or Gemini image endpoints for multimodal prompts.</li>
 <li>Video/audio: ffmpeg, librosa, PyTorch/TensorFlow for deep analysis; Audio agent design is in basisReadme.md.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
 Security &amp; Open Source</h1>
 <ul>
 <li>This project favors open-source tooling; keep API keys and secrets out of the repo (.gitignore .env files).</li>
 <li>Document data provenance and citation when using proprietary models.</li>
 <li>We can create an organization and work on anthropic using CLAUDE.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
 How to contribute (brief)</h1>
+<p>refers to <a class="el" href="dc/dbb/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2docs_2reference_2deployment_guide.html" title="DEPLOYMENT &amp; RELEASE MANAGEMENT"><span class="tt">deployment guide</span></a> for more details</p>
+<p>A. If the repo uses Python components (recommended for reproducibility): Clone as this:</p><ul>
+<li>git clone <a href="https://github.com/Macreat/GCPDS-CW.git">https://github.com/Macreat/GCPDS-CW.git</a></li>
+</ul>
+<p>then, depending on the OS :</p>
+<p>PowerShell:</p><ul>
+<li>python -m venv .venv <em>(also can use conda)</em></li>
+<li>..venv\Scripts\Activate.ps1</li>
+<li>if (Test-Path requirements.txt) { pip install -r requirements.txt }</li>
+</ul>
+<p>WSL / Linux:</p><ul>
+<li>sudo apt update &amp;&amp; sudo apt install -y python3-venv python3-pip</li>
+<li>git clone &lt;repo&gt;</li>
+<li>python3 -m venv .venv</li>
+<li>source .venv/bin/activate</li>
+<li>pip install -r requirements.txt</li>
+</ul>
+<p>After completing these steps, we can align and establish a collaborative environment:</p>
 <ol type="1">
-<li>Pick a role/task from ROLE-BASED_GUIDE.md : <a class="el" href="df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html" title="ROLE-BASED DOCUMENTATION &amp; COLLABORATION GUIDE"><span class="tt">collaboratory environment guide</span></a></li>
+<li>Pick a role/task from <a class="el" href="df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_assurance_2_r_o_l_e-_b_a_s_e_d___g_u_i_d_e.html" title="ROLE-BASED DOCUMENTATION &amp; COLLABORATION GUIDE"><span class="tt">collaboratory environment guide</span></a> for specific role entry points and code module maps for wideband/narrowband/voice services.</li>
 <li>Create a branch (after confirm the repo cloned): &lt;feature&gt;-&lt;role&gt;-&lt;short-desc&gt;</li>
 <li>Add tests, type hints, and docs (follow Google docstring style)</li>
-<li>Run tests and linters before PR and commit.</li>
-<li>Reference the role in the PR description </li>
+<li>Run tests and linters before PR and/or commit.</li>
+<li>Reference the role in the PR/commit description (optional) </li>
 </ol>
 </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>

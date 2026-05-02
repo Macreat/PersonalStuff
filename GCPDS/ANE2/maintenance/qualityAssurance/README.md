@@ -251,12 +251,12 @@ Create `.env` in project root:
 
 ```bash
 # API CONFIGURATION
-API_URL=https://rsm.ane.gov.co:12443/api
+API_URL=
 
 # APPLICATION
-APP_NAME=ANE2-QA 
-APP_VERSION=0.2.0
-COUNTRY=America/Bogota
+APP_NAME=
+APP_VERSION=
+COUNTRY=
 
 # DEBUG & LOGGING
 DEBUG=false              # Enable detailed logging

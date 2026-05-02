@@ -92,14 +92,14 @@ $(function(){initNavTree('df/d5f/md__g_c_p_d_s_2_a_n_e2_2maintenance_2quality_as
   <div class="headertitle"><div class="title">ROLE-BASED DOCUMENTATION &amp; COLLABORATION GUIDE </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md10"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md11"></a></p>
 <p><b>Version:</b> 0.2 | <b>Date:</b> March 18, 2026</p>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 OVERVIEW</h1>
 <p>This document provides <b>role-specific navigation paths</b> for collaborators working on the ANE2-Calibration-SDR project. Each role (wide band, narrow band and service voice) has dedicated entry points, documentation, and code modules.</p>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 QUICK ROLE SELECTOR</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -112,16 +112,16 @@ QUICK ROLE SELECTOR</h1>
 <td class="markdownTableBodyNone">voice services  </td><td class="markdownTableBodyNone">Link  </td><td class="markdownTableBodyNone">Network sync &amp; metrics  </td><td class="markdownTableBodyNone"><span class="tt">processing.correlation</span>  </td><td class="markdownTableBodyNone">Planning  </td></tr>
 </table>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 WIDEBAND</h1>
 <p><b>Focus:</b> Multi-frequency spectrum analysis, bandwidth optimization, cross-band correlation</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 Starting Point</h2>
 <ol type="1">
 <li><b>First Read:</b> <a href="../../README.md###-Wideband">README.md - wide band section</a></li>
 <li><b>Implementation Notebook:</b> <span class="tt">src/example-campaign_nodes.ipynb</span></li>
 </ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Code Modules</h2>
 <div class="fragment"><div class="line">src/</div>
 <div class="line">├── libs/data_request.py           ← Campaign data fetching</div>
@@ -132,9 +132,9 @@ Code Modules</h2>
 <div class="line">└── visualization/</div>
 <div class="line">    ├── spectrum_plots.py          ← Multi-band comparison plots</div>
 <div class="line">    └── correlation_heatmaps.py    ← Band relationship visualization</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 Key Workflows</h2>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
 1. Load Campaign Data Across Bands</h3>
 <div class="fragment"><div class="line"><span class="keyword">from</span> libs.data_request <span class="keyword">import</span> DataRequest</div>
 <div class="line"> </div>
@@ -152,7 +152,7 @@ Key Workflows</h2>
 <div class="line">multi_band_data = dr.load_campaigns_and_nodes(campaigns, node_ids)</div>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Structure: {band_name: {node_name: DataFrame}}</span></div>
-</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 2. Normalize Spectra Across Bands</h3>
 <div class="fragment"><div class="line"><span class="keyword">from</span> processing.normalization <span class="keyword">import</span> SpectrumNormalizer</div>
 <div class="line"> </div>
@@ -160,7 +160,7 @@ Key Workflows</h2>
 <div class="line"><span class="comment"># Normalize to common reference</span></div>
 <div class="line">normalizer = SpectrumNormalizer(reference_band=<span class="stringliteral">&#39;band_960hz&#39;</span>)</div>
 <div class="line">normalized = normalizer.normalize_all_bands(multi_band_data)</div>
-</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 3. Analyze Band Correlation</h3>
 <div class="fragment"><div class="line"><span class="keyword">from</span> processing.correlation <span class="keyword">import</span> CorrelationAnalyzer</div>
 <div class="line"> </div>
@@ -175,7 +175,7 @@ Key Workflows</h2>
 <div class="line"><span class="comment">#   (&#39;band_240hz&#39;, &#39;band_1920hz&#39;): 0.42,  ← Weak</span></div>
 <div class="line"><span class="comment">#   (&#39;band_960hz&#39;, &#39;band_1920hz&#39;): 0.91   ← Very strong</span></div>
 <div class="line"><span class="comment"># }</span></div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
 Testing Requirements</h2>
 <ul class="check">
 <li class="unchecked"><span class="tt">tests/test_normalization.py</span> — Verify normalization consistency</li>
@@ -186,7 +186,7 @@ Testing Requirements</h2>
 <ul class="check">
 <li class="unchecked">Coverage: ≥ 80%</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
 Code Quality Standards</h2>
 <ul>
 <li>Follow developStandars.md</li>
@@ -194,14 +194,14 @@ Code Quality Standards</h2>
 <li>Docstring: Google format</li>
 <li>Commits: <span class="tt">feat(banda-ancha): ...</span></li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
 Documentation to Write</h2>
 <ul>
 <li><b>Frequency band reference table</b> (what each band measures)</li>
 <li><b>Normalization methodology</b> (mathematical basis)</li>
 <li><b>Interpretation guide</b> (how to read band correlation results)</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
 Timeline</h2>
 <ul>
 <li>Week 1: Core normalization module</li>
@@ -209,16 +209,16 @@ Timeline</h2>
 <li>Week 3: Testing &amp; visualization</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
 NARROWBAND</h1>
 <p><b>Focus:</b> Signal quality validation, IQ distortion, noise floor calibration, software compensation</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
 Starting Point</h2>
 <ol type="1">
 <li><b>First Read:</b> <a href="../../README.md###-Narrowband">README.md - narrow band section</a></li>
 <li><b>Real-time Notebook implementation:</b> <span class="tt">src/example-realtime.ipynb</span></li>
 </ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
 Code Modules</h2>
 <div class="fragment"><div class="line">src/</div>
 <div class="line">├── processing/                    ← YOUR PRIMARY RESPONSIBILITY</div>
@@ -245,7 +245,7 @@ Code Modules</h2>
 <div class="line">├── pipeline.py                    ← Orchestrates all modules</div>
 <div class="line">└── visualization/</div>
 <div class="line">    └── quality_dashboard.py       ← Your quality metrics plots</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 CRITICAL: The 5 Signal Quality Challenges</h2>
 <p>Read <a class="el" href="../../dir_8289c29611d6d4924845c0f745188455.html" title="D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/README.md">the main maintenance readme</a> PHASES SECTION FOR understand implementation about:</p><ol type="1">
 <li><b>Orthogonal Signal</b> (Noise floor too high)</li>
@@ -254,9 +254,9 @@ CRITICAL: The 5 Signal Quality Challenges</h2>
 <li><b>Synchronization</b> (Multi-node timing)</li>
 <li><b>Anomalies</b> (Exogenous events not detected)</li>
 </ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
 Implementation Checklist (3 Weeks)</h2>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
 WEEK 1: Noise Floor &amp; SNR</h3>
 <ul class="check">
 <li class="unchecked">Implement <span class="tt">NoiseFloorEstimator.histogram_mode()</span></li>
@@ -276,7 +276,7 @@ WEEK 1: Noise Floor &amp; SNR</h3>
 <ul>
 <li><b>Deliverable:</b> Noise floor report</li>
 </ul>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
 WEEK 2: IQ Calibration &amp; Gain Tuning</h3>
 <ul class="check">
 <li class="unchecked">Implement <span class="tt">IQCalibrator.estimate_imbalance()</span></li>
@@ -299,7 +299,7 @@ WEEK 2: IQ Calibration &amp; Gain Tuning</h3>
 <ul>
 <li><b>Deliverable:</b> Calibration profiles, before/after plots</li>
 </ul>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md34"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
 WEEK 3: Sync &amp; Anomalies</h3>
 <ul class="check">
 <li class="unchecked">Implement <span class="tt">SynchronizationValidator</span></li>
@@ -322,7 +322,7 @@ WEEK 3: Sync &amp; Anomalies</h3>
 <ul>
 <li><b>Deliverable:</b> Complete pipeline, metrics dashboard</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md35"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
 Daily Validation Checklist</h2>
 <div class="fragment"><div class="line">Before Each Commit:</div>
 <div class="line">- [ ] pytest tests/test_*.py --cov=src/processing</div>
@@ -331,7 +331,7 @@ Daily Validation Checklist</h2>
 <div class="line">- [ ] black src/processing/</div>
 <div class="line">- [ ] mypy src/processing/</div>
 <div class="line">- [ ] Commit message: feat(banda-angosta): ...</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md36"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
 Database Structure (NEW)</h2>
 <p>Design and implement: </p><div class="fragment"><div class="line"><span class="comment"># Noise floor baseline per node</span></div>
 <div class="line">{</div>
@@ -362,7 +362,7 @@ Database Structure (NEW)</h2>
 <div class="line">    <span class="stringliteral">&#39;feature_names&#39;</span>: [str],</div>
 <div class="line">    <span class="stringliteral">&#39;pickle_file&#39;</span>: str  <span class="comment"># Serialized sklearn model</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md37"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
 Testing Strategy</h2>
 <ul>
 <li><b>Unit tests:</b> Each function isolated, fixtures in <span class="tt">tests/conftest.py</span></li>
@@ -370,7 +370,7 @@ Testing Strategy</h2>
 <li><b>Performance tests:</b> &lt; 2 seconds for 6 nodes × 104 records</li>
 <li><b>Validation tests:</b> Against laboratory reference measurements</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md38"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
 Documentation You Must Write</h2>
 <ul>
 <li><b>Noise floor estimation</b>: Why histogram mode? When to use percentile method?</li>
@@ -379,7 +379,7 @@ Documentation You Must Write</h2>
 <li><b>Synchronization protocol</b>: How to detect and fix clock drift</li>
 <li><b>Anomaly detection model</b>: Feature engineering, training procedure, interpretation</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
 Code Review Checklist (For PRs)</h2>
 <p>Your PR to <span class="tt">main</span> must have:</p><ul class="check">
 <li class="unchecked">All tests passing</li>
@@ -399,7 +399,7 @@ Code Review Checklist (For PRs)</h2>
 <ul class="check">
 <li class="unchecked">Before/after documentation (for algorithmic changes)</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
 Slack/Meeting Talking Points</h2>
 <ul>
 <li>Daily: Brief 5-min standup on blockers</li>
@@ -407,16 +407,16 @@ Slack/Meeting Talking Points</h2>
 <li>Weekly: Overall quality scores across all 11 nodes</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
 VOICE SERVICES</h1>
 <p><b>Focus:</b> Network synchronization, quality metrics, multi-node anomaly correlation</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
 Starting Point</h2>
 <ol type="1">
 <li><b>First Read:</b> <a href="../../README.md###voice-Services">README.md - Voice Services Section</a></li>
 <li><b>Notebook implementation</b> tests or implementation about network sync, quality metrics, node anomaly correlation </li>
 </ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
 Your Code Modules</h2>
 <div class="fragment"><div class="line">src/</div>
 <div class="line">├── processing/</div>
@@ -431,9 +431,9 @@ Your Code Modules</h2>
 <div class="line">│</div>
 <div class="line">└── dashboards/</div>
 <div class="line">    └── voice_quality_dashboard.py ← Real-time monitoring</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
 Key Workflows</h2>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
 1. Monitor Network Health</h3>
 <div class="fragment"><div class="line"><span class="keyword">from</span> services.quality_metrics <span class="keyword">import</span> VoiceQualityMonitor</div>
 <div class="line"> </div>
@@ -456,7 +456,7 @@ Key Workflows</h2>
 <div class="line"> </div>
 <div class="line"><span class="comment"># Save for dashboard</span></div>
 <div class="line">monitor.publish_metrics(metrics)</div>
-</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
 2. Detect Service Degradation</h3>
 <div class="fragment"><div class="line"><span class="keyword">from</span> services.alert_system <span class="keyword">import</span> AlertManager</div>
 <div class="line"> </div>
@@ -473,7 +473,7 @@ Key Workflows</h2>
 <div class="line"><span class="comment"># - Email (team)</span></div>
 <div class="line"><span class="comment"># - Slack (channel)</span></div>
 <div class="line"><span class="comment"># - Database (historical log)</span></div>
-</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
 3. Generate Quality Reports</h3>
 <div class="fragment"><div class="line"><span class="keyword">from</span> services.reporting <span class="keyword">import</span> QualityReporter</div>
 <div class="line"> </div>
@@ -490,7 +490,7 @@ Key Workflows</h2>
 <div class="line">reporter.export_pdf(<span class="stringliteral">&#39;weekly_report.pdf&#39;</span>, report)</div>
 <div class="line">reporter.export_csv(<span class="stringliteral">&#39;metrics.csv&#39;</span>, report)</div>
 <div class="line">reporter.publish_to_web(<span class="stringliteral">&#39;https://ane-internal.gov.co/reports/v0.2.0&#39;</span>)</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
 Team Assignments - USE TICKETS ¿?</h2>
 <ul>
 <li><b>Person A:</b> Network synchronization implementation</li>
@@ -498,7 +498,7 @@ Team Assignments - USE TICKETS ¿?</h2>
 <li><b>Person C:</b> Alert system &amp; thresholds</li>
 <li><b>Person D:</b> Reporting &amp; dashboard UI</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
 Testing Requirements</h2>
 <ul class="check">
 <li class="unchecked"><span class="tt">tests/test_quality_metrics.py</span></li>
@@ -512,7 +512,7 @@ Testing Requirements</h2>
 <ul class="check">
 <li class="unchecked">Integration test: End-to-end monitoring workflow</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md52"></a>
 Timeline</h2>
 <ul>
 <li>Week 1: Setup &amp; data collection pipeline</li>
@@ -520,7 +520,7 @@ Timeline</h2>
 <li>Week 3: Alerts &amp; reporting, dashboard</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
 CROSS-TEAM COLLABORATION MATRIX</h1>
 <table class="markdownTable">
 <tr class="markdownTableHead">
@@ -543,9 +543,9 @@ CROSS-TEAM COLLABORATION MATRIX</h1>
 <li>Voz → API (exposes quality endpoints)</li>
 </ol>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
 SUCCESS METRICS (BY ROLE)</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
 wide band</h2>
 <ul class="check">
 <li class="unchecked">2 normalization algorithms implemented</li>
@@ -559,7 +559,7 @@ wide band</h2>
 <ul class="check">
 <li class="unchecked">Documentation: "Band Analysis Guide" published</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
 narrow band</h2>
 <ul class="check">
 <li class="unchecked">All 5 signal quality challenges addressed</li>
@@ -573,7 +573,7 @@ narrow band</h2>
 <ul class="check">
 <li class="unchecked">Documentation: "Software Validation Guide" published</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
 voice services</h2>
 <ul class="check">
 <li class="unchecked">Quality metrics API endpoint deployed</li>
@@ -587,7 +587,7 @@ voice services</h2>
 <ul class="check">
 <li class="unchecked">Dashboard updated in real-time</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
 API Deployment</h2>
 <ul class="check">
 <li class="unchecked">REST API running with 99.9% uptime</li>
@@ -602,9 +602,9 @@ API Deployment</h2>
 <li class="unchecked">API documentation (OpenAPI) complete</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md61"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md62"></a>
 TROUBLESHOOTING</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md62"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md63"></a>
 I don't know where to start</h2>
 <ol type="1">
 <li>Find your role above</li>
@@ -612,10 +612,10 @@ I don't know where to start</h2>
 <li>Read first priority document</li>
 <li>Join role-specific Slack channel</li>
 </ol>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md63"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md64"></a>
 My PR was rejected - what now?</h2>
 <p>See the Code Review Checklist in your role section.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md64"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md65"></a>
 I found a bug in someone else's code</h2>
 <ul>
 <li>Report in #ane2-bugs Slack channel</li>

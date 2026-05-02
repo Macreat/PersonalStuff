@@ -13,20 +13,32 @@ v1.0.0 = Production ready
 
 ```
 
-### RELEASE CHECKLIST
 
-- [ ] Todos tests passing
-- [ ] Code coverage ≥80%
-- [ ] Documentación actualizada
-- [ ] CHANGELOG.md updated
-- [ ] Version bumped en `setup.py`
-- [ ] Git tags creado
-- [ ] Release notes en GitHub/GitLab
-- [ ] Archive histórico guardado
+## ESTÁNDARES RÁPIDOS
+
+
+```
+
+- Aspecto	Estándar 
+- Line length	100 chars
+- Imports	stdlib → 3rd party → local
+- Docstrings	Google format
+- Type hints	Siempre
+- Test coverage	≥80%
+- Commits	Conventional
+
+
+
+```
+
+
 
 ### DEPLOYMENT STEPS
+#### _after cloning the repository using HTTPS or SSH:_
 
 ```bash
+
+
 # 1. Prepare release
 git checkout main
 git pull origin main
@@ -68,7 +80,7 @@ git commit -m "feat(module): descripción clara"
 # 4. Subir
 git push origin feature/nombre-descriptivo
 
-# 5. Crear Pull Request
+# 5. Crear Pull Request only for push verified and tested changes 
 # → Description
 # → Checklist
 # → Request review
@@ -94,19 +106,6 @@ mypy src/
 
 ```
 
-## ESTÁNDARES RÁPIDOS
-
-
-- Aspecto	Estándar
-- Line length	100 chars
-- Imports	stdlib → 3rd party → local
-- Docstrings	Google format
-- Type hints	Siempre
-- Test coverage	≥80%
-- Commits	Conventional
-
-
-
 
 ## merge & release 
 
@@ -127,11 +126,10 @@ git branch -d feature/nombre
 
 ## checklist
 
-- [] Ejecutar full test suite
-- [] Revisar datos (validate_data.py ejecutado)
-- [x] Documentación actualizada
+- [] run full test suite
+- [] Review data and [`dictionary`](../../../../../ANE2/DICTIONARY.md)   (validate_data.py ejecutado)
+- [x] Documentation updated 
 - [] Performance benchmarks OK
-- [] Sync con equipo (meeting)
-
+- [] Sync with team (meeting)
 
 

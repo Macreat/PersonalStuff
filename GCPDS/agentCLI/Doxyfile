@@ -25,9 +25,12 @@ WARN_IF_UNDOCUMENTED  = NO
 # Input files (absolute paths to avoid resolution problems)
 INPUT                  = \
   D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/README.md \
-  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/basisReadme.md \
   D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/C-Collab-Env-Guide.md \
-  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md
+  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md \
+  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/wellPrompt/README.md \
+  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/docs/reference/deploymentGuide.md 
+
+
 
 # Patterns and formats
 FILE_PATTERNS          = *.md

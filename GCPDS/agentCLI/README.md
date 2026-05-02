@@ -157,7 +157,7 @@ ROLE → OBJECTIVE → CONTEXT → REASONING pattern.
 - Use an "Interpreter" + "Backend agent" pair: Interpreter extracts entities, Backend persists to a local JSON DB.
 - Multimodal sample: audio → Audio agent computes spectrogram → Interpreter summarizes findings.
 
-Refer to ROLE-BASED_GUIDE.md for specific role entry points and code module maps for wideband/narrowband/voice services.
+
 
 _go to_  [`well prompt information`](wellPrompt/README.md) _for more detail_ 
 
@@ -179,7 +179,7 @@ _go to_  [`well prompt information`](wellPrompt/README.md) _for more detail_
 - For C components, prefer building inside WSL or Docker (install build-essential / clang / msys2 on Windows).
 - Use consistent toolchains in CI to avoid "works on my machine" issues.
 
-_go to_  [`collaboratory environment guide`](/C-Collab-Env-Guide.md) _for more detail_ 
+_go to_  [`collaboratory C environment guide`](C-Collab-Env-Guide.md) _for more detail_ 
 
 
 
@@ -199,12 +199,17 @@ _go to_  [`collaboratory environment guide`](/C-Collab-Env-Guide.md) _for more d
 
 ## How to contribute (brief)
 
-A. If the repo uses Python components (recommended for reproducibility): 
+refers to [`deployment guide`](../ANE2/maintenance/qualityAssurance/docs/reference/deploymentGuide.md)
+for more details 
 
+A. If the repo uses Python components (recommended for reproducibility): 
 Clone as this: 
+- git clone <https://github.com/Macreat/GCPDS-CW.git>
+
+then, depending on the OS : 
 
 PowerShell:
-- python -m venv .venv
+- python -m venv .venv _(also can use conda)_
 - .\.venv\Scripts\Activate.ps1
 - if (Test-Path requirements.txt) { pip install -r requirements.txt }
 
@@ -214,12 +219,14 @@ WSL / Linux:
 - python3 -m venv .venv
 - source .venv/bin/activate
 - pip install -r requirements.txt
-    
+  
 
-1. Pick a role/task from ROLE-BASED_GUIDE.md : [`collaboratory environment guide`](../ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md) 
+After completing these steps, we can align and establish a collaborative environment: 
+
+1. Pick a role/task from [`collaboratory environment guide`](../ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md) for specific role entry points and code module maps for wideband/narrowband/voice services.
 2. Create a branch (after confirm the repo cloned): <feature>-<role>-<short-desc>
 3. Add tests, type hints, and docs (follow Google docstring style)
-4. Run tests and linters before PR and commit.
-5. Reference the role in the PR description
+4. Run tests and linters before PR and/or commit.
+5. Reference the role in the PR/commit description (optional)
 
 
