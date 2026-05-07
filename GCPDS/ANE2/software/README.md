@@ -1,4 +1,4 @@
-# software (iot) notes 
+# software notes 
 
 ## API deployment
 
