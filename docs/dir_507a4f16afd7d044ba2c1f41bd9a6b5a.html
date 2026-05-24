@@ -93,10 +93,10 @@ $(function(){initNavTree('dir_507a4f16afd7d044ba2c1f41bd9a6b5a.html','',''); });
 </div><!--header-->
 <div class="contents">
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md6"></a>
 Benchmark C de Metodo 3 IQ</h1>
 <p>Implementacion C minimalista para evaluar procesamiento IQ (Metodo 3) con foco en rendimiento, estabilidad y calidad de metricas.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md7"></a>
 Alcance</h1>
 <ul>
 <li>IQ int8 intercalado -&gt; complejo float32</li>
@@ -106,7 +106,7 @@ Alcance</h1>
 <li>Metricas computacionales: tiempos por etapa, throughput, CPU, RAM, RSS</li>
 <li>Exportacion opcional a JSON y CSV</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md8"></a>
 Estructura</h1>
 <ul>
 <li>include/iq_bench.h: tipos y API publica</li>
@@ -118,7 +118,7 @@ Estructura</h1>
 <li>src/profiler.c: tiempo y memoria</li>
 <li>docs/SOURCE_REFERENCE.md: documentacion tecnica por archivo</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md9"></a>
 Build</h1>
 <p>Desde el directorio del proyecto:</p>
 <div class="fragment"><div class="line">cmake -S . -B build -DCMAKE_BUILD_TYPE=Release</div>
@@ -126,24 +126,24 @@ Build</h1>
 </div><!-- fragment --><p>Optimizacion nativa local (solo benchmarking en la misma maquina):</p>
 <div class="fragment"><div class="line">cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DIQBENCH_NATIVE_OPT=ON</div>
 <div class="line">cmake --build build --config Release</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
 Ejecucion</h1>
 <div class="fragment"><div class="line">.\build\Release\iq_method3_bench.exe --db &quot;D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/modules/db/DataBase-IQ-FM-88MHz-108MHz&quot; --files 6 --max-complex 262144 --nperseg 512 --overlap 0.5 --chunk-bytes 65536 --json-out qa_after.json --csv-out qa_after.csv</div>
 </div><!-- fragment --><p>Smoke test:</p>
 <div class="fragment"><div class="line">.\build\Release\iq_method3_bench.exe --files 2 --max-complex 32768 --nperseg 256 --overlap 0.5</div>
-</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md11"></a>
 Despliegue Remoto (Raspberry Pi 4)</h1>
 <p>Para desplegar este benchmark en una Raspberry Pi 4 Model B via SSH, consulte el flujo de trabajo detallado en:</p><ul>
 <li><span class="tt">../../SSH_WORKFLOW.md</span></li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md12"></a>
 Lectura rapida de resultados</h1>
 <ul>
 <li>Si <span class="tt">welch_ms</span> domina, el cuello de botella esta en la etapa espectral.</li>
 <li>Si <span class="tt">alloc_count == free_count</span> y <span class="tt">bytes_current == 0</span>, no hay fuga en tracker interno.</li>
 <li><span class="tt">throughput_sps</span>, <span class="tt">latency_ratio</span> y <span class="tt">file_jitter_ms</span> resumen salud operacional del pipeline.</li>
 </ul>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 Recomendaciones para produccion</h1>
 <ol type="1">
 <li>Comparar versiones con mismos parametros y mismo dataset.</li>

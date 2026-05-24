@@ -94,27 +94,27 @@ $(function(){initNavTree('how_deploy_collab.html','',''); });
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_how_deploy_collab"></a></p>
 <p>This guide explains how to contribute to the GCPDS environment documentation and ensure changes are correctly deployed to the personal domain.</p>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md93"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
 Workflow Overview</h1>
 <p>To maintain a professional and consistent documentation flow, follow these steps:</p>
 <ol type="1">
 <li><b>Modify Content</b>: Edit the Markdown (<span class="tt">.md</span>) files within the <span class="tt">GCPDS/</span> directory. Ensure you use unique IDs for pages using the <span class="tt">{#page_id}</span> syntax and link them using <span class="tt">@subpage</span>.</li>
 <li><b>Regenerate &amp; Deploy</b>: Use the provided automation script to rebuild the Doxygen HTML and push changes to the relevant branches.</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md94"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md78"></a>
 Using the Deployment Script</h1>
 <p>We have provided a PowerShell script <span class="tt">deploy_docs.ps1</span> in the root directory that automates the entire process.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md95"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md79"></a>
 Prerequisites</h2>
 <ul>
 <li><b>Doxygen</b>: Must be installed and available in your PATH.</li>
 <li><b>Git</b>: Configured with access to the remote repository.</li>
 </ul>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md96"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md80"></a>
 Execution</h2>
 <p>Run the following command from the project root:</p>
 <div class="fragment"><div class="line">.\deploy_docs.ps1</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md97"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md81"></a>
 What the Script Does:</h2>
 <ol type="1">
 <li><b>Regenerates Documentation</b>: Runs Doxygen using <span class="tt">GCPDS/agentCLI/Doxyfile</span> and outputs the HTML to the <span class="tt">docs/</span> folder.</li>
@@ -122,7 +122,7 @@ What the Script Does:</h2>
 <li><b>Commits</b>: Creates a commit with an automated timestamp.</li>
 <li><b>Deploys</b>: Pushes the changes to the <span class="tt">main</span> branch (for source control) and the <span class="tt">gh-newpage</span> branch (for personal domain deployment).</li>
 </ol>
-<h1 class="doxsection"><a class="anchor" id="autotoc_md98"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md82"></a>
 Professional Standards</h1>
 <ul>
 <li><b>No Empty Pages</b>: Ensure every link in the Doxygen navigation tree points to a file with actual content.</li>
