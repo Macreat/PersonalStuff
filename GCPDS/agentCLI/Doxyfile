@@ -1,53 +1,50 @@
-# Doxyfile 1.9 - Agents CLI consolidated documentation
-# Minimal Doxygen config to generate HTML pages from repository markdown files
+# Doxyfile 1.9 - GCPDSenv Consolidated Documentation
 
-PROJECT_NAME           = "Agents CLI — Consolidated Docs"
-PROJECT_BRIEF          = "Consolidated documentation pages: README, basisReadme, ROLE-BASED_GUIDE, C-Collab-Env-Guide"
+PROJECT_NAME           = "GCPDSenv"
+PROJECT_BRIEF          = "Consolidated environment documentation: Documentation, Hardware, Software, and Maintenance"
 
-# Absolute output directory to avoid path resolution issues when invoking doxygen from any cwd
-OUTPUT_DIRECTORY       = D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/docs/doxygen
-CREATE_SUBDIRS         = YES
+# Absolute output directory - Corrected to root docs for GitHub Pages
+OUTPUT_DIRECTORY       = D:/wnOs/wsp/CODE/work/PersonalStuff/docs
+CREATE_SUBDIRS         = NO
 
-# Generate only HTML (no LaTeX/PDF)
+# Generate only HTML
 GENERATE_HTML          = YES
 GENERATE_LATEX         = NO
 GENERATE_MAN           = NO
 GENERATE_RTF           = NO
 GENERATE_XML           = NO
-HTML_OUTPUT            = html
+HTML_OUTPUT            = .
 GENERATE_TREEVIEW      = YES
 
-# Reduce noise during generation
+# Reduce noise
 QUIET                 = YES
 WARNINGS              = NO
 WARN_IF_UNDOCUMENTED  = NO
 
-# Input files (absolute paths to avoid resolution problems)
-INPUT                  = \
-  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/README.md \
-  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/C-Collab-Env-Guide.md \
-  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/ROLE-BASED_GUIDE.md \
-  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/wellPrompt/README.md \
-  D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/docs/reference/deploymentGuide.md 
-
-
-
-# Patterns and formats
+# Input files - Tracking the entire GCPDS folder recursively
+INPUT                  = D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS
+RECURSIVE              = YES
 FILE_PATTERNS          = *.md
-RECURSIVE              = NO
-USE_MDFILE_AS_MAINPAGE = README.md
+
+# Main page configuration
+USE_MDFILE_AS_MAINPAGE = D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/README.md
+
+# Formatting and Support
 MARKDOWN_SUPPORT       = YES
-# Avoid EXTENSION_MAPPING to prevent compatibility errors with some Doxygen versions
 INPUT_ENCODING         = UTF-8
-STRIP_FROM_PATH        = D:/wnOs/wsp/CODE/work/PersonalStuff
+STRIP_FROM_PATH        = D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS
 FULL_PATH_NAMES        = NO
 
 # Presentation
 SOURCE_BROWSER         = NO
 INLINE_SOURCES         = NO
 TAB_SIZE               = 4
-
-# Keep output minimal and focused: do not document code symbols
 EXTRACT_ALL            = NO
 
-# End of Doxyfile
+# Extra files to include in HTML output
+HTML_EXTRA_FILES       = D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/paper.pdf
+
+# Exclude unnecessary folders if needed
+EXCLUDE                = D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/docs/doxygen \
+                         D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/agentCLI/wellPrompt/.cache \
+                         D:/wnOs/wsp/CODE/work/PersonalStuff/GCPDS/ANE2/maintenance/qualityAssurance/.cache

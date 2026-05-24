@@ -1,2 +1,0 @@
-files_requested,files_processed,samples_total,throughput_sps,total_ms,load_ms,convert_ms,preprocess_ms,welch_ms,metric_ms,snr_mean_db,snr_std_db,noise_mean_dbm,center_mean_dbm,score,rss_start_mb,rss_end_mb
-2,2,65536,1842674.262281,35.565700,2.208400,0.510500,1.170700,16.897700,0.048200,12.080563,0.485607,-74.210926,-62.130363,-4.679725,3.828125,4.285156
