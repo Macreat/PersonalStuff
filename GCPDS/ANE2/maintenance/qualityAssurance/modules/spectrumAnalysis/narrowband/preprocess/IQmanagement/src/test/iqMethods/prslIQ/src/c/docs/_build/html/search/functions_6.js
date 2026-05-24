@@ -1,5 +1,0 @@
-var searchData=
-[
-  ['load_5fiq_5fint8_5flimited_0',['load_iq_int8_limited',['../iq__bench_8h.html#ab9d13705767d28d9bb301318d2217e8c',1,'load_iq_int8_limited(const char *data_path, int8_t **out_raw, size_t *out_bytes, size_t max_complex_samples, mem_tracker_t *mt):&#160;sigmf_io.c'],['../sigmf__io_8c.html#ab9d13705767d28d9bb301318d2217e8c',1,'load_iq_int8_limited(const char *data_path, int8_t **out_raw, size_t *out_bytes, size_t max_complex_samples, mem_tracker_t *mt):&#160;sigmf_io.c']]],
-  ['load_5fiq_5fint8_5flimited_5fchunked_5finto_1',['load_iq_int8_limited_chunked_into',['../iq__bench_8h.html#a4bfeec851af17c7ec93a1eea640d3434',1,'load_iq_int8_limited_chunked_into(const char *data_path, int8_t *raw_buf, size_t raw_capacity, size_t *out_bytes, size_t chunk_bytes):&#160;sigmf_io.c'],['../sigmf__io_8c.html#a4bfeec851af17c7ec93a1eea640d3434',1,'load_iq_int8_limited_chunked_into(const char *data_path, int8_t *raw_buf, size_t raw_capacity, size_t *out_bytes, size_t chunk_bytes):&#160;sigmf_io.c']]]
-];
